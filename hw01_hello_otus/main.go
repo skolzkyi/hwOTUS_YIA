@@ -14,5 +14,6 @@ func main() {
 
 func reverseString(input string) string {
 	output := stringutil.Reverse(input)
+
 	return output
 }

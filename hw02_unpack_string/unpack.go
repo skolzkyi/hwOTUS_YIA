@@ -11,6 +11,7 @@ var ErrInvalidString = errors.New("invalid string")
 
 func Unpack(input string) (string, error) {
 	var res string
+
 	if input == "" {
 		return "", nil
 	}
@@ -18,8 +19,7 @@ func Unpack(input string) (string, error) {
 	resslice := make([]rune, 0)
 	rslice := []rune(input)
 
-	err := verifRslice(rslice)
-	if err != nil {
+	if err := verifRslice(rslice); err != nil {
 		return "", err
 	}
 

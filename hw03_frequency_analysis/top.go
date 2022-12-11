@@ -33,11 +33,12 @@ func Top10(input string) []string {
 	}
 
 	sort.Slice(freqSlice, func(i, j int) bool {
-		if freqSlice[i].Freq > freqSlice[j].Freq {
+		switch {
+		case freqSlice[i].Freq > freqSlice[j].Freq:
 			return true
-		} else if freqSlice[i].Freq < freqSlice[j].Freq {
+		case freqSlice[i].Freq < freqSlice[j].Freq:
 			return false
-		} else {
+		default:
 			if strings.Compare(freqSlice[i].Word, freqSlice[j].Word) == -1 {
 				return true
 			}

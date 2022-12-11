@@ -3,8 +3,6 @@ package hw03frequencyanalysis
 import (
 	"sort"
 	"strings"
-	"unicode"
-	"unicode/utf8"
 )
 
 type wordFreq struct {
@@ -17,24 +15,12 @@ func Top10(input string) []string {
 		var void []string
 		return void
 	}
-	inputSR := []rune(input)
-	space, _ := utf8.DecodeRune([]byte(` `))
-	for index, rune := range inputSR {
-		if unicode.IsControl(rune) {
-			inputSR[index] = space
-		}
-	}
 
-	input = string(inputSR)
-
-	slice := strings.Split(input, " ")
+	slice := strings.Fields(input)
 	freqSlice := make([]wordFreq, 0)
 	freqMap := make(map[string]int)
 
 	for _, word := range slice {
-		if word == "" {
-			continue
-		}
 		if freqMap[word] == 0 {
 			freqSlice = append(freqSlice, wordFreq{
 				Word: word,

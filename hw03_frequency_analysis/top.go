@@ -1,8 +1,13 @@
 package hw03frequencyanalysis
 
 import (
+	"regexp"
 	"sort"
 	"strings"
+)
+
+var (
+	reg = regexp.MustCompile(`[!,.;:?)"(]`)
 )
 
 type wordFreq struct {
@@ -11,22 +16,30 @@ type wordFreq struct {
 }
 
 func Top10(input string) []string {
+	var resLength int
 	if input == "" {
 		var void []string
 		return void
 	}
 
 	slice := strings.Fields(input)
-	freqSlice := make([]wordFreq, 0)
+	freqSlice := make([]wordFreq, len(slice))
 	freqMap := make(map[string]int)
 
-	for _, word := range slice {
-		if freqMap[word] == 0 {
-			freqSlice = append(freqSlice, wordFreq{
+	i := 0
+	for _, rawWord := range slice {
+		word := reg.ReplaceAllString(strings.ToLower(rawWord), "")
+		if word == "-" {
+			continue
+		}
+		_, ok := freqMap[word]
+		if !ok {
+			freqSlice[i] = wordFreq{
 				Word: word,
 				Freq: 1,
-			})
-			freqMap[word] = len(freqSlice) - 1
+			}
+			freqMap[word] = i
+			i++
 		} else {
 			freqSlice[freqMap[word]].Freq++
 		}
@@ -45,9 +58,13 @@ func Top10(input string) []string {
 			return false
 		}
 	})
-
-	resslice := make([]string, 10)
-	for i := 0; i < 10; i++ {
+	if len(freqSlice) >= 10 {
+		resLength = 10
+	} else {
+		resLength = len(freqSlice) - 1
+	}
+	resslice := make([]string, resLength)
+	for i := 0; i < resLength; i++ {
 		resslice[i] = freqSlice[i].Word
 	}
 

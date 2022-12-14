@@ -6,9 +6,7 @@ import (
 	"strings"
 )
 
-var (
-	reg = regexp.MustCompile(`[!,.;:?)"(]`)
-)
+var reg = regexp.MustCompile(`[!,.;:?)"(]`)
 
 type wordFreq struct {
 	Word string

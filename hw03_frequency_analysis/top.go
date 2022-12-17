@@ -42,7 +42,7 @@ func Top10(input string) []string {
 			freqSlice[freqMap[word]].Freq++
 		}
 	}
-
+	freqSlice = freqSlice[:i+1]
 	sort.Slice(freqSlice, func(i, j int) bool {
 		switch {
 		case freqSlice[i].Freq > freqSlice[j].Freq:

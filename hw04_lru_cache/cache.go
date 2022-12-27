@@ -50,10 +50,11 @@ func (lc *lruCache) Set(key Key, value interface{}) bool {
 }
 
 func (lc *lruCache) Get(key Key) (interface{}, bool) {
-	if _, ok := lc.items[key]; !ok {
+	v, ok := lc.items[key]
+	if !ok {
 		return nil, false
 	}
-	value := lc.items[key].Value
+	value := v.Value
 	lc.queue.MoveToFront(lc.items[key])
 	return value, true
 }

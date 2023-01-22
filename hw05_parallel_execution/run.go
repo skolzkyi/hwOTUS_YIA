@@ -2,23 +2,23 @@ package hw05parallelexecution
 
 import (
 	"errors"
-	"fmt"
 	"sync"
-	"sync/atomic"
 )
 
 var ErrErrorsLimitExceeded = errors.New("errors limit exceeded")
-var ErrErrorsBadErrorsCount = errors.New("errors count less tasks len")
-var ErrErrorsBadGoroutinesCount = errors.New("tasks len less goroutines count")
+var ErrErrorsBadGoroutinesCount = errors.New("goroutines count large tasks len")
+var ErrErrorsBadErrorsCount = errors.New("errors count large tasks len")
+var ChannelCounter int
 
 type Task func() error
 
 // Run starts tasks in n goroutines and stops its work when receiving m errors from tasks.
 func Run(tasks []Task, n, m int) error {
 
+	ChannelCounter = 0
 	var returnerror error
 
-	if len(tasks) < n {
+	if n > len(tasks) {
 		returnerror = ErrErrorsBadGoroutinesCount
 		return returnerror
 	}
@@ -29,49 +29,49 @@ func Run(tasks []Task, n, m int) error {
 	}
 
 	workch := make(chan Task, n)
-	errch := make(chan error)
+	errch := make(chan error, n)
 
-	//var workerr error
-	wg := sync.WaitGroup{}
-	wgStop := sync.WaitGroup{}
-	wg.Add(n)
-	wgStop.Add(n)
 	var stopint int32
+	var rwm sync.RWMutex
 
 	for i := 0; i < n; i++ {
 		workch <- tasks[i]
 	}
 
-	fmt.Println("count of GR: ", n, "buf: ", len(workch))
+	//	fmt.Println("count of GR: ", n, "buf: ", len(workch))
 
 	k := 0
 	for i := 0; i < n; i++ {
 		k++
-		go worker(i, workch, errch, &wg, &wgStop, &stopint)
+		go worker(i, n, workch, errch, &rwm, &stopint)
 
 	}
-	fmt.Println("real count of GR: ", k)
+	//	fmt.Println("real count of GR: ", k)
 	k = 0
 	q := 0
 	t := n
 	var flag bool
+
 	for {
+
 		workerr := <-errch
 		if workerr != nil {
 			if !flag {
 				k++
-				fmt.Println("numerr: ", k)
+				//	fmt.Println("numerr: ", k)
 			} else {
 				q++
-				fmt.Println("numerr after stop: ", q)
+				//	fmt.Println("numerr after stop: ", q)
 			}
 		}
+
 		if !flag {
-			if ((k < m || workerr == nil) || (m <= 0)) && (t <= len(tasks)-1) { //if ((k < m || workerr == nil) && (t <= len(tasks)-1)) || (m <= 0)
+			if ((k < m || workerr == nil) || (m <= 0)) && (t < len(tasks)) { //if ((k < m || workerr == nil) && (t <= len(tasks)-1)) || (m <= 0)
 				workch <- tasks[t]
-				fmt.Println("len: ", t)
+				//fmt.Println("len: ", t)
 				t++
 			} else {
+				//fmt.Println("workch closed!")
 				close(workch)
 				if (k >= m) && (m > 0) {
 					returnerror = ErrErrorsLimitExceeded
@@ -79,35 +79,45 @@ func Run(tasks []Task, n, m int) error {
 				flag = true
 			}
 		}
-		fmt.Println("stopint: ", stopint)
-		if stopint >= int32(n) {
-			fmt.Println("break")
+
+		rwm.RLock()
+		//	fmt.Println("ChannelCounter: ", ChannelCounter, " n ", n)
+		if ChannelCounter >= n {
+			rwm.RUnlock()
+			//fmt.Println("break")
 			break
 		}
+		rwm.RUnlock()
+
 	}
-	fmt.Println("freedom")
-	wg.Wait()
+	//fmt.Println("freedom")
 
 	return returnerror
 }
 
-func worker(i int, workch chan Task, errch chan error, wg *sync.WaitGroup, wgStop *sync.WaitGroup, stopint *int32) {
-	//j := 1
-	defer wg.Done()
-	//fmt.Println("start worker: ", i)
+//cd C:\REPO\Go\!OTUS\hwOTUS_YIA\hw05_parallel_execution
+
+func worker(i int, n int, workch chan Task, errch chan error, rwm *sync.RWMutex, stopint *int32) {
+
 	for {
 		task, ok := <-workch
 		if !ok {
 			//fmt.Println("break worker: ", i)
-			atomic.AddInt32(stopint, int32(1))
-			//wgStop.Done()
+
+			rwm.Lock()
+			if ChannelCounter == n-1 {
+				close(errch)
+			}
+			ChannelCounter++
+			//	fmt.Println("ChannelCounter: ", ChannelCounter, " from worker ", i)
+			rwm.Unlock()
+
 			break
 		} else {
-			//fmt.Println("worker: ", i, " task: ", j, "buf: ", len(workch))
-			//j++
+
 			err := task()
 			errch <- err
 		}
 	}
-	//fmt.Println("stop worker: ", i)
+
 }

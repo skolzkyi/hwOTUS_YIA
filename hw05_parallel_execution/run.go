@@ -33,25 +33,21 @@ func Run(tasks []Task, n, m int) error {
 		workch <- tasks[i]
 	}
 
-	k := 0
 	for i := 0; i < n; i++ {
-		k++
 		go worker(n, workch, errch, &rwm)
 	}
 
-	k = 0
+	k := 0
 	t := n
 	var flag bool
 
 	for {
 		workerr := <-errch
-		if workerr != nil {
-			if !flag {
-				k++
-			}
+		if workerr != nil && !flag {
+			k++
 		}
 		if !flag {
-			if ((k < m || workerr == nil) || (m <= 0)) && (t < len(tasks)) {
+			if (k < m || workerr == nil || m <= 0) && (t < len(tasks)) {
 				workch <- tasks[t]
 				t++
 			} else {

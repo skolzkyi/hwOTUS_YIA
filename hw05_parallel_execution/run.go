@@ -6,99 +6,60 @@ import (
 )
 
 var (
-	ErrErrorsLimitExceeded      = errors.New("errors limit exceeded")
-	ErrErrorsBadGoroutinesCount = errors.New("goroutines count large tasks len")
-	ErrErrorsBadErrorsCount     = errors.New("errors count large tasks len")
-	ChannelCounter              int
+	ErrErrorsLimitExceeded = errors.New("errors limit exceeded")
+	ErrBadWorkersCount     = errors.New("workers count less one")
 )
 
 type Task func() error
 
 // Run starts tasks in n goroutines and stops its work when receiving m errors from tasks.
 func Run(tasks []Task, n, m int) error {
-	ChannelCounter = 0
-	var returnerror error
-
-	returnerror = checkinputParameters(len(tasks), n, m)
-	if returnerror != nil {
-		return returnerror
-	}
-
-	workch := make(chan Task, n)
-	errch := make(chan error, n)
-
+	var err error
+	var errCounter int
+	var wg sync.WaitGroup
 	var rwm sync.RWMutex
 
-	for i := 0; i < n; i++ {
-		workch <- tasks[i]
+	if n < 1 {
+		err = ErrBadWorkersCount
+		return err
 	}
 
+	workch := make(chan Task)
+	wg.Add(n)
 	for i := 0; i < n; i++ {
-		go worker(n, workch, errch, &rwm)
-	}
-
-	k := 0
-	t := n
-	var flag bool
-
-	for {
-		workerr := <-errch
-		if workerr != nil && !flag {
-			k++
-		}
-		if !flag {
-			if (k < m || workerr == nil || m <= 0) && (t < len(tasks)) {
-				workch <- tasks[t]
-				t++
-			} else {
-				close(workch)
-				if (k >= m) && (m > 0) {
-					returnerror = ErrErrorsLimitExceeded
+		go func(workch chan Task, wg *sync.WaitGroup, rwm *sync.RWMutex) {
+			for {
+				task, ok := <-workch
+				if !ok {
+					break
 				}
-				flag = true
+				err := task()
+				if err != nil {
+					rwm.Lock()
+					errCounter++
+					rwm.Unlock()
+				}
 			}
-		}
+			wg.Done()
+		}(workch, &wg, &rwm)
+	}
 
+	for _, task := range tasks {
+		workch <- task
 		rwm.RLock()
-		if ChannelCounter >= n {
+		if errCounter >= m && m > 0 {
 			rwm.RUnlock()
+			close(workch)
+			err = ErrErrorsLimitExceeded
 			break
 		}
 		rwm.RUnlock()
 	}
-
-	return returnerror
-}
-
-func worker(n int, workch chan Task, errch chan error, rwm *sync.RWMutex) {
-	for {
-		task, ok := <-workch
-		if !ok {
-			rwm.Lock()
-			if ChannelCounter == n-1 {
-				close(errch)
-			}
-			ChannelCounter++
-			rwm.Unlock()
-			break
-		} else {
-			err := task()
-			errch <- err
-		}
-	}
-}
-
-func checkinputParameters(l, n, m int) error {
-	var returnerror error
-	if n > l {
-		returnerror = ErrErrorsBadGoroutinesCount
-		return returnerror
+	if err == nil {
+		close(workch)
 	}
 
-	if m > l {
-		returnerror = ErrErrorsBadErrorsCount
-		return returnerror
-	}
+	wg.Wait()
 
-	return nil
+	return err
 }

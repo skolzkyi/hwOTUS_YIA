@@ -9,6 +9,9 @@ type (
 type Stage func(in In) (out Out)
 
 func ExecutePipeline(in In, done In, stages ...Stage) Out {
+	if len(stages) < 1 {
+		return in
+	}
 	chainStep := in
 	for i := range stages {
 		chainStep = func(in In) (out Out) {

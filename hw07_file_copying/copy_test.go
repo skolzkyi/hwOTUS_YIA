@@ -52,7 +52,7 @@ func TestCopy(t *testing.T) {
 		to:             outputPath,
 		limit:          10,
 		offset:         0,
-		goldenFilePath: "testdata/my_out_offset0_limit10.txt",
+		goldenFilePath: "testdata/out_offset0_limit10.txt", //my
 		expectedError:  nil,
 	}
 	cases = append(cases, newCase)
@@ -62,7 +62,7 @@ func TestCopy(t *testing.T) {
 		to:             outputPath,
 		limit:          1000,
 		offset:         0,
-		goldenFilePath: "testdata/my_out_offset0_limit1000.txt",
+		goldenFilePath: "testdata/out_offset0_limit1000.txt", //my
 		expectedError:  nil,
 	}
 	cases = append(cases, newCase)
@@ -82,7 +82,7 @@ func TestCopy(t *testing.T) {
 		to:             outputPath,
 		limit:          1000,
 		offset:         100,
-		goldenFilePath: "testdata/my_out_offset100_limit1000.txt",
+		goldenFilePath: "testdata/out_offset100_limit1000.txt", //my
 		expectedError:  nil,
 	}
 	cases = append(cases, newCase)
@@ -92,7 +92,7 @@ func TestCopy(t *testing.T) {
 		to:             outputPath,
 		limit:          1000,
 		offset:         6000,
-		goldenFilePath: "testdata/my_out_offset6000_limit1000.txt",
+		goldenFilePath: "testdata/out_offset6000_limit1000.txt", //my
 		expectedError:  nil,
 	}
 	cases = append(cases, newCase)

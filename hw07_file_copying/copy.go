@@ -7,7 +7,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 )
 
 var (
@@ -42,7 +41,7 @@ func (PB *ProgressBarAC05) Init(rawDataLength int64) {
 }
 
 func (PB *ProgressBarAC05) Rewrite(curDataSize int64) {
-	time.Sleep(time.Second) //for PB testing
+	//time.Sleep(time.Second) //for PB testing
 	count := curDataSize / PB.scale
 	procent := int(curDataSize / PB.procentScale)
 	var sb strings.Builder

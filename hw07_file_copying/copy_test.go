@@ -2,12 +2,11 @@ package main
 
 import (
 	"errors"
+	"os"
 	"testing"
 
-	//"fmt"
 	"github.com/stretchr/testify/require"
 	"github.com/udhos/equalfile"
-	"os"
 )
 
 type testCase struct {
@@ -21,10 +20,47 @@ type testCase struct {
 }
 
 func TestCopy(t *testing.T) {
-	//PositiveCases
 	inputPath := "./testdata/input.txt"
 	outputPath := "out.txt"
 	outputCopyPath := "testdata/input_copy.txt"
+	var outputPathVariant string
+	// PositiveCases
+	cases := generatePositiveCases(inputPath, outputPath)
+	for _, tc := range cases {
+		tc := tc
+		t.Run(tc.caseName, func(t *testing.T) {
+			// fmt.Println(tc)
+			err := Copy(tc.from, tc.to, tc.offset, tc.limit)
+			require.NoError(t, err)
+			compare := equalfile.New(nil, equalfile.Options{})
+			if tc.from != tc.to {
+				outputPathVariant = tc.to
+			} else {
+				outputPathVariant = outputCopyPath
+			}
+			equal, err := compare.CompareFile(outputPathVariant, tc.goldenFilePath)
+			if err != nil {
+				require.Fail(t, "file comparison error")
+			}
+			err = os.Remove(outputPathVariant)
+			if err != nil {
+				require.Fail(t, "test case output clear error")
+			}
+			require.True(t, equal)
+		})
+	}
+	// Negative Cases
+	cases = generateNegativeCases(inputPath, outputPath)
+	for _, tc := range cases {
+		tc := tc
+		t.Run(tc.caseName, func(t *testing.T) {
+			err := Copy(tc.from, tc.to, tc.offset, tc.limit)
+			require.Truef(t, errors.Is(err, tc.expectedError), "actual error %q", err)
+		})
+	}
+}
+
+func generatePositiveCases(inputPath, outputPath string) []testCase {
 	cases := make([]testCase, 0)
 	newCase := testCase{
 		caseName:       "offset0_limit0",
@@ -52,7 +88,7 @@ func TestCopy(t *testing.T) {
 		to:             outputPath,
 		limit:          10,
 		offset:         0,
-		goldenFilePath: "testdata/out_offset0_limit10.txt", //my
+		goldenFilePath: "testdata/out_offset0_limit10.txt", // my
 		expectedError:  nil,
 	}
 	cases = append(cases, newCase)
@@ -62,7 +98,7 @@ func TestCopy(t *testing.T) {
 		to:             outputPath,
 		limit:          1000,
 		offset:         0,
-		goldenFilePath: "testdata/out_offset0_limit1000.txt", //my
+		goldenFilePath: "testdata/out_offset0_limit1000.txt", // my
 		expectedError:  nil,
 	}
 	cases = append(cases, newCase)
@@ -82,7 +118,7 @@ func TestCopy(t *testing.T) {
 		to:             outputPath,
 		limit:          1000,
 		offset:         100,
-		goldenFilePath: "testdata/out_offset100_limit1000.txt", //my
+		goldenFilePath: "testdata/out_offset100_limit1000.txt", // my
 		expectedError:  nil,
 	}
 	cases = append(cases, newCase)
@@ -92,38 +128,17 @@ func TestCopy(t *testing.T) {
 		to:             outputPath,
 		limit:          1000,
 		offset:         6000,
-		goldenFilePath: "testdata/out_offset6000_limit1000.txt", //my
+		goldenFilePath: "testdata/out_offset6000_limit1000.txt", // my
 		expectedError:  nil,
 	}
 	cases = append(cases, newCase)
 
-	var outputPathVariant string
-	for _, tc := range cases {
-		tc := tc
-		t.Run(tc.caseName, func(t *testing.T) {
-			//fmt.Println(tc)
-			err := Copy(tc.from, tc.to, tc.offset, tc.limit)
-			require.NoError(t, err)
-			compare := equalfile.New(nil, equalfile.Options{})
-			if tc.from != tc.to {
-				outputPathVariant = tc.to
-			} else {
-				outputPathVariant = outputCopyPath
-			}
-			equal, err := compare.CompareFile(outputPathVariant, tc.goldenFilePath)
-			if err != nil {
-				require.Fail(t, "file comparsion error")
-			}
-			err = os.Remove(outputPathVariant)
-			if err != nil {
-				require.Fail(t, "test case output clear error")
-			}
-			require.True(t, equal)
-		})
-	}
-	//Negative Cases
-	cases = make([]testCase, 0)
-	newCase = testCase{
+	return cases
+}
+
+func generateNegativeCases(inputPath, outputPath string) []testCase {
+	cases := make([]testCase, 0)
+	newCase := testCase{
 		caseName:       "from pass is null",
 		from:           "",
 		to:             outputPath,
@@ -193,11 +208,5 @@ func TestCopy(t *testing.T) {
 		expectedError:  ErrOffsetExceedsFileSize,
 	}
 	cases = append(cases, newCase)
-	for _, tc := range cases {
-		tc := tc
-		t.Run(tc.caseName, func(t *testing.T) {
-			err := Copy(tc.from, tc.to, tc.offset, tc.limit)
-			require.Truef(t, errors.Is(err, tc.expectedError), "actual error %q", err)
-		})
-	}
+	return cases
 }

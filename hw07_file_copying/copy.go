@@ -20,47 +20,46 @@ var (
 )
 
 type ProgressBarAC05 struct {
+	symbol        string
 	procentScale  int64
 	rawDataLength int64
 	scale         int64
-	symbol        string
 	pbLength      int
 	textPosStart  int
-	curPBPos      int
 	textLength    int
 }
 
-func (PB *ProgressBarAC05) Init(rawDataLength int64) {
-	PB.pbLength = 20
-	PB.textPosStart = 9
-	PB.textLength = 4
-	PB.symbol = "|"
-	PB.rawDataLength = rawDataLength
-	PB.scale = rawDataLength / int64(PB.pbLength)
-	PB.procentScale = rawDataLength / int64(100)
+func (pb *ProgressBarAC05) Init(rawDataLength int64) {
+	pb.pbLength = 20
+	pb.textPosStart = 9
+	pb.textLength = 4
+	pb.symbol = "|"
+	pb.rawDataLength = rawDataLength
+	pb.scale = rawDataLength / int64(pb.pbLength)
+	pb.procentScale = rawDataLength / int64(100)
 }
 
-func (PB *ProgressBarAC05) Rewrite(curDataSize int64) {
-	//time.Sleep(time.Second) //for PB testing
-	count := curDataSize / PB.scale
-	procent := int(curDataSize / PB.procentScale)
+func (pb *ProgressBarAC05) Rewrite(curDataSize int64) {
+	// time.Sleep(time.Second) // for PB testing
+	count := curDataSize / pb.scale
+	procent := int(curDataSize / pb.procentScale)
 	var sb strings.Builder
 	sb.WriteString("\r")
-	for i := 1; i < PB.pbLength; i++ {
+	for i := 1; i < pb.pbLength; i++ {
 		switch {
-		case i < PB.textPosStart:
+		case i < pb.textPosStart:
 			if int64(i) <= count {
-				sb.WriteString(PB.symbol)
+				sb.WriteString(pb.symbol)
 			} else {
 				sb.WriteString(" ")
 			}
-		case i == PB.textPosStart:
+		case i == pb.textPosStart:
 			sb.WriteString(strconv.Itoa(procent))
 			sb.WriteString("%")
-			i = i + PB.textLength
-		case i > PB.textPosStart+PB.textLength:
+			i += pb.textLength
+		case i > pb.textPosStart+pb.textLength:
 			if int64(i) <= count {
-				sb.WriteString(PB.symbol)
+				sb.WriteString(pb.symbol)
 			} else {
 				break
 			}
@@ -70,7 +69,6 @@ func (PB *ProgressBarAC05) Rewrite(curDataSize int64) {
 }
 
 func Copy(fromPath, toPath string, offset, limit int64) error {
-
 	var writedBytes int64
 	var err error
 
@@ -86,25 +84,10 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 		toPathSlice[len(toPathSlice)-2] = toPathSlice[len(toPathSlice)-2] + "_copy"
 		toPath = strings.Join(toPathSlice, ".")
 	}
-	toDirPathSlice := strings.Split(toPath, sep)
-	//fmt.Println(toDirPathSlice)
-	if len(toDirPathSlice) > 1 {
-		toDirPathSlice = toDirPathSlice[:len(toDirPathSlice)-1]
-		//fmt.Println(toDirPathSlice)
-		toDir := strings.Join(toDirPathSlice, sep)
-		//fmt.Println(toDir)
-		//return nil
-		_, err = os.Stat(toDir)
-		if err != nil {
-			if os.IsNotExist(err) {
-				err := os.MkdirAll(toDir, 0750)
-				if err != nil {
-					return err
-				}
-			} else {
-				return err
-			}
-		}
+
+	err = checkTargetDirectory(toPath, sep)
+	if err != nil {
+		return err
 	}
 
 	fileFrom, err := os.Open(fromPath)
@@ -113,15 +96,9 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	}
 	defer fileFrom.Close()
 
-	fileFromStat, err := fileFrom.Stat()
+	fileFromStatSize, err := checkFileFromAndReturnSize(fileFrom, offset)
 	if err != nil {
 		return err
-	}
-	if fileFromStat.Size() == 0 {
-		return ErrUnsupportedFile
-	}
-	if fileFromStat.Size() < offset {
-		return ErrOffsetExceedsFileSize
 	}
 
 	fileTo, err := os.Create(toPath)
@@ -132,33 +109,26 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 
 	fileFrom.Seek(offset, io.SeekStart)
 	var ProgBar ProgressBarAC05
-	ProgBar.Init(fileFromStat.Size())
+	ProgBar.Init(fileFromStatSize)
 	var flag bool
 	for !flag {
-		buffer := make([]byte, 512, 512)
+		buffer := make([]byte, 512)
 		n, errFF := fileFrom.Read(buffer)
-		//fmt.Println(n)
 		if n < len(buffer) {
 			buffer = buffer[:n]
 		}
-		//n, errFF := io.ReadFull(fileFrom, buffer)
-		writedBytes = writedBytes + int64(len(buffer))
+		writedBytes += int64(len(buffer))
 		if writedBytes >= limit && limit > 0 {
-			//fmt.Println("writedbytes, owerwrite: ", writedBytes, writedBytes-limit)
 			buffer = buffer[:int64(len(buffer))-(writedBytes-limit)]
-			//fmt.Println("new buffer length: ", len(buffer))
 			flag = true
 		}
-		//fmt.Println("new buffer length2: ", len(buffer))
 		ProgBar.Rewrite(writedBytes)
 		_, errFT := fileTo.Write(buffer)
-		//fmt.Println("writed: ", k)
 		if errFT != nil {
 			return errFT
 		}
 		if errFF != nil {
-			if errors.Is(errFF, io.EOF) { //|| errors.Is(errFF, io.ErrUnexpectedEOF)      && n == 0
-				//fmt.Println("exit: ", errFF.Error())
+			if errors.Is(errFF, io.EOF) {
 				flag = true
 			} else {
 				return errFF
@@ -170,7 +140,6 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 }
 
 func checkInputFlags(from, to string, limit, offset int64) error {
-
 	var err error
 	if from == "" {
 		err = ErrSourcePathIsNull
@@ -196,12 +165,49 @@ func checkInputFlags(from, to string, limit, offset int64) error {
 	if err != nil {
 		if os.IsNotExist(err) {
 			err = ErrSourceIsNotExisted
-			return err
+		}
+		return err
+	}
+
+	return nil
+}
+
+func checkFileFromAndReturnSize(fileFrom *os.File, offset int64) (int64, error) {
+	fileFromStat, err := fileFrom.Stat()
+	if err != nil {
+		return 0, err
+	}
+
+	if fileFromStat.Size() == 0 {
+		return 0, ErrUnsupportedFile
+	}
+
+	if fileFromStat.Size() < offset {
+		return 0, ErrOffsetExceedsFileSize
+	}
+
+	return fileFromStat.Size(), nil
+}
+
+func checkTargetDirectory(targetDirectoryPath string, sep string) error {
+	toDirPathSlice := strings.Split(targetDirectoryPath, sep)
+	var toDir string
+	if len(toDirPathSlice) > 1 {
+		toDirPathSlice = toDirPathSlice[:len(toDirPathSlice)-1]
+		toDir = strings.Join(toDirPathSlice, sep)
+	} else {
+		return nil
+	}
+	_, err := os.Stat(toDir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			err := os.MkdirAll(toDir, 0o750)
+			if err != nil {
+				return err
+			}
 		} else {
 			return err
 		}
 	}
-
 	return nil
-
 }

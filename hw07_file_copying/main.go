@@ -19,17 +19,12 @@ func init() {
 
 func main() {
 	flag.Parse()
-	var err error
 
-	err = Copy(from, to, offset, limit)
+	err := Copy(from, to, offset, limit)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
-	} else {
-		fmt.Println()
-		fmt.Println("Copy process completed successfully!")
 	}
-
+	fmt.Println()
+	fmt.Println("Copy process completed successfully!")
 }
-
-//cd C:\REPO\Go\!OTUS\hwOTUS_YIA\hw07_file_copying

@@ -2,7 +2,7 @@ package main
 
 import (
 	"errors"
-	"os"
+	//"os"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -20,11 +20,11 @@ func TestReadDir(t *testing.T) {
 	t.Run(cases.caseName, func(t *testing.T) {
 		env, err := ReadDir(cases.dir)
 		require.NoError(t, err)
-		require.EqualValues(evn, cases.expEnvironment)
+		require.EqualValues(t, env, cases.expEnvironment)
 	})
 	cases = createNegativeCases()
 	t.Run(cases.caseName, func(t *testing.T) {
-		env, err = ReadDir(cases.dir)
+		_, err := ReadDir(cases.dir)
 		require.Truef(t, errors.Is(err, cases.expectedError), "actual error %q", err)
 	})
 }
@@ -65,7 +65,7 @@ func createPositiveCases() testCase {
 	return positiveTestCase
 }
 
-func createNegativeTestCase() testCase {
+func createNegativeCases() testCase {
 	negativeTestCase := testCase{
 		caseName:       "NegativeTestCase",
 		dir:            "./testdata/env/BAR",

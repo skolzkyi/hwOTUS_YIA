@@ -18,8 +18,6 @@ type EnvValue struct {
 
 var ErrNotDirectory = errors.New("it's file, not directory")
 
-// cd  C:\REPO\Go\!OTUS\hwOTUS_YIA\hw08_envdir_tool
-
 // ReadDir reads a specified directory and returns map of env variables.
 // Variables represented as files where filename is name of variable, file first line is a value.
 func ReadDir(dir string) (Environment, error) {
@@ -39,18 +37,8 @@ func ReadDir(dir string) (Environment, error) {
 			}
 			if !info.IsDir() {
 				var envExempl EnvValue
-				// высокая комплексаная сложность из-за проверки ошибок, не могу их игнорировать
-				//nolint:nestif
 				if info.Size() > 0 {
-					file, innererr := os.Open(path)
-					if innererr != nil {
-						return innererr
-					}
-					rez, innererr := readContent(file)
-					if innererr != nil {
-						return innererr
-					}
-					innererr = file.Close()
+					rez, innererr := readFirstStringFromFile(path)
 					if innererr != nil {
 						return innererr
 					}
@@ -69,9 +57,20 @@ func ReadDir(dir string) (Environment, error) {
 	return envir, nil
 }
 
-//func readFirstStringFromFile(path string) string {
+func readFirstStringFromFile(path string) (string, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
 
-//}
+	rez, err := readContent(file)
+	if err != nil {
+		return "", err
+	}
+
+	return rez, nil
+}
 
 func readContent(file *os.File) (string, error) {
 	rez := make([]byte, 0)

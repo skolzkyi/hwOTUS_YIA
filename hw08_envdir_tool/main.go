@@ -2,12 +2,23 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 func main() {
-	rez, err := ReadDir("./testdata/env")
+	args := os.Args
+
+	envDirPath := args[1]
+	commandAndArgs := args[2:]
+
+	env, err := ReadDir(envDirPath)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err.Error())
+		os.Exit(13)
 	}
-	fmt.Println("general_out: ", rez)
+
+	exitCode := RunCmd(commandAndArgs, env)
+	if exitCode != 0 {
+		os.Exit(exitCode)
+	}
 }

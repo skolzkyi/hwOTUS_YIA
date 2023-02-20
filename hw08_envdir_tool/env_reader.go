@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -17,9 +16,7 @@ type EnvValue struct {
 	NeedRemove bool
 }
 
-var (
-	ErrNotDirectory = errors.New("it's file, not directory!")
-)
+var ErrNotDirectory = errors.New("it's file, not directory")
 
 // cd  C:\REPO\Go\!OTUS\hwOTUS_YIA\hw08_envdir_tool
 
@@ -42,7 +39,8 @@ func ReadDir(dir string) (Environment, error) {
 			}
 			if !info.IsDir() {
 				var envExempl EnvValue
-				fmt.Println("file: ", info.Name())
+				// высокая комплексаная сложность из-за проверки ошибок, не могу их игнорировать
+				//nolint:nestif
 				if info.Size() > 0 {
 					file, innererr := os.Open(path)
 					if innererr != nil {
@@ -52,16 +50,14 @@ func ReadDir(dir string) (Environment, error) {
 					if innererr != nil {
 						return innererr
 					}
-					fmt.Println("rez: ", rez)
-					envExempl.Value = clearFileContent(rez)
 					innererr = file.Close()
 					if innererr != nil {
 						return innererr
 					}
+					envExempl.Value = clearFileContent(rez)
 				} else {
 					envExempl.NeedRemove = true
 				}
-				fmt.Println("exempl: ", envExempl)
 				clearedName := clearFileName(info.Name())
 				envir[clearedName] = envExempl
 			}
@@ -70,9 +66,12 @@ func ReadDir(dir string) (Environment, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("func_out: ", envir)
 	return envir, nil
 }
+
+//func readFirstStringFromFile(path string) string {
+
+//}
 
 func readContent(file *os.File) (string, error) {
 	rez := make([]byte, 0)
@@ -85,7 +84,6 @@ func readContent(file *os.File) (string, error) {
 			}
 			return "", innererr
 		}
-		//fmt.Println("buf: ", buf)
 		if buf[0] == 10 { // \n
 			break
 		}
@@ -105,6 +103,5 @@ func clearFileName(input string) string {
 }
 
 func clearFileContent(input string) string {
-	//output = strings.ReplaceAll(input, 0x00, "\n")
-	return strings.TrimRight(input, " ")
+	return strings.TrimRight(input, " \t")
 }

@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	//"os"
 	"testing"
 
 	"github.com/stretchr/testify/require"

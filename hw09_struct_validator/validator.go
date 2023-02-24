@@ -89,7 +89,7 @@ func Validate(v interface{}) error {
 	return valErrors
 }
 
-func validateData(v any, validators map[string]Validator) (ValidationErrors, error) {
+func validateData(v interface{}, validators map[string]Validator) (ValidationErrors, error) {
 	roadMapOfInputData := make([]Field, 0)
 	errors := make(ValidationErrors, 0)
 	var i int

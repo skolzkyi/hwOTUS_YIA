@@ -1,7 +1,6 @@
 package hw09structvalidator
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"testing"

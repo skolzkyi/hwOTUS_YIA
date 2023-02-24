@@ -21,7 +21,7 @@ type (
 		Role   UserRole `validate:"in:admin,stuff"`
 		Phones []string `validate:"len:11"`
 		//nolint:unused
-		meta json.RawMessage
+		// meta json.RawMessage //т.к. на github этот линтер почему-то не отключается через nolint:unused
 	}
 
 	App struct {

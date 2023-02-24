@@ -19,8 +19,7 @@ type (
 		Email  string   `validate:"regexp:^\\w+@\\w+\\.\\w+$"`
 		Role   UserRole `validate:"in:admin,stuff"`
 		Phones []string `validate:"len:11"`
-		//nolint:unused
-		// meta json.RawMessage //т.к. на github этот линтер почему-то не отключается через nolint:unused
+		// meta json.RawMessage //т.к. на github этот линтер почему-то не отключается через nolint
 	}
 
 	App struct {

@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 type UserRole string
@@ -18,8 +19,9 @@ type (
 		Age    int      `validate:"min:18|max:50"`
 		Email  string   `validate:"regexp:^\\w+@\\w+\\.\\w+$"`
 		Role   UserRole `validate:"in:admin,stuff"`
-		Phones []string //`validate:"len:11"`
-		meta   json.RawMessage
+		Phones []string `validate:"len:11"`
+		//nolint:unused
+		meta json.RawMessage
 	}
 
 	App struct {
@@ -45,69 +47,80 @@ func TestValidate(t *testing.T) {
 	}{
 		{
 			in: User{
-				ID:    "123456789012345678901234567890123456",
-				Name:  "Antuan",
-				Age:   36,
-				Email: "antuan@mail.ru",
-				Role:  "stuff",
-				//	Phones: "89123456789",
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    36,
+				Email:  "antuan@mail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
 			},
 			expectedErr: nil,
 		},
 		{
 			in: User{
-				ID:    "1234567890123456789012345678901234567",
-				Name:  "Antuan",
-				Age:   36,
-				Email: "antuan@mail.ru",
-				Role:  "stuff",
-				//Phones: "89123456789",
+				ID:     "1234567890123456789012345678901234567",
+				Name:   "Antuan",
+				Age:    36,
+				Email:  "antuan@mail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
 			},
 			expectedErr: ErrStrLen,
 		},
 		{
 			in: User{
-				ID:    "123456789012345678901234567890123456",
-				Name:  "Antuan",
-				Age:   36,
-				Email: "antuanmail.ru",
-				Role:  "stuff",
-				//	Phones: "89123456789",
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    36,
+				Email:  "antuanmail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
 			},
 			expectedErr: ErrStrRegexp,
 		},
 		{
 			in: User{
-				ID:    "123456789012345678901234567890123456",
-				Name:  "Antuan",
-				Age:   36,
-				Email: "antuan@mail.ru",
-				Role:  "noname",
-				//	Phones: "89123456789",
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    36,
+				Email:  "antuan@mail.ru",
+				Role:   "noname",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
 			},
 			expectedErr: ErrStrMStrings,
 		},
 		{
 			in: User{
-				ID:    "123456789012345678901234567890123456",
-				Name:  "Antuan",
-				Age:   16,
-				Email: "antuan@mail.ru",
-				Role:  "stuff",
-				//	Phones: "89123456789",
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    16,
+				Email:  "antuan@mail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
 			},
 			expectedErr: ErrNumLessMin,
 		},
 		{
 			in: User{
-				ID:    "123456789012345678901234567890123456",
-				Name:  "Antuan",
-				Age:   56,
-				Email: "antuan@mail.ru",
-				Role:  "stuff",
-				//Phones: "89123456789",
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    56,
+				Email:  "antuan@mail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
 			},
 			expectedErr: ErrNumGreaterMax,
+		},
+		{
+			in: User{
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    36,
+				Email:  "antuan@mail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "8912345678200", "89123456783"},
+			},
+			expectedErr: ErrStrLen,
 		},
 		{
 			in: App{
@@ -139,15 +152,23 @@ func TestValidate(t *testing.T) {
 
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("case %d", i), func(t *testing.T) {
-			//tt := tt
-			//t.Parallel()
-			err := Validate(tt.in)
+			tt := tt
+			t.Parallel()
+			// иначе не сохранить сишнатуру Validate
+			//nolint:errorlint
+			valErrors := Validate(tt.in).(ValidationErrors)
 			if tt.expectedErr == nil {
-				require.NoError(t, err)
+				require.Len(t, valErrors, 0)
 			} else {
-				require.Truef(t, errors.Is(err, tt.expectedErr), "actual error %q", err)
+				var flag bool
+				for _, curValErr := range valErrors {
+					if errors.Is(curValErr.Err, tt.expectedErr) {
+						flag = true
+						break
+					}
+				}
+				require.Truef(t, flag, "actual errors %q", valErrors)
 			}
-			//_ = tt
 		})
 	}
 }

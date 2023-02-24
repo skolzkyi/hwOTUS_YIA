@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
-	"regexp"
 	"strconv"
 	"strings"
 )
@@ -17,12 +16,21 @@ type ValidationError struct {
 type ValidationErrors []ValidationError
 
 func (v ValidationErrors) Error() string {
-	panic("implement me")
+	builder := strings.Builder{}
+	for _, curValErr := range v {
+		builder.WriteString("[Field: ")
+		builder.WriteString(curValErr.Field)
+		builder.WriteString(" Error: ")
+		builder.WriteString(curValErr.Err.Error())
+		builder.WriteString("]; ")
+	}
+	return builder.String()
 }
 
 type Field struct {
-	Name   string
-	RawTag string
+	Name    string
+	RawTag  string
+	IsSlice bool
 }
 
 type Tag struct {
@@ -54,6 +62,8 @@ func Validate(v interface{}) error {
 	var valErrors ValidationErrors
 	var err error
 	validators := initValidators()
+	// т.к. обрабатываются только string и int  и их слайсы
+	//nolint:exhaustive
 	switch reflect.TypeOf(v).Kind() {
 	case reflect.Slice:
 		if reflect.TypeOf(v).Elem().Kind() == reflect.Struct {
@@ -76,54 +86,58 @@ func Validate(v interface{}) error {
 		return ErrBadInputData
 	}
 	fmt.Println()
-	if len(valErrors) > 0 {
-		return packErrors(valErrors)
-	} else {
-		return nil
-	}
+	return valErrors
 }
 
 func validateData(v any, validators map[string]Validator) (ValidationErrors, error) {
 	roadMapOfInputData := make([]Field, 0)
 	errors := make(ValidationErrors, 0)
 	var i int
-	for i < int(reflect.TypeOf(v).NumField()) {
+	for i < reflect.TypeOf(v).NumField() {
+		var isSliceFlag bool
+		if reflect.TypeOf(v).Field(i).Type.Kind() == reflect.Slice {
+			isSliceFlag = true
+		}
 		newField := Field{
-			Name:   reflect.TypeOf(v).Field(i).Name,
-			RawTag: reflect.TypeOf(v).Field(i).Tag.Get("validate"),
+			Name:    reflect.TypeOf(v).Field(i).Name,
+			RawTag:  reflect.TypeOf(v).Field(i).Tag.Get("validate"),
+			IsSlice: isSliceFlag,
 		}
 		if newField.RawTag != "" {
 			roadMapOfInputData = append(roadMapOfInputData, newField)
 		}
 		i++
 	}
-	fmt.Println()
-	fmt.Println("roadMapOfInputData: ", roadMapOfInputData)
 	for _, curField := range roadMapOfInputData {
 		curTags, err := parseTag(curField.RawTag)
 		if err != nil {
 			return nil, err
 		}
-		fmt.Println("parseTag: ", curTags)
 		fieldContent := reflect.ValueOf(v).FieldByName(curField.Name)
-		for _, curTag := range curTags {
-			valErrors, err := validateDataByTag(fieldContent, curField.Name, curTag, validators)
+		if curField.IsSlice {
+			for i := 0; i < fieldContent.Len(); i++ {
+				valErrors, err := validateDataByTag(fieldContent.Index((i)), curField.Name, curTags, validators)
+				if err != nil {
+					return nil, err
+				}
+				valErrors = wrapIndex(valErrors, i)
+				errors = append(errors, valErrors...)
+			}
+		} else {
+			valErrors, err := validateDataByTag(fieldContent, curField.Name, curTags, validators)
 			if err != nil {
 				return nil, err
 			}
-			if len(valErrors) > 0 {
-				errors = append(errors, valErrors...)
-			}
+			errors = append(errors, valErrors...)
 		}
-
 	}
 	return errors, nil
 }
 
-func parseTag(RawTag string) ([]Tag, error) {
+func parseTag(rawTag string) ([]Tag, error) {
 	var parsedTag Tag
 	parsedTags := make([]Tag, 0)
-	tags := strings.Split(RawTag, "|")
+	tags := strings.Split(rawTag, "|")
 	for _, tag := range tags {
 		tagData := strings.Split(tag, ":")
 		if len(tagData) > 2 {
@@ -137,169 +151,61 @@ func parseTag(RawTag string) ([]Tag, error) {
 				tagParams = append(tagParams, strings.ReplaceAll(curtextParam, " ", ""))
 			}
 			parsedTag.Params = tagParams
-			// parsedTag.Params = strings.Split(tagData[1], ",")
 		}
 		parsedTags = append(parsedTags, parsedTag)
 	}
 	return parsedTags, nil
 }
 
-func validateDataByTag(value reflect.Value, fieldname string, tag Tag, validators map[string]Validator) (ValidationErrors, error) {
+func wrapIndex(input ValidationErrors, index int) ValidationErrors {
+	for i := range input {
+		input[i].Err = fmt.Errorf("Index of error data - "+strconv.Itoa((index))+":%w", input[i].Err)
+	}
+	return input
+}
+
+func validateDataByTag(v reflect.Value, fn string, tags []Tag, vd map[string]Validator) (ValidationErrors, error) {
+	errors := make(ValidationErrors, 0)
+	for _, curTag := range tags {
+		valErrors, err := validateElDataByTag(v, fn, curTag, vd)
+		if err != nil {
+			return nil, err
+		}
+		if len(valErrors) > 0 {
+			errors = append(errors, valErrors...)
+		}
+	}
+	return errors, nil
+}
+
+func validateElDataByTag(v reflect.Value, fn string, tag Tag, vd map[string]Validator) (ValidationErrors, error) {
 	valErrors := make(ValidationErrors, 0)
-	validator, ok := validators[tag.Name+value.Type().Kind().String()]
-	fmt.Println("validator: ", validator, ok)
+	validator, ok := vd[tag.Name+v.Type().Kind().String()]
 	if !ok {
 		return nil, ErrBadTypeAssertion
 	}
-	if value.Type().Kind() != validator.SupportedType {
+	if v.Type().Kind() != validator.SupportedType {
 		return nil, ErrUnsupportedType
 	}
 	var tempValue string
-	switch value.Type().Kind() {
+	// т.к. обрабатываются только string и int  и их слайсы
+	//nolint:exhaustive
+	switch v.Type().Kind() {
 	case reflect.Int:
-		tempInt := value.Int()
+		tempInt := v.Int()
 		tempValue = strconv.Itoa(int(tempInt))
 	case reflect.String:
-		tempValue = value.String()
+		tempValue = v.String()
 	default:
 		return nil, ErrUnsupportedType
 	}
 	err := validator.Method(tempValue, tag.Params)
 	if err != nil {
 		valError := ValidationError{
-			Field: fieldname,
+			Field: fn,
 			Err:   err,
 		}
 		valErrors = append(valErrors, valError)
-		fmt.Println("validateDataByTag - ", fieldname, "; tag - ", tag.Name, "ValidationError - ", valError)
 	}
 	return valErrors, nil
-}
-
-func initValidators() map[string]Validator {
-	validators := make([]Validator, 6)
-	validators[0] = Validator{
-		Name:          "min",
-		SupportedType: reflect.Int,
-		Method: func(data string, params []string) error {
-			fmt.Println("min: ", data, " ", params)
-			min, err := strconv.Atoi(params[0])
-			if err != nil {
-				return err
-			}
-			dataInt, err := strconv.Atoi(data)
-			if err != nil {
-				return err
-			}
-			if dataInt < min {
-				return ErrNumLessMin
-			}
-			return nil
-		},
-	}
-	validators[1] = Validator{
-		Name:          "max",
-		SupportedType: reflect.Int,
-		Method: func(data string, params []string) error {
-			fmt.Println("max: ", data, " ", params)
-			max, err := strconv.Atoi(params[0])
-			if err != nil {
-				return err
-			}
-			dataInt, err := strconv.Atoi(data)
-			if err != nil {
-				return err
-			}
-			if dataInt > max {
-				return ErrNumGreaterMax
-			}
-			return nil
-		},
-	}
-	validators[2] = Validator{
-		Name:          "in",
-		SupportedType: reflect.Int,
-		Method: func(data string, params []string) error {
-			fmt.Println("in: ", data, " ", params)
-			dataInt, err := strconv.Atoi(data)
-			fmt.Println("in: dataInt:", dataInt)
-			if err != nil {
-				fmt.Println("bad assertion 1")
-				return err
-			}
-			for _, curParam := range params {
-				curParamInt, err := strconv.Atoi(curParam)
-				if err != nil {
-					fmt.Println("bad assertion 2 ", curParam)
-					return err
-				}
-				if dataInt == curParamInt {
-					return nil
-				}
-			}
-			return ErrNumMNums
-		},
-	}
-	validators[3] = Validator{
-		Name:          "len",
-		SupportedType: reflect.String,
-		Method: func(data string, params []string) error {
-			fmt.Println("params[0]:", params[0])
-			length, err := strconv.Atoi(params[0])
-			if err != nil {
-				fmt.Println("bad assertion 3")
-				return err
-			}
-			if len(data) == length {
-				return nil
-			}
-			return ErrStrLen
-		},
-	}
-	validators[4] = Validator{
-		Name:          "regexp",
-		SupportedType: reflect.String,
-		Method: func(data string, params []string) error {
-			expression := params[0]
-			regexp, err := regexp.Compile(expression)
-			if err != nil {
-				return err
-			}
-			if regexp.MatchString(data) {
-				return nil
-			} else {
-				return ErrStrRegexp
-			}
-		},
-	}
-	validators[5] = Validator{
-		Name:          "in",
-		SupportedType: reflect.String,
-		Method: func(data string, params []string) error {
-			for _, curParam := range params {
-				if data == curParam {
-					return nil
-				}
-			}
-			return ErrStrMStrings
-		},
-	}
-	validatorsMap := make(map[string]Validator)
-	for _, curValidator := range validators {
-		validatorsMap[curValidator.Name+curValidator.SupportedType.String()] = curValidator
-	}
-	fmt.Println("initValidators - ", validatorsMap)
-	return validatorsMap
-}
-
-func packErrors(input ValidationErrors) error {
-	var errRez error
-	tempErr := input[0].Err
-	for i, curValErr := range input {
-		errRez = fmt.Errorf("Field - "+curValErr.Field+":%w", tempErr)
-		if i < len(input)-1 {
-			tempErr = input[i+1].Err
-		}
-	}
-	return errRez
 }

@@ -1,9 +1,11 @@
 package hw09structvalidator
 
 import (
-	"encoding/json"
+	"errors"
 	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 type UserRole string
@@ -17,7 +19,7 @@ type (
 		Email  string   `validate:"regexp:^\\w+@\\w+\\.\\w+$"`
 		Role   UserRole `validate:"in:admin,stuff"`
 		Phones []string `validate:"len:11"`
-		meta   json.RawMessage
+		// meta json.RawMessage //т.к. на github этот линтер почему-то не отключается через nolint
 	}
 
 	App struct {
@@ -42,19 +44,129 @@ func TestValidate(t *testing.T) {
 		expectedErr error
 	}{
 		{
-			// Place your code here.
+			in: User{
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    36,
+				Email:  "antuan@mail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
+			},
+			expectedErr: nil,
 		},
-		// ...
-		// Place your code here.
+		{
+			in: User{
+				ID:     "1234567890123456789012345678901234567",
+				Name:   "Antuan",
+				Age:    36,
+				Email:  "antuan@mail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
+			},
+			expectedErr: ErrStrLen,
+		},
+		{
+			in: User{
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    36,
+				Email:  "antuanmail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
+			},
+			expectedErr: ErrStrRegexp,
+		},
+		{
+			in: User{
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    36,
+				Email:  "antuan@mail.ru",
+				Role:   "noname",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
+			},
+			expectedErr: ErrStrMStrings,
+		},
+		{
+			in: User{
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    16,
+				Email:  "antuan@mail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
+			},
+			expectedErr: ErrNumLessMin,
+		},
+		{
+			in: User{
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    56,
+				Email:  "antuan@mail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "89123456782", "89123456783"},
+			},
+			expectedErr: ErrNumGreaterMax,
+		},
+		{
+			in: User{
+				ID:     "123456789012345678901234567890123456",
+				Name:   "Antuan",
+				Age:    36,
+				Email:  "antuan@mail.ru",
+				Role:   "stuff",
+				Phones: []string{"89123456781", "8912345678200", "89123456783"},
+			},
+			expectedErr: ErrStrLen,
+		},
+		{
+			in: App{
+				Version: "1.2.2",
+			},
+			expectedErr: nil,
+		},
+		{
+			in: App{
+				Version: "1.2.2.16",
+			},
+			expectedErr: ErrStrLen,
+		},
+		{
+			in: Response{
+				Code: 114,
+				Body: "{}",
+			},
+			expectedErr: ErrNumMNums,
+		},
+		{
+			in: Response{
+				Code: 404,
+				Body: "{}",
+			},
+			expectedErr: nil,
+		},
 	}
 
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("case %d", i), func(t *testing.T) {
 			tt := tt
 			t.Parallel()
-
-			// Place your code here.
-			_ = tt
+			// иначе не сохранить сишнатуру Validate
+			//nolint:errorlint
+			valErrors := Validate(tt.in).(ValidationErrors)
+			if tt.expectedErr == nil {
+				require.Len(t, valErrors, 0)
+			} else {
+				var flag bool
+				for _, curValErr := range valErrors {
+					if errors.Is(curValErr.Err, tt.expectedErr) {
+						flag = true
+						break
+					}
+				}
+				require.Truef(t, flag, "actual errors %q", valErrors)
+			}
 		})
 	}
 }

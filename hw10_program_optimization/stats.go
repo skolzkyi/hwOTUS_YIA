@@ -1,12 +1,14 @@
 package hw10programoptimization
 
 import (
-	"encoding/json"
+	//"encoding/json"
+	"bufio"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"regexp"
 	"strings"
+
+	"github.com/tidwall/gjson"
 )
 
 type User struct {
@@ -24,45 +26,80 @@ type User struct {
 type DomainStat map[string]int
 
 func GetDomainStat(r io.Reader, domain string) (DomainStat, error) {
-	u, err := getUsers(r)
+	emails, err := getUsers(r)
 	if err != nil {
 		return nil, fmt.Errorf("get users error: %w", err)
 	}
-	return countDomains(u, domain)
+	return countDomains(emails, domain)
 }
 
-type users [100_000]User
+// type users []User
+type emails map[int64]string
 
-func getUsers(r io.Reader) (result users, err error) {
-	content, err := ioutil.ReadAll(r)
-	if err != nil {
-		return
-	}
+//type emails []string
 
-	lines := strings.Split(string(content), "\n")
-	for i, line := range lines {
-		var user User
-		if err = json.Unmarshal([]byte(line), &user); err != nil {
-			return
+//type void struct{}
+
+func getUsers(r io.Reader) (*emails, error) {
+	/*
+		content, err := ioutil.ReadAll(r)
+		if err != nil {
+			return nil, err
 		}
-		result[i] = user
+	*/
+	result := make(emails)
+	bufReader := bufio.NewReader(r)
+	var i int64
+	var email string
+	var flag bool
+	for {
+		line, err := bufReader.ReadString('\n')
+		if err != nil {
+			if err == io.EOF {
+				//break
+				flag = true
+			} else {
+				return nil, err
+			}
+		}
+		email = gjson.Get(line, "Email").String()
+		result[i] = email
+		i++
+		if flag {
+			break
+		}
 	}
-	return
+	//fmt.Println("result: ", result)
+	//lines := strings.Split(string(content), "\n")
+	//length := len(lines)
+	//result := make(emails, length, length)
+	/*
+		var email string
+		for i, line := range lines {
+			email = gjson.Get(line, "Email").String()
+			result[i] = email
+		}
+	*/
+	return &result, nil
 }
 
-func countDomains(u users, domain string) (DomainStat, error) {
+func countDomains(emails *emails, domain string) (DomainStat, error) {
 	result := make(DomainStat)
-
-	for _, user := range u {
-		matched, err := regexp.Match("\\."+domain, []byte(user.Email))
+	var matched bool
+	var err error
+	var num int
+	var domainstr string
+	for _, email := range *emails {
+		matched, err = regexp.Match("\\."+domain, []byte(email))
 		if err != nil {
 			return nil, err
 		}
 
 		if matched {
-			num := result[strings.ToLower(strings.SplitN(user.Email, "@", 2)[1])]
+			domainstr = strings.ToLower(strings.SplitN(email, "@", 2)[1])
+			num = result[domainstr]
 			num++
-			result[strings.ToLower(strings.SplitN(user.Email, "@", 2)[1])] = num
+			result[domainstr] = num
 		}
 	}
 	return result, nil

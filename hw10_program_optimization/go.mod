@@ -1,6 +1,6 @@
-module github.com/fixme_my_friend/hw10_program_optimization
+module github.com/skolzkyi/hwOTUS_YIA/hw10_program_optimization
 
-go 1.16
+go 1.19
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect

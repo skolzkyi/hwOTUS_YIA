@@ -19,6 +19,8 @@ type User struct {
 	Address  string
 }
 
+// cd C:\REPO\Go\!OTUS\hwOTUS_YIA\hw10_program_optimization
+
 type DomainStat map[string]int
 
 func GetDomainStat(r io.Reader, domain string) (DomainStat, error) {

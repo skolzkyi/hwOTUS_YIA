@@ -2,6 +2,7 @@ package hw10programoptimization
 
 import (
 	"bufio"
+	"errors"
 	"io"
 	"strings"
 
@@ -24,7 +25,7 @@ func GetDomainStat(r io.Reader, domain string) (DomainStat, error) {
 	for {
 		line, err = bufReader.ReadString('\n')
 		if err != nil {
-			if err == io.EOF {
+			if errors.Is(err, io.EOF) {
 				flag = true
 			} else {
 				return nil, err

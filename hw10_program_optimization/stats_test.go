@@ -61,7 +61,6 @@ func TestGetDomainStat(t *testing.T) {
 		fmt.Println()
 		fmt.Printf("allocations per operations: %d allocs/op", result.AllocsPerOp())
 		fmt.Println()
-
 	})
 }
 

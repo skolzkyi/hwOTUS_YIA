@@ -11,7 +11,6 @@ import (
 type DomainStat map[string]int
 
 func GetDomainStat(r io.Reader, domain string) (DomainStat, error) {
-
 	result := make(DomainStat)
 	bufReader := bufio.NewReader(r)
 	var email string

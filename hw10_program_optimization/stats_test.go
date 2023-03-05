@@ -5,7 +5,7 @@ package hw10programoptimization
 
 import (
 	"bytes"
-	//"fmt"
+	"fmt"
 	"testing"
 	"time"
 
@@ -52,15 +52,16 @@ func TestGetDomainStat(t *testing.T) {
 				res, _ := GetDomainStat(bytes.NewBufferString(data), "com")
 				b.Helper()
 				b.StopTimer()
-				//fmt.Println(result)
 				require.NotEqual(t, res, DomainStat{})
 				b.StartTimer()
 			}
 		}
 		result := testing.Benchmark(bench)
-		mem := result.MemBytes
-		t.Logf("time used: %s / %s", result.T, timeLimit)
-		t.Logf("memory used: %dMb / %dMb", mem/mb, memoryLimit/mb)
+		fmt.Printf("allocated bytes per operation: %d B/op", result.AllocedBytesPerOp())
+		fmt.Println()
+		fmt.Printf("allocations per operations: %d allocs/op", result.AllocsPerOp())
+		fmt.Println()
+
 	})
 }
 

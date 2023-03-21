@@ -1,52 +1,83 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"flag"
+	"io"
 	"os"
 	"os/signal"
-	"sync"
 	"syscall"
 	"time"
 )
 
 var (
-	ErrTimeOut        = errors.New("timeout error")
-	ErrNotExistServer = errors.New("server not exist")
-	addr, port        string
-	timeout           time.Duration
+	ErrTimeOut = errors.New("timeout error")
+	timeout    time.Duration
 )
 
 func init() {
-	flag.StringVar(&addr, "addr", "127.0.0.1", "net adress for connection")
-	flag.StringVar(&port, "port", "", "port for connection")
-	flag.DurationVar(&timeout, "limit", 10, "timeout for connection")
+	flag.DurationVar(&timeout, "timeout", time.Duration(10)*time.Second, "timeout for connection")
 }
 
 func main() {
 	flag.Parse()
+	addr := flag.Arg(0)
+	port := flag.Arg(1)
+
+	if addr == "" {
+		os.Stderr.WriteString("address is void\n")
+		os.Exit(1)
+	}
+
+	if port == "" {
+		os.Stderr.WriteString("port is void\n")
+		os.Exit(1)
+	}
 
 	fulladress := addr + ":" + port
-	tClient := NewTelnetClient(fulladress, timeout, os.Stdin, os.Stdout)
-	defer tClient.Close()
-
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-	var wg sync.WaitGroup
-	wg.Add(1)
-
-	go func() {
-		defer wg.Done()
-
-		<-quit
-
-		tClient.Close()
-		os.Stderr.WriteString("client stopped on: " + addr)
-	}()
-	tClient.Connect()
-	tClient.Receive()
-	tClient.Send()
-	wg.Wait()
+	err := runTelnetClient(fulladress, timeout, os.Stdin, os.Stdout)
+	if err != nil {
+		os.Stderr.WriteString(err.Error() + "\n")
+		os.Exit(1)
+	}
 }
 
-// P.S. Do not rush to throw context down, think think if it is useful with blocking operation?
+func runTelnetClient(fulladress string, timeout time.Duration, in io.ReadCloser, out io.Writer) error {
+	tClient := NewTelnetClient(fulladress, timeout, in, out)
+
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+	defer cancel()
+
+	err := tClient.Connect()
+	if err != nil {
+		return err
+	}
+
+	go func() {
+		defer cancel()
+		err := tClient.Send()
+		if err != nil {
+			os.Stderr.WriteString(err.Error() + "\n")
+			return
+		}
+	}()
+
+	go func() {
+		defer cancel()
+		err := tClient.Receive()
+		if err != nil {
+			os.Stderr.WriteString(err.Error() + "\n")
+			return
+		}
+	}()
+
+	<-ctx.Done()
+
+	err = tClient.Close()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -2,7 +2,8 @@ package main
 
 import (
 	"bytes"
-	"io/ioutil"
+	"errors"
+	"io"
 	"net"
 	"sync"
 	"testing"
@@ -29,7 +30,7 @@ func TestTelnetClient(t *testing.T) {
 			timeout, err := time.ParseDuration("10s")
 			require.NoError(t, err)
 
-			client := NewTelnetClient(l.Addr().String(), timeout, ioutil.NopCloser(in), out)
+			client := NewTelnetClient(l.Addr().String(), timeout, io.NopCloser(in), out)
 			require.NoError(t, client.Connect())
 			defer func() { require.NoError(t, client.Close()) }()
 
@@ -61,5 +62,16 @@ func TestTelnetClient(t *testing.T) {
 		}()
 
 		wg.Wait()
+	})
+	t.Run("case w/timeout ", func(t *testing.T) {
+		in := &bytes.Buffer{}
+		out := &bytes.Buffer{}
+
+		timeout, err := time.ParseDuration("3s")
+		require.NoError(t, err)
+
+		client := NewTelnetClient("google.com:500", timeout, io.NopCloser(in), out)
+		err = client.Connect()
+		require.Truef(t, errors.Is(err, ErrTimeOut), "actual error %q", err)
 	})
 }

@@ -3,21 +3,24 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
-	"github.com/fixme_my_friend/hw12_13_14_15_calendar/internal/app"
-	"github.com/fixme_my_friend/hw12_13_14_15_calendar/internal/logger"
-	internalhttp "github.com/fixme_my_friend/hw12_13_14_15_calendar/internal/server/http"
-	memorystorage "github.com/fixme_my_friend/hw12_13_14_15_calendar/internal/storage/memory"
+	_ "github.com/go-sql-driver/mysql"
+
+	"github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app"
+	"github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger"
+	internalhttp "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http"
+	memorystorage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/memory"
 )
 
-var configFile string
+var configFilePath string
 
 func init() {
-	flag.StringVar(&configFile, "config", "/etc/calendar/config.toml", "Path to configuration file")
+	flag.StringVar(&configFilePath, "config", "./configs", "Path to config.yaml")
 }
 
 func main() {
@@ -29,6 +32,10 @@ func main() {
 	}
 
 	config := NewConfig()
+	err := config.Init(configFilePath)
+	if err != nil {
+		fmt.Println(err)
+	}
 	logg := logger.New(config.Logger.Level)
 
 	storage := memorystorage.New()
@@ -59,3 +66,5 @@ func main() {
 		os.Exit(1) //nolint:gocritic
 	}
 }
+
+// cd C:\REPO\Go\!OTUS\hwOTUS_YIA\hw12_13_14_15_calendar

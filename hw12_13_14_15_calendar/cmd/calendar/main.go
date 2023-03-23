@@ -38,10 +38,22 @@ func main() {
 	}
 	logg := logger.New(config.Logger.Level)
 
-	storage := memorystorage.New()
+	var storage app.Storage
+	ctxStor, cancelStore := context.WithTimeout(context.Background(), 5*time.Second)
+	if config.workWithDBStorage {
+		//ToDo
+	} else {
+		storage := memorystorage.New()
+		err = storage.Init(ctxStor)
+		if err != nil {
+			cancelStore()
+			fmt.Println(err)
+		}
+	}
+
 	calendar := app.New(logg, storage)
 
-	server := internalhttp.NewServer(logg, calendar)
+	server := internalhttp.NewServer(logg, calendar, config)
 
 	ctx, cancel := signal.NotifyContext(context.Background(),
 		syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)

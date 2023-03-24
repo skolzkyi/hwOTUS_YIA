@@ -6,22 +6,26 @@ import (
 
 type LoggerWrap struct {
 	config zap.Config
-	logger *zap.Logger
+	logger *zap.SugaredLogger
 }
 
-func New(level string) *LoggerWrap {
+func New(level string) (*LoggerWrap, error) {
 	logWrap := LoggerWrap{}
+	zlevel, err := zap.ParseAtomicLevel(level)
+	if err != nil {
+		return nil, err
+	}
 	logWrap.config = zap.Config{
-		Level:            zap.NewAtomicLevelAt(level),
+		Level:            zlevel,
 		DisableCaller:    true,
 		Development:      true,
-		Encoding:         true,
+		Encoding:         "json",
 		OutputPaths:      []string{"stdout", "file_log.log"},
 		ErrorOutputPaths: []string{"stderr"},
 		EncoderConfig:    zap.NewDevelopmentEncoderConfig(),
 	}
 	logWrap.logger = zap.Must(logWrap.config.Build()).Sugar()
-	return &logWrap
+	return &logWrap, nil
 }
 
 func (l LoggerWrap) Info(msg string) {
@@ -30,7 +34,7 @@ func (l LoggerWrap) Info(msg string) {
 }
 
 func (l LoggerWrap) Warning(msg string) {
-	l.logger.Warning(msg)
+	l.logger.Warn(msg)
 }
 
 func (l LoggerWrap) Error(msg string) {

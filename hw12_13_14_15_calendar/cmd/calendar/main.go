@@ -36,8 +36,10 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	logg := logger.New(config.Logger.Level)
-
+	logg, err := logger.New(config.Logger.Level)
+	if err != nil {
+		fmt.Println(err)
+	}
 	var storage app.Storage
 	ctxStor, cancelStore := context.WithTimeout(context.Background(), 5*time.Second)
 	if config.workWithDBStorage {
@@ -69,8 +71,6 @@ func main() {
 			logg.Error("failed to stop http server: " + err.Error())
 		}
 	}()
-
-	logg.Info("calendar is running...")
 
 	if err := server.Start(ctx); err != nil {
 		logg.Error("failed to start http server: " + err.Error())

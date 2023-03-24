@@ -39,8 +39,8 @@ type Application interface {
 	InitStorage(ctx context.Context) error
 	CloseStorage() error
 	GetEvent(ctx context.Context, id string) (storage.Event, error)
-	CreateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Time) error
-	UpdateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Time) error
+	CreateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
+	UpdateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
 	DeleteEvent(ctx context.Context, id string) error
 	GetListEventsonDayByDay(ctx context.Context, day time.Time) error
 	GetListEventsOnWeekByDay(ctx context.Context, day time.Time) error
@@ -60,6 +60,13 @@ func NewServer(logger Logger, app Application, config Config) *Server {
 }
 
 func (s *Server) Start(ctx context.Context) error {
+	s.logg.Info("calendar is running...")
+	//============
+	std := time.Now()
+	stopd := std.Add(72 * time.Hour)
+	emtd := 4 * time.Hour
+	s.app.CreateEvent(context.Background(), "0", "test", "USER0", "", std, stopd, emtd)
+	//============
 	err := s.serv.ListenAndServe()
 	if err != nil {
 		if !errors.Is(err, http.ErrServerClosed) {

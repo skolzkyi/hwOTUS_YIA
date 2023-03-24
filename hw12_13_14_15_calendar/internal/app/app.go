@@ -52,7 +52,7 @@ func (a *App) GetEvent(ctx context.Context, id string) (storage.Event, error) {
 	return event, err
 }
 
-func (a *App) CreateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Time) error {
+func (a *App) CreateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error {
 	err := a.storage.CreateEvent(ctx, storage.Event{ID: id, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta})
 	if err != nil {
 		message := helpers.StringBuild("создано новое событие(id - ", id, " title - ", title, ")")
@@ -61,7 +61,7 @@ func (a *App) CreateEvent(ctx context.Context, id, title string, userID string, 
 	return err
 }
 
-func (a *App) UpdateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Time) error {
+func (a *App) UpdateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error {
 	err := a.storage.UpdateEvent(ctx, storage.Event{ID: id, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta})
 	if err != nil {
 		message := helpers.StringBuild("обновлено событие(id - ", id, " title - ", title, ")")
@@ -73,23 +73,23 @@ func (a *App) UpdateEvent(ctx context.Context, id, title string, userID string, 
 func (a *App) DeleteEvent(ctx context.Context, id string) error {
 	err := a.storage.DeleteEvent(ctx, id)
 	if err != nil {
-		message := helpers.StringBuild("удалено событие(id - ", id, " title - ", title, ")")
+		message := helpers.StringBuild("удалено событие(id - ", id, ")")
 		a.logger.Info(message)
 	}
 	return err
 }
 
-func (a *App) GetListEventsonDayByDay(ctx context.Context, day time.Time) error {
+func (a *App) GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error) {
 	eventsList, err := a.storage.GetListEventsonDayByDay(ctx, day)
 	return eventsList, err
 }
 
-func (a *App) GetListEventsOnWeekByDay(ctx context.Context, day time.Time) error {
+func (a *App) GetListEventsOnWeekByDay(ctx context.Context, day time.Time) ([]storage.Event, error) {
 	eventsList, err := a.storage.GetListEventsOnWeekByDay(ctx, day)
 	return eventsList, err
 }
 
-func (a *App) GetListEventsOnMonthByDay(ctx context.Context, day time.Time) error {
+func (a *App) GetListEventsOnMonthByDay(ctx context.Context, day time.Time) ([]storage.Event, error) {
 	eventsList, err := a.storage.GetListEventsOnMonthByDay(ctx, day)
 	return eventsList, err
 }

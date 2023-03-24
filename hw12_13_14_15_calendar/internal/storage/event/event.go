@@ -15,5 +15,5 @@ type Event struct {
 	Description           string
 	DateStart             time.Time
 	DateStop              time.Time
-	EventMessageTimeDelta time.Time
+	EventMessageTimeDelta time.Duration
 }

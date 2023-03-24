@@ -42,9 +42,9 @@ type Application interface {
 	CreateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
 	UpdateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
 	DeleteEvent(ctx context.Context, id string) error
-	GetListEventsonDayByDay(ctx context.Context, day time.Time) error
-	GetListEventsOnWeekByDay(ctx context.Context, day time.Time) error
-	GetListEventsOnMonthByDay(ctx context.Context, day time.Time) error
+	GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
+	GetListEventsOnWeekByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
+	GetListEventsOnMonthByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
 }
 
 func NewServer(logger Logger, app Application, config Config) *Server {
@@ -92,4 +92,14 @@ func (s *Server) Stop(ctx context.Context) error {
 	return err
 }
 
-// TODO
+func (s *Server) helloWorld(w http.ResponseWriter, r *http.Request) {
+
+	if r.URL.Path != "/" {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("404 Not Found"))
+		return
+	}
+
+	w.Write([]byte("Hello world!"))
+
+}

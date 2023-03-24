@@ -75,7 +75,7 @@ func (config *Config) Init(path string) error {
 	config.dbMaxOpenConns = viper.GetInt("dbMaxOpenConns")
 	config.dbMaxIdleConns = viper.GetInt("dbMaxIdleConns")
 	config.workWithDBStorage = viper.GetBool("workWithDBStorage")
-	config.Logger.Level = viper.GetBool("logLevel")
+	config.Logger.Level = viper.GetString("logLevel")
 	config.OSFilePathSeparator = viper.GetString("OSFilePathSeparator")
 
 	return nil

@@ -55,7 +55,7 @@ func main() {
 
 	calendar := app.New(logg, storage)
 
-	server := internalhttp.NewServer(logg, calendar, config)
+	server := internalhttp.NewServer(logg, calendar, &config)
 
 	ctx, cancel := signal.NotifyContext(context.Background(),
 		syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)

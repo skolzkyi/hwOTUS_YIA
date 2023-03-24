@@ -8,5 +8,5 @@ dbPassword: "LightInDark"
 dbConnMaxLifetime: "3m"
 dbMaxOpenConns: 20
 dbMaxIdleConns: 20
-workWithDBStorage: "true"
+workWithDBStorage: "false"
 logLevel: "debug"

@@ -1,11 +1,13 @@
 package internalhttp
 
-import "net/http"
+import (
+	"net/http"
+)
 
 func (s *Server) routes() *http.ServeMux {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/", s.helloWorld)
+	mux.HandleFunc("/", loggingMiddleware(s.helloWorld, s.logg))
 
 	return mux
 }

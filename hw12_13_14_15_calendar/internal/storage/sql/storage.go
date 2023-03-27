@@ -1,8 +1,12 @@
 package sqlstorage
 
-import "context"
+import (
+	"context"
 
-type Storage struct { // TODO
+	_ "github.com/go-sql-driver/mysql"
+)
+
+type Storage struct {
 }
 
 func New() *Storage {

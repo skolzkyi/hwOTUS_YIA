@@ -19,7 +19,7 @@ func New(level string) (*LoggerWrap, error) {
 		Level:            zlevel,
 		DisableCaller:    true,
 		Development:      true,
-		Encoding:         "json",
+		Encoding:         "console",
 		OutputPaths:      []string{"stdout", "file_log.log"},
 		ErrorOutputPaths: []string{"stderr"},
 		EncoderConfig:    zap.NewDevelopmentEncoderConfig(),
@@ -39,4 +39,8 @@ func (l LoggerWrap) Warning(msg string) {
 
 func (l LoggerWrap) Error(msg string) {
 	l.logger.Error(msg)
+}
+
+func (l LoggerWrap) Fatal(msg string) {
+	l.logger.Fatal(msg)
 }

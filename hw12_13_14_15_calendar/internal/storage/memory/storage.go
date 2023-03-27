@@ -49,6 +49,7 @@ func (s *Storage) GetEvent(ctx context.Context, id string) (storage.Event, error
 }
 
 func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) error {
+
 	select {
 	case <-ctx.Done():
 		return storage.ErrStorageTimeout

@@ -17,6 +17,7 @@ type Logger interface {
 	Info(msg string)
 	Warning(msg string)
 	Error(msg string)
+	Fatal(msg string)
 }
 
 type Storage interface {
@@ -53,29 +54,36 @@ func (a *App) GetEvent(ctx context.Context, id string) (storage.Event, error) {
 }
 
 func (a *App) CreateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error {
-	err := a.storage.CreateEvent(ctx, storage.Event{ID: id, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta})
+	event := storage.Event{ID: id, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta}
+	err := a.storage.CreateEvent(ctx, event)
 	if err != nil {
-		message := helpers.StringBuild("создано новое событие(id - ", id, " title - ", title, ")")
-		a.logger.Info(message)
+		message := helpers.StringBuild("event create error(id - ", id, " title - ", title, ")")
+		a.logger.Error(message)
 	}
+	message := helpers.StringBuild("new event created(id - ", id, " title - ", title, ")")
+	a.logger.Info(message)
 	return err
 }
 
 func (a *App) UpdateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error {
 	err := a.storage.UpdateEvent(ctx, storage.Event{ID: id, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta})
 	if err != nil {
-		message := helpers.StringBuild("обновлено событие(id - ", id, " title - ", title, ")")
-		a.logger.Info(message)
+		message := helpers.StringBuild("event update error(id - ", id, " title - ", title, ")")
+		a.logger.Error(message)
 	}
+	message := helpers.StringBuild("event updated(id - ", id, " title - ", title, ")")
+	a.logger.Info(message)
 	return err
 }
 
 func (a *App) DeleteEvent(ctx context.Context, id string) error {
 	err := a.storage.DeleteEvent(ctx, id)
 	if err != nil {
-		message := helpers.StringBuild("удалено событие(id - ", id, ")")
-		a.logger.Info(message)
+		message := helpers.StringBuild("event delete error(id - ", id, ")")
+		a.logger.Error(message)
 	}
+	message := helpers.StringBuild("event deleted(id - ", id, ")")
+	a.logger.Info(message)
 	return err
 }
 

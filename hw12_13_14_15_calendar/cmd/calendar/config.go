@@ -15,6 +15,7 @@ type Config struct {
 	Logger                LoggerConf
 	ServerShutdownTimeout time.Duration
 	dbConnMaxLifetime     time.Duration
+	dbTimeOut             time.Duration
 	address               string
 	port                  string
 	OSFilePathSeparator   string
@@ -49,6 +50,7 @@ func (config *Config) Init(path string) error {
 	viper.SetDefault("dbConnMaxLifetime", time.Minute*3)
 	viper.SetDefault("dbMaxOpenConns", 20)
 	viper.SetDefault("dbMaxIdleConns", 20)
+	viper.SetDefault("dbTimeOut", 5*time.Second)
 	viper.SetDefault("workWithDBStorage", false)
 	viper.SetDefault("logLevel", "debug")
 
@@ -74,6 +76,7 @@ func (config *Config) Init(path string) error {
 	config.dbConnMaxLifetime = viper.GetDuration("dbConnMaxLifetime")
 	config.dbMaxOpenConns = viper.GetInt("dbMaxOpenConns")
 	config.dbMaxIdleConns = viper.GetInt("dbMaxIdleConns")
+	config.dbTimeOut = viper.GetDuration("dbTimeOut")
 	config.workWithDBStorage = viper.GetBool("workWithDBStorage")
 	config.Logger.Level = viper.GetString("logLevel")
 	config.OSFilePathSeparator = viper.GetString("OSFilePathSeparator")
@@ -142,4 +145,9 @@ func (config *Config) GetDbMaxIdleConns() int {
 
 	return config.dbMaxIdleConns
 
+}
+
+func (config *Config) GetdbTimeOut() time.Duration {
+
+	return config.dbTimeOut
 }

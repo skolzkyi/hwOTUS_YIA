@@ -36,19 +36,22 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+	fmt.Println("config: ", config)
 	logg, err := logger.New(config.Logger.Level)
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	var storage app.Storage
-	ctxStor, cancelStore := context.WithTimeout(context.Background(), 5*time.Second)
+	ctxStor, cancelStore := context.WithTimeout(context.Background(), config.GetdbTimeOut())
 	if config.workWithDBStorage {
 		//ToDo
 	} else {
-		storage := memorystorage.New()
+		storage = memorystorage.New()
 		err = storage.Init(ctxStor)
 		if err != nil {
 			cancelStore()
+			logg.Fatal("fatal error of inintialization memory storage: " + err.Error())
 			fmt.Println(err)
 		}
 	}
@@ -68,7 +71,7 @@ func main() {
 		defer cancel()
 
 		if err := server.Stop(ctx); err != nil {
-			logg.Error("failed to stop http server: " + err.Error())
+			logg.Fatal("failed to stop http server: " + err.Error())
 		}
 	}()
 

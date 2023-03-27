@@ -1,0 +1,39 @@
+{"L":"INFO","T":"2023-03-27T09:48:41.511+0400","M":"test msg"}
+{"L":"INFO","T":"2023-03-27T10:23:18.350+0400","M":"test msg"}
+{"L":"INFO","T":"2023-03-27T10:23:18.354+0400","M":"calendar is running..."}
+{"L":"INFO","T":"2023-03-27T10:29:09.483+0400","M":"test msg"}
+{"L":"INFO","T":"2023-03-27T10:29:09.487+0400","M":"calendar is running..."}
+{"L":"INFO","T":"2023-03-27T13:54:28.068+0400","M":"test msg"}
+{"L":"INFO","T":"2023-03-27T13:54:28.071+0400","M":"calendar is running..."}
+{"L":"INFO","T":"2023-03-27T13:57:14.807+0400","M":"test msg"}
+{"L":"INFO","T":"2023-03-27T13:57:14.810+0400","M":"calendar is running..."}
+{"L":"INFO","T":"2023-03-27T13:58:10.801+0400","M":"test msg"}
+{"L":"INFO","T":"2023-03-27T13:58:10.806+0400","M":"calendar is running..."}
+{"L":"INFO","T":"2023-03-27T14:00:45.196+0400","M":"test msg"}
+{"L":"INFO","T":"2023-03-27T14:00:45.200+0400","M":"calendar is running..."}
+{"L":"INFO","T":"2023-03-27T14:23:20.194+0400","M":"test msg"}
+{"L":"INFO","T":"2023-03-27T14:23:20.197+0400","M":"calendar is running..."}
+{"L":"ERROR","T":"2023-03-27T14:23:28.337+0400","M":"failed to start http server: http: Server closed","S":"github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error\n\tC:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41\nmain.main\n\tC:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:79\nruntime.main\n\tC:/Program Files/Go/src/runtime/proc.go:250"}
+{"L":"INFO","T":"2023-03-27T15:01:09.191+0400","M":"test msg"}
+{"L":"INFO","T":"2023-03-27T15:01:09.195+0400","M":"calendar is running..."}
+{"L":"ERROR","T":"2023-03-27T15:24:52.369+0400","M":"failed to start http server: http: Server closed","S":"github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error\n\tC:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41\nmain.main\n\tC:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:79\nruntime.main\n\tC:/Program Files/Go/src/runtime/proc.go:250"}
+{"L":"INFO","T":"2023-03-27T15:25:17.203+0400","M":"test msg"}
+{"L":"INFO","T":"2023-03-27T15:25:17.207+0400","M":"calendar is running..."}
+{"L":"ERROR","T":"2023-03-27T15:41:05.516+0400","M":"failed to start http server: http: Server closed","S":"github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error\n\tC:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41\nmain.main\n\tC:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:79\nruntime.main\n\tC:/Program Files/Go/src/runtime/proc.go:250"}
+2023-03-27T15:41:30.188+0400	INFO	calendar is running...
+2023-03-27T17:10:53.362+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:79
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-27T17:13:18.200+0400	INFO	calendar is running...
+2023-03-27T17:13:18.203+0400	INFO	new event created(id - 0 title - test0)
+2023-03-27T17:13:18.204+0400	INFO	new event created(id - 1 title - test1 - +5days)
+2023-03-27T17:13:18.204+0400	INFO	new event created(id - 2 title - test2 - +6 days end date after week)
+2023-03-27T17:13:18.205+0400	INFO	new event created(id - 3 title - test3 - +8 days - next week)
+2023-03-27T17:13:18.205+0400	INFO	new event created(id - 4 title - test4 - start in before week and end in cur week)
+2023-03-27T17:13:18.205+0400	INFO	new event created(id - 5 title - test5 - in this day)
+2023-03-27T17:13:25.654+0400	INFO	[client IP: 127.0.0.1:12586 Request DateTime: 2023-03-27 17:13:25.6548282 +0400 +04 m=+7.457517601 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 648.1µsRequest User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+2023-03-27T17:15:04.270+0400	INFO	[client IP: 127.0.0.1:12586 Request DateTime: 2023-03-27 17:15:04.2705403 +0400 +04 m=+106.073229701 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 740.1µsRequest User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36

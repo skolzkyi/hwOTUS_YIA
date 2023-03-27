@@ -65,7 +65,12 @@ func (s *Server) Start(ctx context.Context) error {
 	std := time.Now()
 	stopd := std.Add(72 * time.Hour)
 	emtd := 4 * time.Hour
-	s.app.CreateEvent(context.Background(), "0", "test", "USER0", "", std, stopd, emtd)
+	s.app.CreateEvent(context.Background(), "0", "test0 - base event", "USER0", "", std, stopd, emtd)
+	s.app.CreateEvent(context.Background(), "1", "test1 - +5days", "USER0", "", std.Add(120*time.Hour), stopd.Add(120*time.Hour), emtd)
+	s.app.CreateEvent(context.Background(), "2", "test2 - +6 days end date after week", "USER0", "", std.Add(144*time.Hour), stopd.Add(144*time.Hour), emtd)
+	s.app.CreateEvent(context.Background(), "3", "test3 - +8 days - next week", "USER0", "", std.Add(192*time.Hour), stopd.Add(192*time.Hour), emtd)
+	s.app.CreateEvent(context.Background(), "4", "test4 - start in before week and end in cur week", "USER0", "", std.Add(-48*time.Hour), stopd, emtd)
+	s.app.CreateEvent(context.Background(), "5", "test5 - in this day", "USER0", "", std.Add(3*time.Hour), stopd, emtd)
 	//============
 	err := s.serv.ListenAndServe()
 	if err != nil {
@@ -89,17 +94,6 @@ func (s *Server) Stop(ctx context.Context) error {
 		s.logg.Error("server closeStorage error: " + err.Error())
 		return err
 	}
+	s.logg.Info("server graceful shutdown")
 	return err
-}
-
-func (s *Server) helloWorld(w http.ResponseWriter, r *http.Request) {
-
-	if r.URL.Path != "/" {
-		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte("404 Not Found"))
-		return
-	}
-
-	w.Write([]byte("Hello world!"))
-
 }

@@ -7,8 +7,24 @@ import (
 	helpers "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/helpers"
 )
 
-var ErrNoRecord = errors.New("запись не найдена")
-var ErrStorageTimeout = errors.New("таймаут обращения к хранилищу")
+var ErrNoRecord = errors.New("record not searched")
+var ErrStorageTimeout = errors.New("storage timeout")
+
+type Config interface {
+	Init(path string) error
+	GetServerURL() string
+	GetAddress() string
+	GetPort() string
+	GetOSFilePathSeparator() string
+	GetServerShutdownTimeout() time.Duration
+	GetDbName() string
+	GetDbUser() string
+	GetDbPassword() string
+	GetdbConnMaxLifetime() time.Duration
+	GetDbMaxOpenConns() int
+	GetDbMaxIdleConns() int
+	GetdbTimeOut() time.Duration
+}
 
 type Event struct {
 	ID                    string

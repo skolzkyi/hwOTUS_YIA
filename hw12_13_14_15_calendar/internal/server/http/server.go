@@ -36,8 +36,8 @@ type Logger interface {
 }
 
 type Application interface {
-	InitStorage(ctx context.Context) error
-	CloseStorage() error
+	InitStorage(ctx context.Context, config storage.Config) error
+	CloseStorage(ctx context.Context) error
 	GetEvent(ctx context.Context, id string) (storage.Event, error)
 	CreateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
 	UpdateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
@@ -89,7 +89,7 @@ func (s *Server) Stop(ctx context.Context) error {
 		s.logg.Error("server shutdown error: " + err.Error())
 		return err
 	}
-	err = s.app.CloseStorage()
+	err = s.app.CloseStorage(ctx)
 	if err != nil {
 		s.logg.Error("server closeStorage error: " + err.Error())
 		return err

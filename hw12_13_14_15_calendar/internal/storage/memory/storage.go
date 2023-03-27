@@ -2,7 +2,6 @@ package memorystorage
 
 import (
 	"context"
-	"io"
 	"sort"
 	"sync"
 	"time"
@@ -14,21 +13,20 @@ import (
 type Storage struct {
 	mu sync.RWMutex
 	m  map[string]storage.Event
-	io.Closer
 }
 
 func New() *Storage {
 	return &Storage{}
 }
 
-func (s *Storage) Init(_ context.Context) error {
+func (s *Storage) Init(_ context.Context, _ storage.Config) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.m = make(map[string]storage.Event)
 	return nil
 }
 
-func (s *Storage) Close() error {
+func (s *Storage) Close(_ context.Context) error {
 	return nil
 }
 

@@ -15,6 +15,7 @@ import (
 	"github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger"
 	internalhttp "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http"
 	memorystorage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/memory"
+	SQLstorage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/sql"
 )
 
 var configFilePath string
@@ -45,14 +46,18 @@ func main() {
 	var storage app.Storage
 	ctxStor, cancelStore := context.WithTimeout(context.Background(), config.GetdbTimeOut())
 	if config.workWithDBStorage {
-		//ToDo
+		storage = SQLstorage.New()
+		err = storage.Init(ctxStor, &config)
+		if err != nil {
+			cancelStore()
+			logg.Fatal("fatal error of inintialization SQL storage: " + err.Error())
+		}
 	} else {
 		storage = memorystorage.New()
-		err = storage.Init(ctxStor)
+		err = storage.Init(ctxStor, &config)
 		if err != nil {
 			cancelStore()
 			logg.Fatal("fatal error of inintialization memory storage: " + err.Error())
-			fmt.Println(err)
 		}
 	}
 

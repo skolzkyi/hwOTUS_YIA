@@ -21,8 +21,8 @@ type Logger interface {
 }
 
 type Storage interface {
-	Init(ctx context.Context) error
-	Close() error
+	Init(ctx context.Context, config storage.Config) error
+	Close(ctx context.Context) error
 	GetEvent(ctx context.Context, id string) (storage.Event, error)
 	CreateEvent(ctx context.Context, value storage.Event) error
 	UpdateEvent(ctx context.Context, value storage.Event) error
@@ -40,12 +40,12 @@ func New(logger Logger, storage Storage) *App {
 	return &app
 }
 
-func (a *App) InitStorage(ctx context.Context) error {
-	return a.storage.Init(ctx)
+func (a *App) InitStorage(ctx context.Context, config storage.Config) error {
+	return a.storage.Init(ctx, config)
 }
 
-func (a *App) CloseStorage() error {
-	return a.storage.Close()
+func (a *App) CloseStorage(ctx context.Context) error {
+	return a.storage.Close(ctx)
 }
 
 func (a *App) GetEvent(ctx context.Context, id string) (storage.Event, error) {

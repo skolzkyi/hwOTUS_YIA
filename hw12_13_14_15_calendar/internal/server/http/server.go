@@ -38,10 +38,10 @@ type Logger interface {
 type Application interface {
 	InitStorage(ctx context.Context, config storage.Config) error
 	CloseStorage(ctx context.Context) error
-	GetEvent(ctx context.Context, id string) (storage.Event, error)
-	CreateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
-	UpdateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
-	DeleteEvent(ctx context.Context, id string) error
+	GetEvent(ctx context.Context, id int) (storage.Event, error)
+	CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
+	UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
+	DeleteEvent(ctx context.Context, id int) error
 	GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
 	GetListEventsOnWeekByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
 	GetListEventsOnMonthByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
@@ -65,14 +65,20 @@ func (s *Server) Start(ctx context.Context) error {
 	std := time.Now()
 	stopd := std.Add(72 * time.Hour)
 	emtd := 4 * time.Hour
-	s.app.CreateEvent(context.Background(), "0", "test0 - base event", "USER0", "", std, stopd, emtd)
-	s.app.CreateEvent(context.Background(), "1", "test1 - +5days", "USER0", "", std.Add(120*time.Hour), stopd.Add(120*time.Hour), emtd)
-	s.app.CreateEvent(context.Background(), "2", "test2 - +6 days end date after week", "USER0", "", std.Add(144*time.Hour), stopd.Add(144*time.Hour), emtd)
-	s.app.CreateEvent(context.Background(), "3", "test3 - +8 days - next week", "USER0", "", std.Add(192*time.Hour), stopd.Add(192*time.Hour), emtd)
-	s.app.CreateEvent(context.Background(), "4", "test4 - start in before week and end in cur week", "USER0", "", std.Add(-48*time.Hour), stopd, emtd)
-	s.app.CreateEvent(context.Background(), "5", "test5 - in this day", "USER0", "", std.Add(3*time.Hour), stopd, emtd)
+	s.app.CreateEvent(context.Background(), "test0 - base event", "USER0", "", std, stopd, emtd)
+	s.app.CreateEvent(context.Background(), "test1 - +5days", "USER0", "", std.Add(120*time.Hour), stopd.Add(120*time.Hour), emtd)
+	s.app.CreateEvent(context.Background(), "test2 - +6 days end date after week", "USER0", "", std.Add(144*time.Hour), stopd.Add(144*time.Hour), emtd)
+	s.app.CreateEvent(context.Background(), "test3 - +8 days - next week", "USER0", "", std.Add(192*time.Hour), stopd.Add(192*time.Hour), emtd)
+	s.app.CreateEvent(context.Background(), "test4 - start in before week and end in cur week", "USER0", "", std.Add(-48*time.Hour), std.Add(-5*time.Hour), emtd)
+	s.app.CreateEvent(context.Background(), "test5 - in this day", "USER0", "", std.Add(-4*time.Hour), std.Add(-3*time.Hour), emtd)
+	testEvents, err := s.app.GetListEventsOnMonthByDay(context.Background(), std)
+	if len(testEvents) > 0 {
+		id := testEvents[0].ID
+		s.app.UpdateEvent(context.Background(), id, "test777 - updated event", "USER0", "", std, stopd, emtd)
+	}
+
 	//============
-	err := s.serv.ListenAndServe()
+	err = s.serv.ListenAndServe()
 	if err != nil {
 		if !errors.Is(err, http.ErrServerClosed) {
 			s.logg.Error("server start error: " + err.Error())

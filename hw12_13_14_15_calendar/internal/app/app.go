@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"strconv"
 	"time"
 
 	helpers "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/helpers"
@@ -23,10 +24,10 @@ type Logger interface {
 type Storage interface {
 	Init(ctx context.Context, config storage.Config) error
 	Close(ctx context.Context) error
-	GetEvent(ctx context.Context, id string) (storage.Event, error)
+	GetEvent(ctx context.Context, id int) (storage.Event, error)
 	CreateEvent(ctx context.Context, value storage.Event) error
 	UpdateEvent(ctx context.Context, value storage.Event) error
-	DeleteEvent(ctx context.Context, id string) error
+	DeleteEvent(ctx context.Context, id int) error
 	GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
 	GetListEventsOnWeekByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
 	GetListEventsOnMonthByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
@@ -48,42 +49,58 @@ func (a *App) CloseStorage(ctx context.Context) error {
 	return a.storage.Close(ctx)
 }
 
-func (a *App) GetEvent(ctx context.Context, id string) (storage.Event, error) {
+func (a *App) GetEvent(ctx context.Context, id int) (storage.Event, error) {
 	event, err := a.storage.GetEvent(ctx, id)
 	return event, err
 }
 
-func (a *App) CreateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error {
-	event := storage.Event{ID: id, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta}
-	err := a.storage.CreateEvent(ctx, event)
+func (a *App) CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error {
+	//event := storage.Event{ID: id, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta}
+	event, err := SimpleEventValidator(title, userID, description, dateStart, dateStop, eventMessageTimeDelta)
 	if err != nil {
-		message := helpers.StringBuild("event create error(id - ", id, " title - ", title, ")")
+		message := helpers.StringBuild("event create error(title - ", title, "),error: ", err.Error())
 		a.logger.Error(message)
 	}
-	message := helpers.StringBuild("new event created(id - ", id, " title - ", title, ")")
-	a.logger.Info(message)
+	err = a.storage.CreateEvent(ctx, event)
+	if err != nil {
+		message := helpers.StringBuild("event create error(title - ", title, "),error: ", err.Error())
+		a.logger.Error(message)
+	} else {
+		message := helpers.StringBuild("new event created(title - ", title, ")")
+		a.logger.Info(message)
+	}
+
 	return err
 }
 
-func (a *App) UpdateEvent(ctx context.Context, id, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error {
-	err := a.storage.UpdateEvent(ctx, storage.Event{ID: id, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta})
+func (a *App) UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error {
+	event, err := SimpleEventValidator(title, userID, description, dateStart, dateStop, eventMessageTimeDelta)
 	if err != nil {
-		message := helpers.StringBuild("event update error(id - ", id, " title - ", title, ")")
+		message := helpers.StringBuild("event create error(title - ", title, "),error: ", err.Error())
 		a.logger.Error(message)
 	}
-	message := helpers.StringBuild("event updated(id - ", id, " title - ", title, ")")
-	a.logger.Info(message)
+	err = a.storage.UpdateEvent(ctx, event)
+	if err != nil {
+		message := helpers.StringBuild("event update error(title - ", title, "),error: ", err.Error())
+		a.logger.Error(message)
+	} else {
+		message := helpers.StringBuild("event updated(title - ", title, ")")
+		a.logger.Info(message)
+	}
+
 	return err
 }
 
-func (a *App) DeleteEvent(ctx context.Context, id string) error {
+func (a *App) DeleteEvent(ctx context.Context, id int) error {
 	err := a.storage.DeleteEvent(ctx, id)
 	if err != nil {
-		message := helpers.StringBuild("event delete error(id - ", id, ")")
+		message := helpers.StringBuild("event delete error(id - ", strconv.Itoa(id), "),error: ", err.Error())
 		a.logger.Error(message)
+	} else {
+		message := helpers.StringBuild("event deleted(id - ", strconv.Itoa(id), ")")
+		a.logger.Info(message)
 	}
-	message := helpers.StringBuild("event deleted(id - ", id, ")")
-	a.logger.Info(message)
+
 	return err
 }
 

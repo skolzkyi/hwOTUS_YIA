@@ -37,3 +37,1184 @@ runtime.main
 2023-03-27T17:13:18.205+0400	INFO	new event created(id - 5 title - test5 - in this day)
 2023-03-27T17:13:25.654+0400	INFO	[client IP: 127.0.0.1:12586 Request DateTime: 2023-03-27 17:13:25.6548282 +0400 +04 m=+7.457517601 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 648.1µsRequest User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
 2023-03-27T17:15:04.270+0400	INFO	[client IP: 127.0.0.1:12586 Request DateTime: 2023-03-27 17:15:04.2705403 +0400 +04 m=+106.073229701 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 740.1µsRequest User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+2023-03-28T16:17:29.874+0400	INFO	calendar is running...
+2023-03-28T16:17:29.877+0400	ERROR	event create error(id - 0 title - test0 - base event)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:17:29.877+0400	INFO	new event created(id - 0 title - test0 - base event)
+2023-03-28T16:17:29.877+0400	ERROR	event create error(id - 1 title - test1 - +5days)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:17:29.877+0400	INFO	new event created(id - 1 title - test1 - +5days)
+2023-03-28T16:17:29.878+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:17:29.878+0400	INFO	new event created(id - 2 title - test2 - +6 days end date after week)
+2023-03-28T16:17:29.878+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:17:29.878+0400	INFO	new event created(id - 3 title - test3 - +8 days - next week)
+2023-03-28T16:17:29.878+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:17:29.879+0400	INFO	new event created(id - 4 title - test4 - start in before week and end in cur week)
+2023-03-28T16:17:29.879+0400	ERROR	event create error(id - 5 title - test5 - in this day)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:17:29.879+0400	INFO	new event created(id - 5 title - test5 - in this day)
+2023-03-28T16:17:29.880+0400	ERROR	server start error: listen tcp 127.0.0.1:3306: bind: An attempt was made to access a socket in a way forbidden by its access permissions.
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:78
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:17:29.880+0400	ERROR	failed to start http server: listen tcp 127.0.0.1:3306: bind: An attempt was made to access a socket in a way forbidden by its access permissions.
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:19:53.872+0400	INFO	calendar is running...
+2023-03-28T16:19:53.876+0400	ERROR	event create error(id - 0 title - test0 - base event)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:19:53.876+0400	INFO	new event created(id - 0 title - test0 - base event)
+2023-03-28T16:19:53.876+0400	ERROR	event create error(id - 1 title - test1 - +5days)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:19:53.876+0400	INFO	new event created(id - 1 title - test1 - +5days)
+2023-03-28T16:19:53.876+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:19:53.877+0400	INFO	new event created(id - 2 title - test2 - +6 days end date after week)
+2023-03-28T16:19:53.877+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:19:53.877+0400	INFO	new event created(id - 3 title - test3 - +8 days - next week)
+2023-03-28T16:19:53.877+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:19:53.877+0400	INFO	new event created(id - 4 title - test4 - start in before week and end in cur week)
+2023-03-28T16:19:53.878+0400	ERROR	event create error(id - 5 title - test5 - in this day)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:19:53.878+0400	INFO	new event created(id - 5 title - test5 - in this day)
+2023-03-28T16:19:53.879+0400	ERROR	server start error: listen tcp 127.0.0.1:4000: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:78
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:19:53.879+0400	ERROR	failed to start http server: listen tcp 127.0.0.1:4000: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:23:19.877+0400	INFO	calendar is running...
+2023-03-28T16:23:19.880+0400	ERROR	event create error(id - 0 title - test0 - base event),error: event with this id exited
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:23:19.880+0400	INFO	new event created(id - 0 title - test0 - base event)
+2023-03-28T16:23:19.881+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: event with this id exited
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:23:19.881+0400	INFO	new event created(id - 1 title - test1 - +5days)
+2023-03-28T16:23:19.881+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: event with this id exited
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:23:19.881+0400	INFO	new event created(id - 2 title - test2 - +6 days end date after week)
+2023-03-28T16:23:19.882+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: event with this id exited
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:23:19.882+0400	INFO	new event created(id - 3 title - test3 - +8 days - next week)
+2023-03-28T16:23:19.882+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week),error: event with this id exited
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:23:19.882+0400	INFO	new event created(id - 4 title - test4 - start in before week and end in cur week)
+2023-03-28T16:23:19.882+0400	ERROR	event create error(id - 5 title - test5 - in this day),error: event with this id exited
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:23:19.883+0400	INFO	new event created(id - 5 title - test5 - in this day)
+2023-03-28T16:30:30.716+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:31:00.468+0400	INFO	calendar is running...
+2023-03-28T16:31:00.472+0400	ERROR	event create error(id - 0 title - test0 - base event),error: event with this id exited
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:31:00.472+0400	INFO	new event created(id - 0 title - test0 - base event)
+2023-03-28T16:31:00.472+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: event with this id exited
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:31:00.473+0400	INFO	new event created(id - 1 title - test1 - +5days)
+2023-03-28T16:32:16.188+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:32:36.140+0400	INFO	calendar is running...
+2023-03-28T16:32:36.144+0400	INFO	new event created(id - 0 title - test0 - base event)
+2023-03-28T16:32:36.144+0400	INFO	new event created(id - 1 title - test1 - +5days)
+2023-03-28T16:32:56.679+0400	INFO	[client IP: 127.0.0.1:4755 Request DateTime: 2023-03-28 16:32:56.6798841 +0400 +04 m=+20.542964801 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 292.4µs Request User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+2023-03-28T16:32:56.817+0400	INFO	[client IP: 127.0.0.1:4755 Request DateTime: 2023-03-28 16:32:56.8170874 +0400 +04 m=+20.680168101 Method: GET Request URL: /favicon.ico Request Scheme: Request Status: Time of request work: 0s Request User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+2023-03-28T16:36:34.220+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:37:20.285+0400	INFO	calendar is running...
+2023-03-28T16:37:20.289+0400	INFO	new event created(id - 0 title - test0 - base event)
+2023-03-28T16:37:20.289+0400	INFO	new event created(id - 1 title - test1 - +5days)
+2023-03-28T16:37:20.289+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:37:20.290+0400	INFO	new event created(id - 2 title - test2 - +6 days end date after week)
+2023-03-28T16:37:20.291+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:61
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T16:37:20.291+0400	INFO	new event created(id - 3 title - test3 - +8 days - next week)
+2023-03-28T16:37:20.291+0400	INFO	new event created(id - 4 title - test4 - start in before week and end in cur week)
+2023-03-28T16:37:20.291+0400	INFO	new event created(id - 5 title - test5 - in this day)
+2023-03-28T17:51:33.029+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T17:51:52.012+0400	INFO	calendar is running...
+2023-03-28T17:51:52.015+0400	INFO	new event created(id - 0 title - test0 - base event)
+2023-03-28T17:51:52.015+0400	INFO	new event created(id - 1 title - test1 - +5days)
+2023-03-28T17:51:52.015+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T17:51:52.016+0400	INFO	new event created(id - 2 title - test2 - +6 days end date after week)
+2023-03-28T17:51:52.016+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T17:51:52.016+0400	INFO	new event created(id - 3 title - test3 - +8 days - next week)
+2023-03-28T17:51:52.016+0400	INFO	new event created(id - 4 title - test4 - start in before week and end in cur week)
+2023-03-28T17:51:52.016+0400	INFO	new event created(id - 5 title - test5 - in this day)
+2023-03-28T17:52:03.762+0400	INFO	server graceful shutdown
+2023-03-28T17:52:03.762+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T17:53:02.061+0400	FATAL	fatal error of inintialization SQL storage: Error 1045 (28000): Access denied for user 'OTUSFinalLab'@'localhost' (using password: YES)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Fatal
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:45
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:53
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T17:54:39.606+0400	INFO	calendar is running...
+2023-03-28T17:54:39.610+0400	ERROR	event create error(id - 0 title - test0 - base event),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(? AS DATE) CAST(? AS DATE) OR CAST(dateStop' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T17:54:39.610+0400	INFO	new event created(id - 0 title - test0 - base event)
+2023-03-28T17:54:39.611+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(? AS DATE) CAST(? AS DATE) OR CAST(dateStop' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T17:54:39.611+0400	INFO	new event created(id - 1 title - test1 - +5days)
+2023-03-28T17:54:39.612+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(? AS DATE) CAST(? AS DATE) OR CAST(dateStop' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T17:54:39.612+0400	INFO	new event created(id - 2 title - test2 - +6 days end date after week)
+2023-03-28T17:54:39.612+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(? AS DATE) CAST(? AS DATE) OR CAST(dateStop' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T17:54:39.613+0400	INFO	new event created(id - 3 title - test3 - +8 days - next week)
+2023-03-28T17:54:39.613+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(? AS DATE) CAST(? AS DATE) OR CAST(dateStop' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T17:54:39.613+0400	INFO	new event created(id - 4 title - test4 - start in before week and end in cur week)
+2023-03-28T17:54:39.614+0400	ERROR	event create error(id - 5 title - test5 - in this day),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(? AS DATE) CAST(? AS DATE) OR CAST(dateStop' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T17:54:39.614+0400	INFO	new event created(id - 5 title - test5 - in this day)
+2023-03-28T18:02:48.939+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:03:08.863+0400	INFO	calendar is running...
+2023-03-28T18:03:08.867+0400	ERROR	event create error(id - 0 title - test0 - base event),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-03-28 18:03:08 AS DATE) CAST(2023-03-3' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:03:08.868+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-04-02 18:03:08 AS DATE) CAST(2023-04-0' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:03:08.868+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-04-03 18:03:08 AS DATE) CAST(2023-04-0' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:03:08.869+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-04-05 18:03:08 AS DATE) CAST(2023-04-0' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:03:08.869+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-03-26 18:03:08 AS DATE) CAST(2023-03-2' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:03:08.870+0400	ERROR	event create error(id - 5 title - test5 - in this day),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-03-28 14:03:08 AS DATE) CAST(2023-03-2' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:03:13.125+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:04:32.422+0400	INFO	calendar is running...
+2023-03-28T18:04:32.426+0400	ERROR	event create error(id - 0 title - test0 - base event),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-03-28 18:04:32 AS DATE) CAST('2023-03-' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:04:32.426+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-04-02 18:04:32 AS DATE) CAST('2023-04-' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:04:32.427+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-04-03 18:04:32 AS DATE) CAST('2023-04-' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:04:32.428+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-04-05 18:04:32 AS DATE) CAST('2023-04-' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:04:32.428+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-03-26 18:04:32 AS DATE) CAST('2023-03-' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:04:32.429+0400	ERROR	event create error(id - 5 title - test5 - in this day),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST(2023-03-28 14:04:32 AS DATE) CAST('2023-03-' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:05:46.282+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:05:52.872+0400	INFO	calendar is running...
+2023-03-28T18:05:52.876+0400	ERROR	event create error(id - 0 title - test0 - base event),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-03-28 18:05:52' AS DATE) CAST('2023-0' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:05:52.876+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-04-02 18:05:52' AS DATE) CAST('2023-0' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:05:52.877+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-04-03 18:05:52' AS DATE) CAST('2023-0' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:05:52.877+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-04-05 18:05:52' AS DATE) CAST('2023-0' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:05:52.880+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-03-26 18:05:52' AS DATE) CAST('2023-0' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:05:52.880+0400	ERROR	event create error(id - 5 title - test5 - in this day),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-03-28 14:05:52' AS DATE) CAST('2023-0' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:07:25.236+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:07:43.870+0400	INFO	calendar is running...
+2023-03-28T18:07:43.874+0400	ERROR	event create error(id - 0 title - test0 - base event),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-03-28 18:07:43' AS DATE) AND  CAST('2' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:07:43.874+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-04-02 18:07:43' AS DATE) AND  CAST('2' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:07:43.875+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-04-03 18:07:43' AS DATE) AND  CAST('2' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:07:43.876+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-04-05 18:07:43' AS DATE) AND  CAST('2' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:07:43.876+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-03-26 18:07:43' AS DATE) AND  CAST('2' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:07:43.877+0400	ERROR	event create error(id - 5 title - test5 - in this day),error: Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CAST(dateStart AS DATE) BETWEEN CAST('2023-03-28 14:07:43' AS DATE) AND  CAST('2' at line 1
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:10:44.650+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:10:48.521+0400	INFO	calendar is running...
+2023-03-28T18:13:22.995+0400	INFO	calendar is running...
+2023-03-28T18:14:23.854+0400	INFO	calendar is running...
+2023-03-28T18:14:23.859+0400	ERROR	event create error(id - 0 title - test0 - base event),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:14:23.859+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:14:23.860+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:14:23.861+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:14:23.861+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:14:23.862+0400	ERROR	event create error(id - 5 title - test5 - in this day),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:14:36.711+0400	INFO	[client IP: 127.0.0.1:5889 Request DateTime: 2023-03-28 18:14:36.7112097 +0400 +04 m=+12.861342901 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 180.7µs Request User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+2023-03-28T18:16:27.147+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:16:41.670+0400	INFO	calendar is running...
+2023-03-28T18:16:41.675+0400	ERROR	event create error(id - 0 title - test0 - base event),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:16:41.675+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:16:41.676+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:16:41.677+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:16:41.678+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:16:41.678+0400	ERROR	event create error(id - 5 title - test5 - in this day),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:17:01.644+0400	INFO	event deleted(id - 1)
+2023-03-28T18:17:01.652+0400	INFO	event deleted(id - 2)
+2023-03-28T18:17:01.653+0400	INFO	[client IP: 127.0.0.1:5956 Request DateTime: 2023-03-28 18:17:01.6531156 +0400 +04 m=+19.987298501 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 22.1742ms Request User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+2023-03-28T18:17:34.747+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:17:41.662+0400	INFO	calendar is running...
+2023-03-28T18:17:41.667+0400	ERROR	event create error(id - 0 title - test0 - base event),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:17:41.668+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:17:41.668+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:17:41.669+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:17:41.669+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:17:41.671+0400	ERROR	event create error(id - 5 title - test5 - in this day),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:18:21.057+0400	INFO	event deleted(id - 3)
+2023-03-28T18:18:21.059+0400	INFO	event deleted(id - 4)
+2023-03-28T18:18:21.059+0400	INFO	[client IP: 127.0.0.1:5971 Request DateTime: 2023-03-28 18:18:21.0598988 +0400 +04 m=+39.402358901 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 6.5963ms Request User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+2023-03-28T18:25:41.317+0400	INFO	server graceful shutdown
+2023-03-28T18:25:41.317+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:26:02.199+0400	INFO	calendar is running...
+2023-03-28T18:26:02.203+0400	ERROR	event create error(id - 0 title - test0 - base event),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:26:02.204+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:26:02.205+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:26:02.205+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:26:02.206+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:26:02.207+0400	ERROR	event create error(id - 5 title - test5 - in this day),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:83
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:27:22.684+0400	INFO	event deleted(id - 5)
+2023-03-28T18:27:22.695+0400	INFO	event deleted(id - 6)
+2023-03-28T18:27:22.695+0400	INFO	[client IP: 127.0.0.1:6069 Request DateTime: 2023-03-28 18:27:22.6955878 +0400 +04 m=+80.500627701 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 25.2429ms Request User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+2023-03-28T18:31:09.404+0400	ERROR	failed to start http server: http: Server closed
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:84
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:42:28.868+0400	INFO	calendar is running...
+2023-03-28T18:42:28.873+0400	ERROR	event create error(id - 0 title - test0 - base event),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:68
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:42:28.875+0400	ERROR	event create error(id - 1 title - test1 - +5days),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:69
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:42:28.875+0400	ERROR	event create error(id - 2 title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:42:28.876+0400	ERROR	event create error(id - 3 title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:42:28.877+0400	ERROR	event create error(id - 4 title - test4 - start in before week and end in cur week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:42:28.877+0400	ERROR	event create error(id - 5 title - test5 - in this day),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:62
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T18:42:28.880+0400	INFO	event updated(id - 7 title - test777 - updated event)
+2023-03-28T18:42:34.731+0400	INFO	event deleted(id - 7)
+2023-03-28T18:42:34.733+0400	INFO	event deleted(id - 8)
+2023-03-28T18:42:34.733+0400	INFO	[client IP: 127.0.0.1:6214 Request DateTime: 2023-03-28 18:42:34.7337595 +0400 +04 m=+5.870306201 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 6.0765ms Request User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+2023-03-28T19:23:06.877+0400	INFO	calendar is running...
+2023-03-28T19:23:06.880+0400	INFO	new event created(title - test0 - base event)
+2023-03-28T19:23:06.880+0400	INFO	new event created(title - test1 - +5days)
+2023-03-28T19:23:06.880+0400	ERROR	event create error(title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:67
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T19:23:06.881+0400	ERROR	event create error(title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:67
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T19:23:06.881+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-03-28T19:23:06.881+0400	INFO	new event created(title - test5 - in this day)
+2023-03-28T19:23:06.881+0400	ERROR	event update error(title - test777 - updated event),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:41
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).UpdateEvent
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:85
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:77
+main.main
+	C:/REPO/Go/!OTUS/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:250
+2023-03-28T19:23:15.016+0400	INFO	event deleted(id - 2)
+2023-03-28T19:23:15.016+0400	INFO	event deleted(id - 3)
+2023-03-28T19:23:15.018+0400	INFO	event deleted(id - 0)
+2023-03-28T19:23:15.018+0400	INFO	event deleted(id - 1)
+2023-03-28T19:23:15.018+0400	INFO	[client IP: 127.0.0.1:6759 Request DateTime: 2023-03-28 19:23:15.0186603 +0400 +04 m=+8.145110101 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 2.2537ms Request User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36

@@ -26,7 +26,7 @@ func (s *Server) helloWorld(w http.ResponseWriter, r *http.Request) {
 	for _, curContent := range content {
 		stringres = stringres + " \n " + curContent.String()
 	}
-	stringres = " \n " + stringres + "IN THISWEEK: \n "
+	stringres = stringres + "\n IN THISWEEK: \n "
 
 	content, err = s.app.GetListEventsOnWeekByDay(context.Background(), thisDay)
 	if err != nil {
@@ -37,7 +37,7 @@ func (s *Server) helloWorld(w http.ResponseWriter, r *http.Request) {
 	for _, curContent := range content {
 		stringres = stringres + " \n " + curContent.String()
 	}
-	stringres = " \n " + stringres + "IN THISMOUNTH: \n "
+	stringres = stringres + "\n IN THISMOUNTH: \n "
 	content, err = s.app.GetListEventsOnMonthByDay(context.Background(), thisDay)
 	if err != nil {
 		fmt.Println("handlerError: ", err.Error())
@@ -46,6 +46,13 @@ func (s *Server) helloWorld(w http.ResponseWriter, r *http.Request) {
 
 	for _, curContent := range content {
 		stringres = stringres + " \n " + curContent.String()
+	}
+	for _, curEvent := range content {
+		err = s.app.DeleteEvent(context.Background(), curEvent.ID)
+		if err != nil {
+			fmt.Println("handlerError: ", err.Error())
+			return
+		}
 	}
 	//w.Write([]byte("Hello world!"))
 	w.Write([]byte(stringres))

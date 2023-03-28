@@ -2,6 +2,7 @@ package memorystorage
 
 import (
 	"context"
+	"fmt"
 	"sort"
 	"sync"
 	"time"
@@ -12,7 +13,7 @@ import (
 
 type Storage struct {
 	mu sync.RWMutex
-	m  map[string]storage.Event
+	m  map[int]storage.Event
 }
 
 func New() *Storage {
@@ -22,7 +23,7 @@ func New() *Storage {
 func (s *Storage) Init(_ context.Context, _ storage.Config) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	s.m = make(map[string]storage.Event)
+	s.m = make(map[int]storage.Event)
 	return nil
 }
 
@@ -30,7 +31,7 @@ func (s *Storage) Close(_ context.Context) error {
 	return nil
 }
 
-func (s *Storage) GetEvent(ctx context.Context, id string) (storage.Event, error) {
+func (s *Storage) GetEvent(ctx context.Context, id int) (storage.Event, error) {
 	select {
 	case <-ctx.Done():
 		return storage.Event{}, storage.ErrStorageTimeout
@@ -52,9 +53,23 @@ func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) error {
 	case <-ctx.Done():
 		return storage.ErrStorageTimeout
 	default:
+		ok, err := s.isEventOnThisTimeExcluded(ctx, value)
+		if err != nil {
+			fmt.Println("busy check error: ", err.Error())
+			return err
+		}
+		if ok {
+			return storage.ErrDateBusy
+		}
 		s.mu.Lock()
 		defer s.mu.Unlock()
-		s.m[value.ID] = value
+		id := len(s.m)
+		value.ID = id
+		_, ok = s.m[id]
+		if ok {
+			return storage.ErrIdNotUnique
+		}
+		s.m[id] = value
 		return nil
 	}
 }
@@ -64,7 +79,7 @@ func (s *Storage) UpdateEvent(ctx context.Context, value storage.Event) error {
 	return err
 }
 
-func (s *Storage) DeleteEvent(ctx context.Context, id string) error {
+func (s *Storage) DeleteEvent(ctx context.Context, id int) error {
 	select {
 	case <-ctx.Done():
 		return storage.ErrStorageTimeout
@@ -115,4 +130,22 @@ func (s *Storage) GetListEventsOnMonthByDay(ctx context.Context, day time.Time) 
 	dayEnd := helpers.DateEndTime(day.Add(720 * time.Hour))
 	resEvents, err := s.getListEventsBetweenTwoDateInclude(ctx, dayStart, dayEnd)
 	return resEvents, err
+}
+
+func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, value storage.Event) (bool, error) {
+	select {
+	case <-ctx.Done():
+		return false, storage.ErrStorageTimeout
+	default:
+		s.mu.RLock()
+		for _, curEvent := range s.m {
+			if (helpers.DateBetweenInclude(curEvent.DateStart, value.DateStart, value.DateStop) || helpers.DateBetweenInclude(curEvent.DateStop, value.DateStart, value.DateStop)) && curEvent.UserID == value.UserID {
+				s.mu.RUnlock()
+				return true, nil
+			}
+		}
+		s.mu.RUnlock()
+
+		return false, nil
+	}
 }

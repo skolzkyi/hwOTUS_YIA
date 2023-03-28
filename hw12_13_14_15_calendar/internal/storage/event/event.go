@@ -2,6 +2,7 @@ package storage
 
 import (
 	"errors"
+	"strconv"
 	"time"
 
 	helpers "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/helpers"
@@ -9,6 +10,8 @@ import (
 
 var ErrNoRecord = errors.New("record not searched")
 var ErrStorageTimeout = errors.New("storage timeout")
+var ErrDateBusy = errors.New("this date busy by other event")
+var ErrIdNotUnique = errors.New("event with this id exited")
 
 type Config interface {
 	Init(path string) error
@@ -27,7 +30,7 @@ type Config interface {
 }
 
 type Event struct {
-	ID                    string
+	ID                    int
 	Title                 string
 	UserID                string
 	Description           string
@@ -37,6 +40,6 @@ type Event struct {
 }
 
 func (e *Event) String() string {
-	res := helpers.StringBuild("[", "ID: ", e.ID, ", Title: ", e.Title, " UserID: ", e.UserID, " Description: ", e.Description, " DateStart: ", e.DateStart.String(), " DateStop: ", e.DateStop.String(), " EventMessageTimeDelta: ", e.EventMessageTimeDelta.String(), "]")
+	res := helpers.StringBuild("[", "ID: ", strconv.Itoa(e.ID), ", Title: ", e.Title, ", UserID: ", e.UserID, ", Description: ", e.Description, ", DateStart: ", e.DateStart.String(), ", DateStop: ", e.DateStop.String(), ", EventMessageTimeDelta: ", e.EventMessageTimeDelta.String(), "]")
 	return res
 }

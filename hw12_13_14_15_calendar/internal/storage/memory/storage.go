@@ -12,8 +12,9 @@ import (
 )
 
 type Storage struct {
-	mu sync.RWMutex
-	m  map[int]storage.Event
+	mu        sync.RWMutex
+	m         map[int]storage.Event
+	idCounter int
 }
 
 func New() *Storage {
@@ -24,6 +25,7 @@ func (s *Storage) Init(_ context.Context, _ storage.Config) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.m = make(map[int]storage.Event)
+	s.idCounter = 0
 	return nil
 }
 
@@ -47,36 +49,49 @@ func (s *Storage) GetEvent(ctx context.Context, id int) (storage.Event, error) {
 	}
 }
 
-func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) error {
+func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) (int, error) {
 
 	select {
 	case <-ctx.Done():
-		return storage.ErrStorageTimeout
+		return 0, storage.ErrStorageTimeout
 	default:
 		ok, err := s.isEventOnThisTimeExcluded(ctx, value)
 		if err != nil {
 			fmt.Println("busy check error: ", err.Error())
-			return err
+			return 0, err
 		}
 		if ok {
-			return storage.ErrDateBusy
+			return 0, storage.ErrDateBusy
 		}
+		id := s.idCounter
+		value.ID = s.idCounter
+
 		s.mu.Lock()
 		defer s.mu.Unlock()
-		id := len(s.m)
-		value.ID = id
 		_, ok = s.m[id]
 		if ok {
-			return storage.ErrIdNotUnique
+			return 0, storage.ErrIdNotUnique
 		}
 		s.m[id] = value
-		return nil
+		s.idCounter++
+		return id, nil
 	}
 }
 
 func (s *Storage) UpdateEvent(ctx context.Context, value storage.Event) error {
-	err := s.CreateEvent(ctx, value)
-	return err
+	select {
+	case <-ctx.Done():
+		return storage.ErrStorageTimeout
+	default:
+		_, ok := s.m[value.ID]
+		if !ok {
+			return storage.ErrNoRecord
+		}
+		s.mu.Lock()
+		defer s.mu.Unlock()
+		s.m[value.ID] = value
+	}
+	return nil
 }
 
 func (s *Storage) DeleteEvent(ctx context.Context, id int) error {
@@ -84,6 +99,10 @@ func (s *Storage) DeleteEvent(ctx context.Context, id int) error {
 	case <-ctx.Done():
 		return storage.ErrStorageTimeout
 	default:
+		_, ok := s.m[id]
+		if !ok {
+			return storage.ErrNoRecord
+		}
 		s.mu.Lock()
 		defer s.mu.Unlock()
 		delete(s.m, id)

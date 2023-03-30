@@ -39,7 +39,7 @@ type Application interface {
 	InitStorage(ctx context.Context, config storage.Config) error
 	CloseStorage(ctx context.Context) error
 	GetEvent(ctx context.Context, id int) (storage.Event, error)
-	CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
+	CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (int, error)
 	UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
 	DeleteEvent(ctx context.Context, id int) error
 	GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
@@ -71,14 +71,14 @@ func (s *Server) Start(ctx context.Context) error {
 	s.app.CreateEvent(context.Background(), "test3 - +8 days - next week", "USER0", "", std.Add(192*time.Hour), stopd.Add(192*time.Hour), emtd)
 	s.app.CreateEvent(context.Background(), "test4 - start in before week and end in cur week", "USER0", "", std.Add(-48*time.Hour), std.Add(-5*time.Hour), emtd)
 	s.app.CreateEvent(context.Background(), "test5 - in this day", "USER0", "", std.Add(-4*time.Hour), std.Add(-3*time.Hour), emtd)
-	testEvents, err := s.app.GetListEventsOnMonthByDay(context.Background(), std)
+	testEvents, _ := s.app.GetListEventsOnMonthByDay(context.Background(), std)
 	if len(testEvents) > 0 {
 		id := testEvents[0].ID
 		s.app.UpdateEvent(context.Background(), id, "test777 - updated event", "USER0", "", std, stopd, emtd)
 	}
 
 	//============
-	err = s.serv.ListenAndServe()
+	err := s.serv.ListenAndServe()
 	if err != nil {
 		if !errors.Is(err, http.ErrServerClosed) {
 			s.logg.Error("server start error: " + err.Error())

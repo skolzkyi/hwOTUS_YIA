@@ -25,7 +25,7 @@ type Storage interface {
 	Init(ctx context.Context, config storage.Config) error
 	Close(ctx context.Context) error
 	GetEvent(ctx context.Context, id int) (storage.Event, error)
-	CreateEvent(ctx context.Context, value storage.Event) error
+	CreateEvent(ctx context.Context, value storage.Event) (int, error)
 	UpdateEvent(ctx context.Context, value storage.Event) error
 	DeleteEvent(ctx context.Context, id int) error
 	GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
@@ -54,14 +54,14 @@ func (a *App) GetEvent(ctx context.Context, id int) (storage.Event, error) {
 	return event, err
 }
 
-func (a *App) CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error {
+func (a *App) CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (int, error) {
 	//event := storage.Event{ID: id, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta}
 	event, err := SimpleEventValidator(title, userID, description, dateStart, dateStop, eventMessageTimeDelta)
 	if err != nil {
 		message := helpers.StringBuild("event create error(title - ", title, "),error: ", err.Error())
 		a.logger.Error(message)
 	}
-	err = a.storage.CreateEvent(ctx, event)
+	id, err := a.storage.CreateEvent(ctx, event)
 	if err != nil {
 		message := helpers.StringBuild("event create error(title - ", title, "),error: ", err.Error())
 		a.logger.Error(message)
@@ -70,7 +70,7 @@ func (a *App) CreateEvent(ctx context.Context, title string, userID string, desc
 		a.logger.Info(message)
 	}
 
-	return err
+	return id, err
 }
 
 func (a *App) UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error {

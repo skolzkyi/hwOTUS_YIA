@@ -30,7 +30,6 @@ func New(level string) (*LoggerWrap, error) {
 
 func (l LoggerWrap) Info(msg string) {
 	l.logger.Info(msg)
-	//fmt.Println(msg)
 }
 
 func (l LoggerWrap) Warning(msg string) {

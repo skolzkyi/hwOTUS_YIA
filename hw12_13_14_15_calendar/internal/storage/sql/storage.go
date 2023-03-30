@@ -36,6 +36,7 @@ func (s *Storage) Init(ctx context.Context, config storage.Config) error {
 
 func (s *Storage) Connect(ctx context.Context, config storage.Config) error {
 	dsn := helpers.StringBuild(config.GetDbUser(), ":", config.GetDbPassword(), "@/", config.GetDbName(), "?parseTime=true")
+	fmt.Println("dsn: ", dsn)
 	var err error
 	s.DB, err = sql.Open("mysql", dsn)
 	if err != nil {
@@ -100,24 +101,29 @@ func (s *Storage) GetEvent(ctx context.Context, id int) (storage.Event, error) {
 
 }
 
-func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) error {
+func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) (int, error) {
 	fmt.Println("inSQLcreate")
 	ok, err := s.isEventOnThisTimeExcluded(ctx, value)
 	if err != nil {
 		fmt.Println("busy check error: ", err.Error())
-		return err
+		return 0, err
 	}
 	if ok {
-		return storage.ErrDateBusy
+		return 0, storage.ErrDateBusy
 	}
 	stmt := "INSERT INTO eventsTable(title , userID, description , dateStart, dateStop, eventMessageTimeDelta) VALUES (?,?,?,?,?,?)"
-	_, err = s.DB.ExecContext(ctx, stmt, value.Title, value.UserID, value.Description, value.DateStart, value.DateStop, int64(value.EventMessageTimeDelta))
+	res, err := s.DB.ExecContext(ctx, stmt, value.Title, value.UserID, value.Description, value.DateStart, value.DateStop, int64(value.EventMessageTimeDelta))
 	if err != nil {
 		fmt.Println("CreateEvent error: ", err.Error())
-		return err
+		return 0, err
+	}
+	id, err := res.LastInsertId()
+	if err != nil {
+		fmt.Println("CreateEvent get new id error: ", err.Error())
+		return 0, err
 	}
 
-	return nil
+	return int(id), nil
 }
 
 func (s *Storage) UpdateEvent(ctx context.Context, value storage.Event) error {

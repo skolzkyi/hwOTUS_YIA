@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"errors"
 	"flag"
 	"io"
 	"os"
@@ -11,10 +10,7 @@ import (
 	"time"
 )
 
-var (
-	ErrTimeOut = errors.New("timeout error")
-	timeout    time.Duration
-)
+var timeout time.Duration
 
 func init() {
 	flag.DurationVar(&timeout, "timeout", time.Duration(10)*time.Second, "timeout for connection")
@@ -43,11 +39,11 @@ func main() {
 	}
 }
 
-func runTelnetClient(fulladress string, timeout time.Duration, in io.ReadCloser, out io.Writer) error {
-	tClient := NewTelnetClient(fulladress, timeout, in, out)
-
+func runTelnetClient(fullAddress string, timeout time.Duration, in io.ReadCloser, out io.Writer) error {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 	defer cancel()
+
+	tClient := NewTelnetClient(fullAddress, timeout, in, out)
 
 	err := tClient.Connect()
 	if err != nil {
@@ -55,20 +51,30 @@ func runTelnetClient(fulladress string, timeout time.Duration, in io.ReadCloser,
 	}
 
 	go func() {
-		defer cancel()
-		err := tClient.Send()
-		if err != nil {
-			os.Stderr.WriteString(err.Error() + "\n")
+		select {
+		case <-ctx.Done():
 			return
+		default:
+			defer cancel()
+			err := tClient.Send()
+			if err != nil {
+				os.Stderr.WriteString(err.Error() + "\n")
+				return
+			}
 		}
 	}()
 
 	go func() {
-		defer cancel()
-		err := tClient.Receive()
-		if err != nil {
-			os.Stderr.WriteString(err.Error() + "\n")
+		select {
+		case <-ctx.Done():
 			return
+		default:
+			defer cancel()
+			err := tClient.Receive()
+			if err != nil {
+				os.Stderr.WriteString(err.Error() + "\n")
+				return
+			}
 		}
 	}()
 

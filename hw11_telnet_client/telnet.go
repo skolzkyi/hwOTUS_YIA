@@ -1,12 +1,14 @@
 package main
 
 import (
-	"context"
+	"errors"
 	"io"
 	"net"
 	"os"
 	"time"
 )
+
+var ErrTimeOut = errors.New("timeout error")
 
 type TelnetClient interface {
 	Connect() error
@@ -16,20 +18,17 @@ type TelnetClient interface {
 }
 
 type TelnetClientImpl struct {
+	timeout           time.Duration
 	inData            io.ReadCloser
 	outData           io.Writer
-	ctx               context.Context
-	conn              net.Conn
-	cancel            context.CancelFunc
-	addr              string
-	dialer            *net.Dialer
 	serviceMessageOut io.Writer
+	conn              net.Conn
+	addr              string
 }
 
 func NewTelnetClient(address string, timeout time.Duration, in io.ReadCloser, out io.Writer) TelnetClient {
 	tClientExempl := TelnetClientImpl{}
-	tClientExempl.dialer = &net.Dialer{}
-	tClientExempl.ctx, tClientExempl.cancel = context.WithTimeout(context.Background(), timeout)
+	tClientExempl.timeout = timeout
 	tClientExempl.addr = address
 	tClientExempl.serviceMessageOut = os.Stderr
 	tClientExempl.inData = in
@@ -42,7 +41,7 @@ func NewTelnetClient(address string, timeout time.Duration, in io.ReadCloser, ou
 
 func (tClient *TelnetClientImpl) Connect() error {
 	var err error
-	tClient.conn, err = tClient.dialer.DialContext(tClient.ctx, "tcp", tClient.addr)
+	tClient.conn, err = net.DialTimeout("tcp", tClient.addr, tClient.timeout)
 	if err != nil {
 		err = ErrTimeOut
 		tClient.serviceMessageOut.Write([]byte(err.Error() + "\n"))

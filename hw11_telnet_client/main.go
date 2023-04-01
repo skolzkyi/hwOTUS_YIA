@@ -35,8 +35,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	fulladress := addr + ":" + port
-	err := runTelnetClient(fulladress, timeout, os.Stdin, os.Stdout)
+	fullAdress := addr + ":" + port
+	err := runTelnetClient(fullAdress, timeout, os.Stdin, os.Stdout)
 	if err != nil {
 		os.Stderr.WriteString(err.Error() + "\n")
 		os.Exit(1)

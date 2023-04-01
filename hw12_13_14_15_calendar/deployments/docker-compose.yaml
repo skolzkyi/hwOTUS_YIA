@@ -1,1 +1,19 @@
-version: "3"
+version: '3.1'
+
+services:
+mysq-db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_USER: imapp
+      MYSQL_PASSWORD: LightInDark
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: OTUSFinalLab
+    ports:
+    - "3306:3306"
+    networks:
+    - ofl_network
+    
+networks:
+  ofl_network:
+    driver: bridge

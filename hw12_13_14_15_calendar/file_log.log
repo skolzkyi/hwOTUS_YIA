@@ -1254,3 +1254,111 @@ runtime.main
 2023-03-31T18:43:27.527+0300	INFO	[client IP: 127.0.0.1:35162 Request DateTime: 2023-03-31 18:43:27.527607924 +0300 +03 m=+20.525402980 Method: GET Request URL: /favicon.ico Request Scheme: Request Status: Time of request work: 5.598µs Request User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0
 2023-03-31T18:47:27.200+0300	INFO	[client IP: 127.0.0.1:54636 Request DateTime: 2023-03-31 18:47:27.200881024 +0300 +03 m=+260.198676080 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 24.191µs Request User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0
 2023-03-31T20:23:38.879+0300	INFO	server graceful shutdown
+2023-04-02T23:19:38.022+0400	INFO	calendar is running...
+2023-04-02T23:19:38.023+0400	INFO	new event created(title - test0 - base event)
+2023-04-02T23:19:38.024+0400	INFO	new event created(title - test1 - +5days)
+2023-04-02T23:19:38.025+0400	ERROR	event create error(title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:40
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:67
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	/snap/go/10073/src/runtime/proc.go:250
+2023-04-02T23:19:38.033+0400	ERROR	event create error(title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:40
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:67
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	/snap/go/10073/src/runtime/proc.go:250
+2023-04-02T23:19:38.034+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-02T23:19:38.034+0400	INFO	new event created(title - test5 - in this day)
+2023-04-02T23:19:38.034+0400	INFO	event updated(title - test777 - updated event)
+2023-04-02T23:24:29.361+0400	INFO	calendar is running...
+2023-04-02T23:24:29.363+0400	INFO	new event created(title - test0 - base event)
+2023-04-02T23:24:29.365+0400	INFO	new event created(title - test1 - +5days)
+2023-04-02T23:24:29.367+0400	ERROR	event create error(title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:40
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:67
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	/snap/go/10073/src/runtime/proc.go:250
+2023-04-02T23:24:29.371+0400	ERROR	event create error(title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:40
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:67
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	/snap/go/10073/src/runtime/proc.go:250
+2023-04-02T23:24:29.372+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-02T23:24:29.372+0400	INFO	new event created(title - test5 - in this day)
+2023-04-02T23:24:29.372+0400	INFO	event updated(title - test777 - updated event)
+2023-04-02T23:31:54.022+0400	INFO	calendar is running...
+2023-04-02T23:31:54.054+0400	INFO	new event created(title - test0 - base event)
+2023-04-02T23:31:54.071+0400	INFO	new event created(title - test1 - +5days)
+2023-04-02T23:31:54.072+0400	ERROR	event create error(title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:40
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:67
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:70
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	/snap/go/10073/src/runtime/proc.go:250
+2023-04-02T23:31:54.073+0400	ERROR	event create error(title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:40
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:67
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:71
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	/snap/go/10073/src/runtime/proc.go:250
+2023-04-02T23:31:54.073+0400	ERROR	event create error(title - test4 - start in before week and end in cur week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:40
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:67
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:72
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	/snap/go/10073/src/runtime/proc.go:250
+2023-04-02T23:31:54.074+0400	ERROR	event create error(title - test5 - in this day),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LoggerWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:40
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:67
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:73
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:85
+runtime.main
+	/snap/go/10073/src/runtime/proc.go:250
+2023-04-02T23:31:54.075+0400	INFO	event updated(title - test777 - updated event)
+2023-04-02T23:33:17.990+0400	INFO	event deleted(id - 1)
+2023-04-02T23:33:18.004+0400	INFO	event deleted(id - 2)
+2023-04-02T23:33:18.004+0400	INFO	[client IP: 127.0.0.1:36722 Request DateTime: 2023-04-02 23:33:18.004496595 +0400 +04 m=+83.993028420 Method: GET Request URL: / Request Scheme: Request Status: Time of request work: 24.14212ms Request User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0
+2023-04-02T23:33:18.259+0400	INFO	[client IP: 127.0.0.1:36722 Request DateTime: 2023-04-02 23:33:18.259221741 +0400 +04 m=+84.247753552 Method: GET Request URL: /favicon.ico Request Scheme: Request Status: Time of request work: 5.502µs Request User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0

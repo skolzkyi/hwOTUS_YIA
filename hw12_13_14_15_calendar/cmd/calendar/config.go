@@ -51,7 +51,7 @@ func (config *Config) Init(path string) error {
 	viper.SetDefault("dbMaxOpenConns", 20)
 	viper.SetDefault("dbMaxIdleConns", 20)
 	viper.SetDefault("dbTimeOut", 5*time.Second)
-	viper.SetDefault("workWithDBStorage", false)
+	viper.SetDefault("workWithDBStorage", true)
 	viper.SetDefault("logLevel", "debug")
 
 	viper.SetConfigName("config")

@@ -1,21 +1,24 @@
 BIN := "./bin/calendar"
 DOCKER_IMG="calendar:develop"
-DSN:="imapp:LightInDark@/OTUSFinalLab?parseTime=true"
+DSN="imapp:LightInDark@/OTUSFinalLab?parseTime=true"
 
 GIT_HASH := $(shell git log --format="%h" -n 1)
 LDFLAGS := -X main.release="develop" -X main.buildDate=$(shell date -u +%Y-%m-%dT%H:%M:%S) -X main.gitHash=$(GIT_HASH)
 
 mysql-img:
 	docker-compose -f ./deployments/docker-compose.yaml up -d
+	
+mysql-img-down:
+	docker-compose -f ./deployments/docker-compose.yaml down
 
-migrate:
-    goose --dir=migrations mysql $(DSN) up
+migrate-goose:
+	goose --dir=migrations mysql $(DSN) up
 
 build:
 	go build -v -o $(BIN) -ldflags "$(LDFLAGS)" ./cmd/calendar
 
 run: build
-	$(BIN) -config ./configs/config.toml
+	$(BIN) -config ./configs/config.yaml
 
 build-img:
 	docker build \

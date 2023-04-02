@@ -40,6 +40,22 @@ type Event struct {
 }
 
 func (e *Event) String() string {
-	res := helpers.StringBuild("[", "ID: ", strconv.Itoa(e.ID), ", Title: ", e.Title, ", UserID: ", e.UserID, ", Description: ", e.Description, ", DateStart: ", e.DateStart.String(), ", DateStop: ", e.DateStop.String(), ", EventMessageTimeDelta: ", e.EventMessageTimeDelta.String(), "]")
+	message:=[]string{
+		"[ID: ",
+		 strconv.Itoa(e.ID),
+		  ", Title: ", 
+		  e.Title, 
+		  ", UserID: ", 
+		  e.UserID, 
+		  ", Description: ", 
+		  e.Description,
+		  ", DateStart: ", 
+		  e.DateStart.String(), 
+		  ", DateStop: ", 
+		  e.DateStop.String(), 
+		  ", EventMessageTimeDelta: ",
+		  e.EventMessageTimeDelta.String(),"]"
+	}
+	res := helpers.StringBuild(message)
 	return res
 }

@@ -89,7 +89,7 @@ func TestSimpleValidators(t *testing.T) {
 	t.Run("NegativErrEndDateBefstartDate", func(t *testing.T) {
 		t.Parallel()
 		tEvent := createTestEvent()
-		tempTime := tEvent.DateStart
+		tempTime := tEvent.DateStart //nolint:gocritic
 		tEvent.DateStart = tEvent.DateStop
 		tEvent.DateStop = tempTime
 		_, err := SimpleEventValidator(tEvent.Title, tEvent.UserID, tEvent.Description, tEvent.DateStart, tEvent.DateStop, tEvent.EventMessageTimeDelta)

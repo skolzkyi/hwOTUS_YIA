@@ -55,7 +55,7 @@ func (a *App) GetEvent(ctx context.Context, id int) (storage.Event, error) {
 }
 
 func (a *App) CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (int, error) {
-	//event := storage.Event{ID: id, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta}
+	
 	event, err := SimpleEventValidator(title, userID, description, dateStart, dateStop, eventMessageTimeDelta)
 	if err != nil {
 		message := helpers.StringBuild("event create error(title - ", title, "),error: ", err.Error())

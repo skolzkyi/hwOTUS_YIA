@@ -1,10 +1,10 @@
 package internalhttp
 
 import (
-	"context"
-	"fmt"
+	//"context"
+	//"fmt"
 	"net/http"
-	"time"
+	//"time"
 )
 
 func (s *Server) helloWorld(w http.ResponseWriter, r *http.Request) {
@@ -14,6 +14,7 @@ func (s *Server) helloWorld(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("404 Not Found"))
 		return
 	}
+	/*
 	thisDay := time.Now()
 	var stringres string
 	stringres = "IN THISDAY: \n "
@@ -54,7 +55,9 @@ func (s *Server) helloWorld(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	//w.Write([]byte("Hello world!"))
 	w.Write([]byte(stringres))
+	*/
+	w.Write([]byte("Hello world!"))
+	
 
 }

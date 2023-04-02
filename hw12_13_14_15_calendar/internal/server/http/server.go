@@ -62,6 +62,7 @@ func NewServer(logger Logger, app Application, config Config) *Server {
 func (s *Server) Start(ctx context.Context) error {
 	s.logg.Info("calendar is running...")
 	//============
+	/*
 	std := time.Now()
 	stopd := std.Add(72 * time.Hour)
 	emtd := 4 * time.Hour
@@ -76,7 +77,7 @@ func (s *Server) Start(ctx context.Context) error {
 		id := testEvents[0].ID
 		s.app.UpdateEvent(context.Background(), id, "test777 - updated event", "USER0", "", std, stopd, emtd)
 	}
-
+*/
 	//============
 	err := s.serv.ListenAndServe()
 	if err != nil {

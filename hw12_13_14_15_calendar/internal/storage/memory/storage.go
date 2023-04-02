@@ -110,7 +110,7 @@ func (s *Storage) DeleteEvent(ctx context.Context, id int) error {
 	}
 }
 
-func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, StartTime time.Time, EndTime time.Time) ([]storage.Event, error) {
+func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, startTime time.Time, endTime time.Time) ([]storage.Event, error) {
 	resEvents := make([]storage.Event, 0)
 	select {
 	case <-ctx.Done():
@@ -118,7 +118,7 @@ func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, StartT
 	default:
 		s.mu.RLock()
 		for _, curEvent := range s.m {
-			if helpers.DateBetweenInclude(curEvent.DateStart, StartTime, EndTime) || helpers.DateBetweenInclude(curEvent.DateStop, StartTime, EndTime) {
+			if helpers.DateBetweenInclude(curEvent.DateStart, startTime, endTime) || helpers.DateBetweenInclude(curEvent.DateStop, startTime, endTime) {
 				resEvents = append(resEvents, curEvent)
 			}
 		}

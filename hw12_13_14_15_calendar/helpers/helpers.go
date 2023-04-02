@@ -5,37 +5,37 @@ import (
 	"time"
 )
 
-func OnlyDate(InputDateTime time.Time) time.Time {
+func OnlyDate(inputDateTime time.Time) time.Time {
 
-	year := InputDateTime.Year()
-	month := InputDateTime.Month()
-	day := InputDateTime.Day()
-	location := InputDateTime.Location()
+	year := inputDateTime.Year()
+	month := inputDateTime.Month()
+	day := inputDateTime.Day()
+	location := inputDateTime.Location()
 
 	OnlyDate := time.Date(year, month, day, 0, 0, 0, 0, location)
 
 	return OnlyDate
 }
 
-func DateStartTime(InputDateTime time.Time) time.Time {
-	return OnlyDate(InputDateTime)
+func DateStartTime(inputDateTime time.Time) time.Time {
+	return OnlyDate(inputDateTime)
 }
 
-func DateEndTime(InputDateTime time.Time) time.Time {
+func DateEndTime(inputDateTime time.Time) time.Time {
 
-	year := InputDateTime.Year()
-	month := InputDateTime.Month()
-	day := InputDateTime.Day()
-	location := InputDateTime.Location()
+	year := inputDateTime.Year()
+	month := inputDateTime.Month()
+	day := inputDateTime.Day()
+	location := inputDateTime.Location()
 
 	DateEndTime := time.Date(year, month, day, 23, 59, 59, 0, location)
 
 	return DateEndTime
 }
 
-func DateBetweenInclude(InputDateTime time.Time, StartTime time.Time, EndTime time.Time) bool {
-	aft := InputDateTime.After(StartTime) || InputDateTime.Equal(StartTime)
-	bf := InputDateTime.Before(EndTime) || InputDateTime.Equal(EndTime)
+func DateBetweenInclude(inputDateTime time.Time, startTime time.Time, endTime time.Time) bool {
+	aft := inputDateTime.After(startTime) || inputDateTime.Equal(startTime)
+	bf := inputDateTime.Before(endTime) || inputDateTime.Equal(endTime)
 	return aft && bf
 }
 

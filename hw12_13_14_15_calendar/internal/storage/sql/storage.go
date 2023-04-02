@@ -36,7 +36,7 @@ func (s *Storage) Init(ctx context.Context, config storage.Config) error {
 
 func (s *Storage) Connect(ctx context.Context, config storage.Config) error {
 	dsn := helpers.StringBuild(config.GetDbUser(), ":", config.GetDbPassword(), "@/", config.GetDbName(), "?parseTime=true")
-	fmt.Println("dsn: ", dsn)
+	// fmt.Println("dsn: ", dsn)
 	var err error
 	s.DB, err = sql.Open("mysql", dsn)
 	if err != nil {
@@ -102,7 +102,7 @@ func (s *Storage) GetEvent(ctx context.Context, id int) (storage.Event, error) {
 }
 
 func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) (int, error) {
-	fmt.Println("inSQLcreate")
+	// fmt.Println("inSQLcreate")
 	ok, err := s.isEventOnThisTimeExcluded(ctx, value)
 	if err != nil {
 		fmt.Println("busy check error: ", err.Error())
@@ -150,10 +150,10 @@ func (s *Storage) DeleteEvent(ctx context.Context, id int) error {
 	return nil
 }
 
-func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, StartTime time.Time, EndTime time.Time) ([]storage.Event, error) {
+func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, startTime time.Time, endTime time.Time) ([]storage.Event, error) {
 	resEvents := make([]storage.Event, 0)
-	startTimeStr := StartTime.Format("2006-01-02 15:04:05")
-	endTimeStr := EndTime.Format("2006-01-02 15:04:05")
+	startTimeStr := startTime.Format("2006-01-02 15:04:05")
+	endTimeStr := endTime.Format("2006-01-02 15:04:05")
 	stmt := "SELECT id, title , userID, description , dateStart, dateStop, eventMessageTimeDelta FROM eventsTable WHERE CAST(dateStart AS DATE) BETWEEN CAST('" + startTimeStr + "' AS DATE)  AND CAST('" + endTimeStr + "' AS DATE)"
 
 	rows, err := s.DB.QueryContext(ctx, stmt)
@@ -226,7 +226,7 @@ func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, value storage.E
 	endTimeStr := value.DateStop.Format("2006-01-02 15:04:05")
 	stmt := "SELECT id FROM eventsTable WHERE UserID=? AND CAST(dateStart AS DATE) BETWEEN CAST('" + startTimeStr + "' AS DATE) AND  CAST('" + endTimeStr + "' AS DATE) OR CAST(dateStop AS DATE) BETWEEN CAST('" + startTimeStr + "' AS DATE) AND  CAST('" + endTimeStr + "' AS DATE)"
 	fmt.Println("stmt: ", stmt)
-	//CAST(dateStart AS DATE)
+	
 	row := s.DB.QueryRowContext(ctx, stmt, value.UserID)
 
 	var id int
@@ -238,7 +238,6 @@ func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, value storage.E
 		} else {
 			fmt.Println("error: ", err.Error())
 			os.Exit(1)
-			//return false, err
 		}
 	}
 	return true, nil

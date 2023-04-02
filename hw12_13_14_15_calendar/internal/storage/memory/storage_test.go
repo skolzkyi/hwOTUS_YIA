@@ -9,6 +9,7 @@ import (
 	storage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/event"
 	"github.com/stretchr/testify/require"
 )
+const messageTestUpdated = "testUpdated"
 
 func initStorageInMemory(t *testing.T) *Storage {
 	storage := New()
@@ -168,7 +169,7 @@ func TestStoragePositiveUpdateEvent(t *testing.T) {
 	ctx := context.Background()
 	createTestEventPack(t, s)
 	uEvent := storage.Event{}
-	uEvent.Title = "testUpdated"
+	uEvent.Title = messageTestUpdated 
 
 	for i := 0; i < 2; i++ {
 		t.Run("PositiveUpdateEvent", func(t *testing.T) {
@@ -180,7 +181,7 @@ func TestStoragePositiveUpdateEvent(t *testing.T) {
 			require.NoError(t, err)
 			testEvent, err := s.GetEvent(ctx, i)
 			require.NoError(t, err)
-			require.Truef(t, testEvent.Title == "testUpdated", "event not update: ", testEvent.Title)
+			require.Truef(t, testEvent.Title == messageTestUpdated , "event not update: ", testEvent.Title)
 		})
 	}
 
@@ -317,7 +318,7 @@ func TestStorage(t *testing.T) {
 		ctx := context.Background()
 		createTestEventPack(t, s)
 		uEvent := storage.Event{}
-		uEvent.Title = "testUpdated"
+		uEvent.Title = messageTestUpdated 
 		uEvent.ID = 25
 		err := s.UpdateEvent(ctx, uEvent)
 		require.Truef(t, errors.Is(err, storage.ErrNoRecord), "actual error %q", err)

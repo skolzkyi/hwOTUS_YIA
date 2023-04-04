@@ -54,8 +54,8 @@ func (a *App) GetEvent(ctx context.Context, id int) (storage.Event, error) {
 	return event, err
 }
 
-func (a *App) CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (int, error) {
-	
+func (a *App) CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (int, error) { //nolint:lll,whitespace
+
 	event, err := SimpleEventValidator(title, userID, description, dateStart, dateStop, eventMessageTimeDelta)
 	if err != nil {
 		message := helpers.StringBuild("event create error(title - ", title, "),error: ", err.Error())
@@ -73,7 +73,7 @@ func (a *App) CreateEvent(ctx context.Context, title string, userID string, desc
 	return id, err
 }
 
-func (a *App) UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error {
+func (a *App) UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error { //nolint:lll,revive
 	event, err := SimpleEventValidator(title, userID, description, dateStart, dateStop, eventMessageTimeDelta)
 	if err != nil {
 		message := helpers.StringBuild("event create error(title - ", title, "),error: ", err.Error())

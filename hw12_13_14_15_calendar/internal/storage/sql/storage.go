@@ -5,10 +5,9 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"os"
 	"time"
 
-	mysql "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // for driver
 	helpers "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/helpers"
 	storage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/event"
 )
@@ -28,26 +27,30 @@ func (s *Storage) Init(ctx context.Context, config storage.Config) error {
 	if err != nil {
 		return err
 	}
-	if err = s.DB.PingContext(ctx); err != nil {
-		return err
-	}
-	return nil
+	err = s.DB.PingContext(ctx)
+
+	return err
 }
 
 func (s *Storage) Connect(ctx context.Context, config storage.Config) error {
-	dsn := helpers.StringBuild(config.GetDbUser(), ":", config.GetDbPassword(), "@/", config.GetDbName(), "?parseTime=true")
-	// fmt.Println("dsn: ", dsn)
-	var err error
-	s.DB, err = sql.Open("mysql", dsn)
-	if err != nil {
-		return err
+	select {
+	case <-ctx.Done():
+		return storage.ErrStorageTimeout
+	default:
+		dsn := helpers.StringBuild(config.GetDBUser(), ":", config.GetDBPassword(), "@/", config.GetDBName(), "?parseTime=true") //nolint:lll
+		// fmt.Println("dsn: ", dsn)
+		var err error
+		s.DB, err = sql.Open("mysql", dsn)
+		if err != nil {
+			return err
+		}
+
+		s.DB.SetConnMaxLifetime(config.GetDBConnMaxLifetime())
+		s.DB.SetMaxOpenConns(config.GetDBMaxOpenConns())
+		s.DB.SetMaxIdleConns(config.GetDBMaxIdleConns())
+
+		return nil
 	}
-
-	s.DB.SetConnMaxLifetime(config.GetdbConnMaxLifetime())
-	s.DB.SetMaxOpenConns(config.GetDbMaxOpenConns())
-	s.DB.SetMaxIdleConns(config.GetDbMaxIdleConns())
-
-	return nil
 }
 
 func (s *Storage) Close(ctx context.Context) error {
@@ -64,23 +67,22 @@ func (s *Storage) Close(ctx context.Context) error {
 }
 
 func (s *Storage) GetEvent(ctx context.Context, id int) (storage.Event, error) {
-	stmt := "SELECT id, title , userID, description , dateStart, dateStop, eventMessageTimeDelta FROM eventsTable WHERE id = ?"
+	stmt := "SELECT id, title , userID, description , dateStart, dateStop, eventMessageTimeDelta FROM eventsTable WHERE id = ?" //nolint:lll
 
 	row := s.DB.QueryRowContext(ctx, stmt, id)
 
 	event := &storage.Event{}
 
-	var ntStart mysql.NullTime
-	var ntEnd mysql.NullTime
+	var ntStart sql.NullTime
+	var ntEnd sql.NullTime
 	var int64Delta int64
 
 	err := row.Scan(&event.ID, &event.Title, &event.UserID, &event.Description, &ntStart, &ntEnd, &int64Delta)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return storage.Event{}, storage.ErrNoRecord
-		} else {
-			return storage.Event{}, err
 		}
+		return storage.Event{}, err
 	}
 	if ntStart.Valid {
 		event.DateStart = ntStart.Time
@@ -98,12 +100,11 @@ func (s *Storage) GetEvent(ctx context.Context, id int) (storage.Event, error) {
 	event.EventMessageTimeDelta = dr
 
 	return *event, nil
-
 }
 
 func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) (int, error) {
 	// fmt.Println("inSQLcreate")
-	ok, err := s.isEventOnThisTimeExcluded(ctx, value)
+	ok, err := s.isEventOnThisTimeExcluded(ctx, value, false)
 	if err != nil {
 		fmt.Println("busy check error: ", err.Error())
 		return 0, err
@@ -111,8 +112,8 @@ func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) (int, er
 	if ok {
 		return 0, storage.ErrDateBusy
 	}
-	stmt := "INSERT INTO eventsTable(title , userID, description , dateStart, dateStop, eventMessageTimeDelta) VALUES (?,?,?,?,?,?)"
-	res, err := s.DB.ExecContext(ctx, stmt, value.Title, value.UserID, value.Description, value.DateStart, value.DateStop, int64(value.EventMessageTimeDelta))
+	stmt := "INSERT INTO eventsTable(title , userID, description , dateStart, dateStop, eventMessageTimeDelta) VALUES (?,?,?,?,?,?)"                           //nolint:lll
+	res, err := s.DB.ExecContext(ctx, stmt, value.Title, value.UserID, value.Description, value.DateStart, value.DateStop, int64(value.EventMessageTimeDelta)) //nolint:lll
 	if err != nil {
 		fmt.Println("CreateEvent error: ", err.Error())
 		return 0, err
@@ -127,15 +128,22 @@ func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) (int, er
 }
 
 func (s *Storage) UpdateEvent(ctx context.Context, value storage.Event) error {
-	stmt := "UPDATE eventsTable SET title =?,userID=?,description=?,dateStart=?, dateStop=?, eventMessageTimeDelta=? WHERE id=?"
+	ok, err := s.isEventOnThisTimeExcluded(ctx, value, true)
+	if err != nil {
+		fmt.Println("busy check error: ", err.Error())
+		return err
+	}
+	if ok {
+		return storage.ErrDateBusy
+	}
+	stmt := "UPDATE eventsTable SET title =?,userID=?,description=?,dateStart=?, dateStop=?, eventMessageTimeDelta=? WHERE id=?" //nolint:lll
 
-	_, err := s.DB.ExecContext(ctx, stmt, value.Title, value.UserID, value.Description, value.DateStart, value.DateStop, value.EventMessageTimeDelta, value.ID)
+	_, err = s.DB.ExecContext(ctx, stmt, value.Title, value.UserID, value.Description, value.DateStart, value.DateStop, value.EventMessageTimeDelta, value.ID) //nolint:lll
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return storage.ErrNoRecord
-		} else {
-			return err
 		}
+		return err
 	}
 	return nil
 }
@@ -150,11 +158,12 @@ func (s *Storage) DeleteEvent(ctx context.Context, id int) error {
 	return nil
 }
 
-func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, startTime time.Time, endTime time.Time) ([]storage.Event, error) {
+// small name not informative.
+func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, startTime time.Time, endTime time.Time) ([]storage.Event, error) { //nolint:lll
 	resEvents := make([]storage.Event, 0)
 	startTimeStr := startTime.Format("2006-01-02 15:04:05")
 	endTimeStr := endTime.Format("2006-01-02 15:04:05")
-	stmt := "SELECT id, title , userID, description , dateStart, dateStop, eventMessageTimeDelta FROM eventsTable WHERE CAST(dateStart AS DATE) BETWEEN CAST('" + startTimeStr + "' AS DATE)  AND CAST('" + endTimeStr + "' AS DATE)"
+	stmt := "SELECT id, title , userID, description , dateStart, dateStop, eventMessageTimeDelta FROM eventsTable WHERE CAST(dateStart AS DATE) BETWEEN CAST('" + startTimeStr + "' AS DATE)  AND CAST('" + endTimeStr + "' AS DATE)" //nolint:lll
 
 	rows, err := s.DB.QueryContext(ctx, stmt)
 	if err != nil {
@@ -165,8 +174,8 @@ func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, startT
 
 	event := storage.Event{}
 
-	var ntStart mysql.NullTime
-	var ntEnd mysql.NullTime
+	var ntStart sql.NullTime
+	var ntEnd sql.NullTime
 	var int64Delta int64
 	for rows.Next() {
 		err = rows.Scan(&event.ID, &event.Title, &event.UserID, &event.Description, &ntStart, &ntEnd, &int64Delta)
@@ -197,7 +206,6 @@ func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, startT
 	}
 
 	return resEvents, nil
-
 }
 
 func (s *Storage) GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error) {
@@ -221,13 +229,22 @@ func (s *Storage) GetListEventsOnMonthByDay(ctx context.Context, day time.Time) 
 	return resEvents, err
 }
 
-func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, value storage.Event) (bool, error) {
+func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, value storage.Event, exclID bool) (bool, error) {
 	startTimeStr := value.DateStart.Format("2006-01-02 15:04:05")
 	endTimeStr := value.DateStop.Format("2006-01-02 15:04:05")
-	stmt := "SELECT id FROM eventsTable WHERE UserID=? AND CAST(dateStart AS DATE) BETWEEN CAST('" + startTimeStr + "' AS DATE) AND  CAST('" + endTimeStr + "' AS DATE) OR CAST(dateStop AS DATE) BETWEEN CAST('" + startTimeStr + "' AS DATE) AND  CAST('" + endTimeStr + "' AS DATE)"
+	var addStmt string
+	if exclID {
+		addStmt = " AND ID!=? "
+	}
+	stmt := "SELECT id FROM eventsTable WHERE UserID=?" + addStmt + " AND CAST(dateStart AS DATE) BETWEEN CAST('" + startTimeStr + "' AS DATE) AND  CAST('" + endTimeStr + "' AS DATE) OR CAST(dateStop AS DATE) BETWEEN CAST('" + startTimeStr + "' AS DATE) AND  CAST('" + endTimeStr + "' AS DATE)" //nolint:lll
 	fmt.Println("stmt: ", stmt)
-	
-	row := s.DB.QueryRowContext(ctx, stmt, value.UserID)
+
+	var row *sql.Row
+	if exclID {
+		row = s.DB.QueryRowContext(ctx, stmt, value.UserID, value.ID)
+	} else {
+		row = s.DB.QueryRowContext(ctx, stmt, value.UserID)
+	}
 
 	var id int
 
@@ -235,10 +252,8 @@ func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, value storage.E
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return false, nil
-		} else {
-			fmt.Println("error: ", err.Error())
-			os.Exit(1)
 		}
+		return false, err
 	}
 	return true, nil
 }

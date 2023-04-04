@@ -7,17 +7,19 @@ import (
 	storage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/event"
 )
 
-var ErrVoidTitle = errors.New("title is void")
-var ErrVoidUserID = errors.New("userID is void")
-var ErrVoidDateStart = errors.New("dateStart is void")
-var ErrVoidDateStop = errors.New("dateStop is void")
-var ErrTitleTooLong = errors.New("title too long")
-var ErrUserIDTooLong = errors.New("userID too long")
-var ErrDescTooLong = errors.New("description too long")
-var ErrEndDateBefstartDate = errors.New("endDate before startDate or equal")
+var (
+	ErrVoidTitle           = errors.New("title is void")
+	ErrVoidUserID          = errors.New("userID is void")
+	ErrVoidDateStart       = errors.New("dateStart is void")
+	ErrVoidDateStop        = errors.New("dateStop is void")
+	ErrTitleTooLong        = errors.New("title too long")
+	ErrUserIDTooLong       = errors.New("userID too long")
+	ErrDescTooLong         = errors.New("description too long")
+	ErrEndDateBefstartDate = errors.New("endDate before startDate or equal")
+)
 
-func SimpleEventValidator(title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (storage.Event, error) {
-	event := storage.Event{ID: 0, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta}
+func SimpleEventValidator(title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (storage.Event, error) { //nolint:lll
+	event := storage.Event{ID: 0, Title: title, UserID: userID, Description: description, DateStart: dateStart, DateStop: dateStop, EventMessageTimeDelta: eventMessageTimeDelta} //nolint:lll
 	switch {
 	case event.Title == "":
 		return storage.Event{}, ErrVoidTitle

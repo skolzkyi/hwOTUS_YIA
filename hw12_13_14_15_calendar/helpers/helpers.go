@@ -6,7 +6,6 @@ import (
 )
 
 func OnlyDate(inputDateTime time.Time) time.Time {
-
 	year := inputDateTime.Year()
 	month := inputDateTime.Month()
 	day := inputDateTime.Day()
@@ -22,7 +21,6 @@ func DateStartTime(inputDateTime time.Time) time.Time {
 }
 
 func DateEndTime(inputDateTime time.Time) time.Time {
-
 	year := inputDateTime.Year()
 	month := inputDateTime.Month()
 	day := inputDateTime.Day()
@@ -40,7 +38,6 @@ func DateBetweenInclude(inputDateTime time.Time, startTime time.Time, endTime ti
 }
 
 func StringBuild(input ...string) string {
-
 	var sb strings.Builder
 
 	for _, str := range input {

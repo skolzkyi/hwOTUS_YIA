@@ -50,12 +50,11 @@ func (s *Storage) GetEvent(ctx context.Context, id int) (storage.Event, error) {
 }
 
 func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) (int, error) {
-
 	select {
 	case <-ctx.Done():
 		return 0, storage.ErrStorageTimeout
 	default:
-		ok, err := s.isEventOnThisTimeExcluded(ctx, value)
+		ok, err := s.isEventOnThisTimeExcluded(ctx, value, false)
 		if err != nil {
 			fmt.Println("busy check error: ", err.Error())
 			return 0, err
@@ -70,7 +69,7 @@ func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) (int, er
 		defer s.mu.Unlock()
 		_, ok = s.m[id]
 		if ok {
-			return 0, storage.ErrIdNotUnique
+			return 0, storage.ErrIDNotUnique
 		}
 		s.m[id] = value
 		s.idCounter++
@@ -83,7 +82,15 @@ func (s *Storage) UpdateEvent(ctx context.Context, value storage.Event) error {
 	case <-ctx.Done():
 		return storage.ErrStorageTimeout
 	default:
-		_, ok := s.m[value.ID]
+		ok, err := s.isEventOnThisTimeExcluded(ctx, value, true)
+		if err != nil {
+			fmt.Println("busy check error: ", err.Error())
+			return err
+		}
+		if ok {
+			return storage.ErrDateBusy
+		}
+		_, ok = s.m[value.ID]
 		if !ok {
 			return storage.ErrNoRecord
 		}
@@ -110,7 +117,8 @@ func (s *Storage) DeleteEvent(ctx context.Context, id int) error {
 	}
 }
 
-func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, startTime time.Time, endTime time.Time) ([]storage.Event, error) {
+// small name not informative.
+func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, startTime time.Time, endTime time.Time) ([]storage.Event, error) { //nolint:lll
 	resEvents := make([]storage.Event, 0)
 	select {
 	case <-ctx.Done():
@@ -118,7 +126,9 @@ func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, startT
 	default:
 		s.mu.RLock()
 		for _, curEvent := range s.m {
-			if helpers.DateBetweenInclude(curEvent.DateStart, startTime, endTime) || helpers.DateBetweenInclude(curEvent.DateStop, startTime, endTime) {
+			startDateBetweenInclude := helpers.DateBetweenInclude(curEvent.DateStart, startTime, endTime)
+			endDateBetweenInclude := helpers.DateBetweenInclude(curEvent.DateStop, startTime, endTime)
+			if startDateBetweenInclude || endDateBetweenInclude {
 				resEvents = append(resEvents, curEvent)
 			}
 		}
@@ -151,14 +161,19 @@ func (s *Storage) GetListEventsOnMonthByDay(ctx context.Context, day time.Time) 
 	return resEvents, err
 }
 
-func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, value storage.Event) (bool, error) {
+func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, value storage.Event, exclID bool) (bool, error) {
 	select {
 	case <-ctx.Done():
 		return false, storage.ErrStorageTimeout
 	default:
 		s.mu.RLock()
 		for _, curEvent := range s.m {
-			if (helpers.DateBetweenInclude(curEvent.DateStart, value.DateStart, value.DateStop) || helpers.DateBetweenInclude(curEvent.DateStop, value.DateStart, value.DateStop)) && curEvent.UserID == value.UserID {
+			startDateBetweenInclude := helpers.DateBetweenInclude(curEvent.DateStart, value.DateStart, value.DateStop)
+			endDateBetweenInclude := helpers.DateBetweenInclude(curEvent.DateStop, value.DateStart, value.DateStop)
+			if (startDateBetweenInclude || endDateBetweenInclude) && curEvent.UserID == value.UserID {
+				if exclID && curEvent.ID == value.ID {
+					continue
+				}
 				s.mu.RUnlock()
 				return true, nil
 			}

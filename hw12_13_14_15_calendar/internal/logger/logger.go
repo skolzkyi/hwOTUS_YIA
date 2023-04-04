@@ -4,13 +4,13 @@ import (
 	"go.uber.org/zap"
 )
 
-type LoggerWrap struct {
+type LogWrap struct {
 	config zap.Config
 	logger *zap.SugaredLogger
 }
 
-func New(level string) (*LoggerWrap, error) {
-	logWrap := LoggerWrap{}
+func New(level string) (*LogWrap, error) {
+	logWrap := LogWrap{}
 	zlevel, err := zap.ParseAtomicLevel(level)
 	if err != nil {
 		return nil, err
@@ -28,18 +28,18 @@ func New(level string) (*LoggerWrap, error) {
 	return &logWrap, nil
 }
 
-func (l LoggerWrap) Info(msg string) {
+func (l LogWrap) Info(msg string) {
 	l.logger.Info(msg)
 }
 
-func (l LoggerWrap) Warning(msg string) {
+func (l LogWrap) Warning(msg string) {
 	l.logger.Warn(msg)
 }
 
-func (l LoggerWrap) Error(msg string) {
+func (l LogWrap) Error(msg string) {
 	l.logger.Error(msg)
 }
 
-func (l LoggerWrap) Fatal(msg string) {
+func (l LogWrap) Fatal(msg string) {
 	l.logger.Fatal(msg)
 }

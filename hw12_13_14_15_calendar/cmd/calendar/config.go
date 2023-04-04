@@ -60,7 +60,8 @@ func (config *Config) Init(path string) error {
 
 	err := viper.ReadInConfig()
 	if err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+		// thit it type, not err.
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok { //nolint:errorlint
 			return err
 		}
 	}
@@ -82,72 +83,52 @@ func (config *Config) Init(path string) error {
 	config.OSFilePathSeparator = viper.GetString("OSFilePathSeparator")
 
 	return nil
-
 }
 
 func (config *Config) GetServerURL() string {
-
 	return config.address + ":" + config.port
-
 }
 
 func (config *Config) GetAddress() string {
-
 	return config.address
-
 }
 
 func (config *Config) GetPort() string {
-
 	return config.port
-
 }
 
 func (config *Config) GetOSFilePathSeparator() string {
-
 	return config.OSFilePathSeparator
-
 }
 
 func (config *Config) GetServerShutdownTimeout() time.Duration {
-
 	return config.ServerShutdownTimeout
 }
 
-func (config *Config) GetDbName() string {
-
+func (config *Config) GetDBName() string {
 	return config.dbName
-
 }
-func (config *Config) GetDbUser() string {
 
+func (config *Config) GetDBUser() string {
 	return config.dbUser
-
 }
-func (config *Config) GetDbPassword() string {
 
+func (config *Config) GetDBPassword() string {
 	return config.dbPassword
-
 }
 
-func (config *Config) GetdbConnMaxLifetime() time.Duration {
-
+func (config *Config) GetDBConnMaxLifetime() time.Duration {
 	return config.dbConnMaxLifetime
 }
 
-func (config *Config) GetDbMaxOpenConns() int {
-
+func (config *Config) GetDBMaxOpenConns() int {
 	return config.dbMaxOpenConns
-
 }
 
-func (config *Config) GetDbMaxIdleConns() int {
-
+func (config *Config) GetDBMaxIdleConns() int {
 	return config.dbMaxIdleConns
-
 }
 
-func (config *Config) GetdbTimeOut() time.Duration {
-
+func (config *Config) GetDBTimeOut() time.Duration {
 	return config.dbTimeOut
 }

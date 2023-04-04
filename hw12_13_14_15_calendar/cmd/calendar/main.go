@@ -12,7 +12,7 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-
+    //nolint:gci,gofmt,gofumpt
 	"github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app"
 	"github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger"
 	internalhttp "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http"
@@ -46,7 +46,7 @@ func main() {
 	}
 
 	var storage app.Storage
-	ctxStor, cancelStore := context.WithTimeout(context.Background(), config.GetdbTimeOut())
+	ctxStor, cancelStore := context.WithTimeout(context.Background(), config.GetDBTimeOut())
 	if config.workWithDBStorage {
 		storage = SQLstorage.New()
 		err = storage.Init(ctxStor, &config)

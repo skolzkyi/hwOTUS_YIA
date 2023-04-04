@@ -9,9 +9,11 @@ import (
 	storage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/event"
 	"github.com/stretchr/testify/require"
 )
+
 const messageTestUpdated = "testUpdated"
 
 func initStorageInMemory(t *testing.T) *Storage {
+	t.Helper()
 	storage := New()
 	err := storage.Init(context.Background(), nil)
 	require.NoError(t, err)
@@ -19,7 +21,8 @@ func initStorageInMemory(t *testing.T) *Storage {
 }
 
 func createTestEventPack(t *testing.T, s *Storage) {
-	events := make([]storage.Event, 10, 10)
+	t.Helper()
+	events := make([]storage.Event, 10)
 	ctx := context.Background()
 	// std := helpers.DateStartTime(time.Now())
 	std := time.Date(2023, 3, 27, 0, 0, 0, 1, time.Local)
@@ -53,7 +56,7 @@ func createTestEventPack(t *testing.T, s *Storage) {
 	}
 	events[3] = storage.Event{
 		ID:                    0,
-		Title:                 "test3 - in this mounth",
+		Title:                 "test3 - in this month",
 		UserID:                "USER0",
 		Description:           "",
 		DateStart:             std.Add(192 * time.Hour),
@@ -90,7 +93,7 @@ func createTestEventPack(t *testing.T, s *Storage) {
 	}
 	events[7] = storage.Event{
 		ID:                    0,
-		Title:                 "test7 - on  out border of this mounth",
+		Title:                 "test7 - on  out border of this month",
 		UserID:                "USER0",
 		Description:           "",
 		DateStart:             std.Add(743 * time.Hour),
@@ -99,7 +102,7 @@ func createTestEventPack(t *testing.T, s *Storage) {
 	}
 	events[8] = storage.Event{
 		ID:                    0,
-		Title:                 "test8 - in next mounth",
+		Title:                 "test8 - in next month",
 		UserID:                "USER0",
 		Description:           "",
 		DateStart:             std.Add(755 * time.Hour),
@@ -108,7 +111,7 @@ func createTestEventPack(t *testing.T, s *Storage) {
 	}
 	events[9] = storage.Event{
 		ID:                    0,
-		Title:                 "test9 - in previos day",
+		Title:                 "test9 - in previous day",
 		UserID:                "USER0",
 		Description:           "",
 		DateStart:             std.Add(-20 * time.Hour),
@@ -119,13 +122,11 @@ func createTestEventPack(t *testing.T, s *Storage) {
 		_, err := s.CreateEvent(ctx, curEvent)
 		require.NoError(t, err)
 	}
-
 }
 
 func TestStoragePositiveCreateEvent(t *testing.T) {
-
 	s := initStorageInMemory(t)
-	events := make([]storage.Event, 2, 2)
+	events := make([]storage.Event, 2)
 	ctx := context.Background()
 	std := time.Date(2023, 3, 27, 0, 0, 0, 1, time.Local)
 	emtd := 4 * time.Hour
@@ -156,38 +157,34 @@ func TestStoragePositiveCreateEvent(t *testing.T) {
 			require.NoError(t, err)
 			_, err = s.GetEvent(ctx, id)
 			require.NoError(t, err)
-
 		})
 	}
 	err := s.Close(context.Background())
 	require.NoError(t, err)
-
 }
 
 func TestStoragePositiveUpdateEvent(t *testing.T) {
 	s := initStorageInMemory(t)
 	ctx := context.Background()
 	createTestEventPack(t, s)
-	uEvent := storage.Event{}
-	uEvent.Title = messageTestUpdated 
 
 	for i := 0; i < 2; i++ {
 		t.Run("PositiveUpdateEvent", func(t *testing.T) {
 			i := i
 			t.Parallel()
-			tEvent := uEvent
-			tEvent.ID = i
-			err := s.UpdateEvent(ctx, tEvent)
+			tEvent, err := s.GetEvent(ctx, i)
+			require.NoError(t, err)
+			tEvent.Title = "testUpdated"
+			err = s.UpdateEvent(ctx, tEvent)
 			require.NoError(t, err)
 			testEvent, err := s.GetEvent(ctx, i)
 			require.NoError(t, err)
-			require.Truef(t, testEvent.Title == messageTestUpdated , "event not update: ", testEvent.Title)
+			require.Truef(t, testEvent.Title == "testUpdated", "event not update: ", testEvent.Title)
 		})
 	}
 
 	err := s.Close(context.Background())
 	require.NoError(t, err)
-
 }
 
 func TestStoragePositiveDeleteEvent(t *testing.T) {
@@ -205,7 +202,6 @@ func TestStoragePositiveDeleteEvent(t *testing.T) {
 	}
 	err := s.Close(context.Background())
 	require.NoError(t, err)
-
 }
 
 func TestStorage(t *testing.T) {
@@ -318,7 +314,7 @@ func TestStorage(t *testing.T) {
 		ctx := context.Background()
 		createTestEventPack(t, s)
 		uEvent := storage.Event{}
-		uEvent.Title = messageTestUpdated 
+		uEvent.Title = messageTestUpdated
 		uEvent.ID = 25
 		err := s.UpdateEvent(ctx, uEvent)
 		require.Truef(t, errors.Is(err, storage.ErrNoRecord), "actual error %q", err)

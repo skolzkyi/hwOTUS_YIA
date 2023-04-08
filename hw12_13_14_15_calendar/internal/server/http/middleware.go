@@ -4,14 +4,22 @@ import (
 	"net/http"
 	"time"
 
-	helpers "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/helpers"
+	zap "go.uber.org/zap"
 )
 
 func loggingMiddleware(next http.HandlerFunc, logg Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		t := time.Now()
 		next.ServeHTTP(w, r)
-		message := helpers.StringBuild("[client IP: ", r.RemoteAddr, " Request DateTime: ", time.Now().String(), " Method: ", r.Method, " Request URL: ", r.RequestURI, " Request Scheme: ", r.URL.Scheme, "Request Status: ", w.Header().Get("Status"), "Time of request work: ", time.Since(t).String(), " Request User-Agent: ", r.Header.Get("User-Agent")) //nolint:lll
-		logg.Info(message)
+		logg.GetZapLogger().With(
+			zap.String("Client IP", r.RemoteAddr),
+			zap.String("Request DateTime", time.Now().String()),
+			zap.String("Method", r.Method),
+			zap.String("Request URL", r.RequestURI),
+			zap.String("Request Scheme", r.URL.Scheme),
+			zap.String("Request Status", w.Header().Get("Status")),
+			zap.String("Time of request work", time.Since(t).String()),
+			zap.String("Request User-Agent", r.Header.Get("User-Agent")),
+		).Info("http middleware log")
 	}
 }

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	storage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/event"
+	"go.uber.org/zap"
 )
 
 type Server struct {
@@ -33,6 +34,8 @@ type Logger interface {
 	Info(msg string)
 	Warning(msg string)
 	Error(msg string)
+	Fatal(msg string)
+	GetZapLogger() *zap.SugaredLogger
 }
 
 type Application interface {

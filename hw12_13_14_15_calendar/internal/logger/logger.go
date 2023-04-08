@@ -28,6 +28,10 @@ func New(level string) (*LogWrap, error) {
 	return &logWrap, nil
 }
 
+func (l LogWrap) GetZapLogger() *zap.SugaredLogger {
+	return l.logger
+}
+
 func (l LogWrap) Info(msg string) {
 	l.logger.Info(msg)
 }

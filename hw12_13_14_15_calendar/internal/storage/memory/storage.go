@@ -2,8 +2,8 @@ package memorystorage
 
 import (
 	"context"
-	"fmt"
 	"sort"
+	"strconv"
 	"sync"
 	"time"
 
@@ -21,7 +21,7 @@ func New() *Storage {
 	return &Storage{}
 }
 
-func (s *Storage) Init(_ context.Context, _ storage.Config) error {
+func (s *Storage) Init(_ context.Context, _ storage.Logger, _ storage.Config) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.m = make(map[int]storage.Event)
@@ -29,11 +29,11 @@ func (s *Storage) Init(_ context.Context, _ storage.Config) error {
 	return nil
 }
 
-func (s *Storage) Close(_ context.Context) error {
+func (s *Storage) Close(_ context.Context, _ storage.Logger) error {
 	return nil
 }
 
-func (s *Storage) GetEvent(ctx context.Context, id int) (storage.Event, error) {
+func (s *Storage) GetEvent(ctx context.Context, _ storage.Logger, id int) (storage.Event, error) {
 	select {
 	case <-ctx.Done():
 		return storage.Event{}, storage.ErrStorageTimeout
@@ -49,14 +49,14 @@ func (s *Storage) GetEvent(ctx context.Context, id int) (storage.Event, error) {
 	}
 }
 
-func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) (int, error) {
+func (s *Storage) CreateEvent(ctx context.Context, logger storage.Logger, value storage.Event) (int, error) {
 	select {
 	case <-ctx.Done():
 		return 0, storage.ErrStorageTimeout
 	default:
-		ok, err := s.isEventOnThisTimeExcluded(ctx, value, false)
+		ok, err := s.isEventOnThisTimeExcluded(ctx, logger, value, false)
 		if err != nil {
-			fmt.Println("busy check error: ", err.Error())
+			logger.Error("Memory storage CreateEvent busy check error" + err.Error())
 			return 0, err
 		}
 		if ok {
@@ -69,6 +69,7 @@ func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) (int, er
 		defer s.mu.Unlock()
 		_, ok = s.m[id]
 		if ok {
+			logger.Error("Memory storage not unique ID error, ID:" + strconv.Itoa(id))
 			return 0, storage.ErrIDNotUnique
 		}
 		s.m[id] = value
@@ -77,14 +78,14 @@ func (s *Storage) CreateEvent(ctx context.Context, value storage.Event) (int, er
 	}
 }
 
-func (s *Storage) UpdateEvent(ctx context.Context, value storage.Event) error {
+func (s *Storage) UpdateEvent(ctx context.Context, logger storage.Logger, value storage.Event) error {
 	select {
 	case <-ctx.Done():
 		return storage.ErrStorageTimeout
 	default:
-		ok, err := s.isEventOnThisTimeExcluded(ctx, value, true)
+		ok, err := s.isEventOnThisTimeExcluded(ctx, logger, value, true)
 		if err != nil {
-			fmt.Println("busy check error: ", err.Error())
+			logger.Error("Memory storage UpdateEvent busy check error" + err.Error())
 			return err
 		}
 		if ok {
@@ -101,7 +102,7 @@ func (s *Storage) UpdateEvent(ctx context.Context, value storage.Event) error {
 	return nil
 }
 
-func (s *Storage) DeleteEvent(ctx context.Context, id int) error {
+func (s *Storage) DeleteEvent(ctx context.Context, _ storage.Logger, id int) error {
 	select {
 	case <-ctx.Done():
 		return storage.ErrStorageTimeout
@@ -118,7 +119,7 @@ func (s *Storage) DeleteEvent(ctx context.Context, id int) error {
 }
 
 // small name not informative.
-func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, startTime time.Time, endTime time.Time) ([]storage.Event, error) { //nolint:lll
+func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, _ storage.Logger, startTime time.Time, endTime time.Time) ([]storage.Event, error) { //nolint:lll
 	resEvents := make([]storage.Event, 0)
 	select {
 	case <-ctx.Done():
@@ -140,28 +141,30 @@ func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, startT
 	}
 }
 
-func (s *Storage) GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error) {
+func (s *Storage) GetListEventsonDayByDay(ctx context.Context, logger storage.Logger, day time.Time) ([]storage.Event, error) { //nolint:lll
 	dayStart := helpers.DateStartTime(day)
 	dayEnd := helpers.DateEndTime(day)
-	resEvents, err := s.getListEventsBetweenTwoDateInclude(ctx, dayStart, dayEnd)
+	resEvents, err := s.getListEventsBetweenTwoDateInclude(ctx, logger, dayStart, dayEnd)
 	return resEvents, err
 }
 
-func (s *Storage) GetListEventsOnWeekByDay(ctx context.Context, day time.Time) ([]storage.Event, error) {
+func (s *Storage) GetListEventsOnWeekByDay(ctx context.Context, logger storage.Logger, day time.Time) ([]storage.Event, error) { //nolint:lll
+	weekTime := 168 * time.Hour
 	dayStart := helpers.DateStartTime(day)
-	dayEnd := helpers.DateEndTime(day.Add(168 * time.Hour))
-	resEvents, err := s.getListEventsBetweenTwoDateInclude(ctx, dayStart, dayEnd)
+	dayEnd := helpers.DateEndTime(day.Add(weekTime))
+	resEvents, err := s.getListEventsBetweenTwoDateInclude(ctx, logger, dayStart, dayEnd)
 	return resEvents, err
 }
 
-func (s *Storage) GetListEventsOnMonthByDay(ctx context.Context, day time.Time) ([]storage.Event, error) {
+func (s *Storage) GetListEventsOnMonthByDay(ctx context.Context, logger storage.Logger, day time.Time) ([]storage.Event, error) { //nolint:lll
+	monthTime := 720 * time.Hour
 	dayStart := helpers.DateStartTime(day)
-	dayEnd := helpers.DateEndTime(day.Add(720 * time.Hour))
-	resEvents, err := s.getListEventsBetweenTwoDateInclude(ctx, dayStart, dayEnd)
+	dayEnd := helpers.DateEndTime(day.Add(monthTime))
+	resEvents, err := s.getListEventsBetweenTwoDateInclude(ctx, logger, dayStart, dayEnd)
 	return resEvents, err
 }
 
-func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, value storage.Event, exclID bool) (bool, error) {
+func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, _ storage.Logger, value storage.Event, exclID bool) (bool, error) { //nolint:lll
 	select {
 	case <-ctx.Done():
 		return false, storage.ErrStorageTimeout

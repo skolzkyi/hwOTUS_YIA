@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	logger "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger"
 	storage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/event"
 	"github.com/stretchr/testify/require"
 )
@@ -14,14 +15,16 @@ const messageTestUpdated = "testUpdated"
 
 func initStorageInMemory(t *testing.T) *Storage {
 	t.Helper()
+	logger, _ := logger.New("debug")
 	storage := New()
-	err := storage.Init(context.Background(), nil)
+	err := storage.Init(context.Background(), logger, nil)
 	require.NoError(t, err)
 	return storage
 }
 
 func createTestEventPack(t *testing.T, s *Storage) {
 	t.Helper()
+	logger, _ := logger.New("debug")
 	events := make([]storage.Event, 10)
 	ctx := context.Background()
 	// std := helpers.DateStartTime(time.Now())
@@ -119,12 +122,13 @@ func createTestEventPack(t *testing.T, s *Storage) {
 		EventMessageTimeDelta: emtd,
 	}
 	for _, curEvent := range events {
-		_, err := s.CreateEvent(ctx, curEvent)
+		_, err := s.CreateEvent(ctx, logger, curEvent)
 		require.NoError(t, err)
 	}
 }
 
 func TestStoragePositiveCreateEvent(t *testing.T) {
+	logger, _ := logger.New("debug")
 	s := initStorageInMemory(t)
 	events := make([]storage.Event, 2)
 	ctx := context.Background()
@@ -153,17 +157,18 @@ func TestStoragePositiveCreateEvent(t *testing.T) {
 		t.Run("PositiveCreateEvent", func(t *testing.T) {
 			curEvent := curEvent
 			t.Parallel()
-			id, err := s.CreateEvent(ctx, curEvent)
+			id, err := s.CreateEvent(ctx, logger, curEvent)
 			require.NoError(t, err)
-			_, err = s.GetEvent(ctx, id)
+			_, err = s.GetEvent(ctx, logger, id)
 			require.NoError(t, err)
 		})
 	}
-	err := s.Close(context.Background())
+	err := s.Close(context.Background(), logger)
 	require.NoError(t, err)
 }
 
 func TestStoragePositiveUpdateEvent(t *testing.T) {
+	logger, _ := logger.New("debug")
 	s := initStorageInMemory(t)
 	ctx := context.Background()
 	createTestEventPack(t, s)
@@ -172,44 +177,46 @@ func TestStoragePositiveUpdateEvent(t *testing.T) {
 		t.Run("PositiveUpdateEvent", func(t *testing.T) {
 			i := i
 			t.Parallel()
-			tEvent, err := s.GetEvent(ctx, i)
+			tEvent, err := s.GetEvent(ctx, logger, i)
 			require.NoError(t, err)
 			tEvent.Title = "testUpdated"
-			err = s.UpdateEvent(ctx, tEvent)
+			err = s.UpdateEvent(ctx, logger, tEvent)
 			require.NoError(t, err)
-			testEvent, err := s.GetEvent(ctx, i)
+			testEvent, err := s.GetEvent(ctx, logger, i)
 			require.NoError(t, err)
 			require.Truef(t, testEvent.Title == "testUpdated", "event not update: ", testEvent.Title)
 		})
 	}
 
-	err := s.Close(context.Background())
+	err := s.Close(context.Background(), logger)
 	require.NoError(t, err)
 }
 
 func TestStoragePositiveDeleteEvent(t *testing.T) {
+	logger, _ := logger.New("debug")
 	s := initStorageInMemory(t)
 	ctx := context.Background()
 	createTestEventPack(t, s)
 	for i := 0; i < 2; i++ {
 		t.Run("PositiveDeleteEvent", func(t *testing.T) {
 			i := i
-			err := s.DeleteEvent(ctx, i)
+			err := s.DeleteEvent(ctx, logger, i)
 			require.NoError(t, err)
-			_, err = s.GetEvent(ctx, 0)
+			_, err = s.GetEvent(ctx, logger, 0)
 			require.Truef(t, errors.Is(err, storage.ErrNoRecord), "actual error %q", err)
 		})
 	}
-	err := s.Close(context.Background())
+	err := s.Close(context.Background(), logger)
 	require.NoError(t, err)
 }
 
 func TestStorage(t *testing.T) {
+	logger, _ := logger.New("debug")
 	t.Run("PositiveInit", func(t *testing.T) {
 		s := New()
-		err := s.Init(context.Background(), nil)
+		err := s.Init(context.Background(), logger, nil)
 		require.NoError(t, err)
-		err = s.Close(context.Background())
+		err = s.Close(context.Background(), logger)
 		require.NoError(t, err)
 	})
 
@@ -218,10 +225,10 @@ func TestStorage(t *testing.T) {
 		ctx := context.Background()
 		createTestEventPack(t, s)
 
-		testEvent, err := s.GetEvent(ctx, 0)
+		testEvent, err := s.GetEvent(ctx, logger, 0)
 		require.NoError(t, err)
 		require.Truef(t, testEvent.Title == "test0 - baseDateTime", "bad event", testEvent.Title)
-		err = s.Close(context.Background())
+		err = s.Close(context.Background(), logger)
 		require.NoError(t, err)
 	})
 
@@ -235,13 +242,13 @@ func TestStorage(t *testing.T) {
 		testEventMap[4] = false
 		testEventMap[5] = false
 		testtime := time.Date(2023, 3, 27, 12, 0, 0, 1, time.Local)
-		testEvents, err := s.GetListEventsonDayByDay(ctx, testtime)
+		testEvents, err := s.GetListEventsonDayByDay(ctx, logger, testtime)
 		require.NoError(t, err)
 		for _, curEvent := range testEvents {
 			_, ok := testEventMap[curEvent.ID]
 			require.Truef(t, ok, "bad event list(GetListEventsonDayByDay): ", testEvents)
 		}
-		err = s.Close(context.Background())
+		err = s.Close(context.Background(), logger)
 		require.NoError(t, err)
 	})
 	t.Run("PositiveGetListEventsOnWeekByDay", func(t *testing.T) {
@@ -256,13 +263,13 @@ func TestStorage(t *testing.T) {
 		testEventMap[5] = false
 		testEventMap[6] = false
 		testtime := time.Date(2023, 3, 27, 12, 0, 0, 1, time.Local)
-		testEvents, err := s.GetListEventsonDayByDay(ctx, testtime)
+		testEvents, err := s.GetListEventsonDayByDay(ctx, logger, testtime)
 		require.NoError(t, err)
 		for _, curEvent := range testEvents {
 			_, ok := testEventMap[curEvent.ID]
 			require.Truef(t, ok, "bad event list(GetListEventsOnWeekByDay): ", testEvents)
 		}
-		err = s.Close(context.Background())
+		err = s.Close(context.Background(), logger)
 		require.NoError(t, err)
 	})
 	t.Run("PositiveGetListEventsOnMonthByDay", func(t *testing.T) {
@@ -279,13 +286,13 @@ func TestStorage(t *testing.T) {
 		testEventMap[6] = false
 		testEventMap[7] = false
 		testtime := time.Date(2023, 3, 27, 12, 0, 0, 1, time.Local)
-		testEvents, err := s.GetListEventsonDayByDay(ctx, testtime)
+		testEvents, err := s.GetListEventsonDayByDay(ctx, logger, testtime)
 		require.NoError(t, err)
 		for _, curEvent := range testEvents {
 			_, ok := testEventMap[curEvent.ID]
 			require.Truef(t, ok, "bad event list(GetListEventsOnMonthByDay): ", testEvents)
 		}
-		err = s.Close(context.Background())
+		err = s.Close(context.Background(), logger)
 		require.NoError(t, err)
 	})
 	t.Run("NegativeCreateEventDateBusy", func(t *testing.T) {
@@ -303,10 +310,10 @@ func TestStorage(t *testing.T) {
 			DateStop:              std.Add(11 * time.Hour),
 			EventMessageTimeDelta: emtd,
 		}
-		_, err := s.CreateEvent(ctx, tEvent)
+		_, err := s.CreateEvent(ctx, logger, tEvent)
 
 		require.Truef(t, errors.Is(err, storage.ErrDateBusy), "actual error %q", err)
-		err = s.Close(context.Background())
+		err = s.Close(context.Background(), logger)
 		require.NoError(t, err)
 	})
 	t.Run("NegativeUpdateEventBadID", func(t *testing.T) {
@@ -316,9 +323,9 @@ func TestStorage(t *testing.T) {
 		uEvent := storage.Event{}
 		uEvent.Title = messageTestUpdated
 		uEvent.ID = 25
-		err := s.UpdateEvent(ctx, uEvent)
+		err := s.UpdateEvent(ctx, logger, uEvent)
 		require.Truef(t, errors.Is(err, storage.ErrNoRecord), "actual error %q", err)
-		err = s.Close(context.Background())
+		err = s.Close(context.Background(), logger)
 		require.NoError(t, err)
 	})
 
@@ -326,9 +333,9 @@ func TestStorage(t *testing.T) {
 		s := initStorageInMemory(t)
 		ctx := context.Background()
 		createTestEventPack(t, s)
-		err := s.DeleteEvent(ctx, 25)
+		err := s.DeleteEvent(ctx, logger, 25)
 		require.Truef(t, errors.Is(err, storage.ErrNoRecord), "actual error %q", err)
-		err = s.Close(context.Background())
+		err = s.Close(context.Background(), logger)
 		require.NoError(t, err)
 	})
 }

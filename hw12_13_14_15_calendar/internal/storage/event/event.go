@@ -31,6 +31,13 @@ type Config interface {
 	GetDBTimeOut() time.Duration
 }
 
+type Logger interface {
+	Info(msg string)
+	Warning(msg string)
+	Error(msg string)
+	Fatal(msg string)
+}
+
 type Event struct {
 	ID                    int
 	Title                 string

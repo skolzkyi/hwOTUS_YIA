@@ -22,15 +22,15 @@ type Logger interface {
 }
 
 type Storage interface {
-	Init(ctx context.Context, config storage.Config) error
-	Close(ctx context.Context) error
-	GetEvent(ctx context.Context, id int) (storage.Event, error)
-	CreateEvent(ctx context.Context, value storage.Event) (int, error)
-	UpdateEvent(ctx context.Context, value storage.Event) error
-	DeleteEvent(ctx context.Context, id int) error
-	GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
-	GetListEventsOnWeekByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
-	GetListEventsOnMonthByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
+	Init(ctx context.Context, logger storage.Logger, config storage.Config) error
+	Close(ctx context.Context, logger storage.Logger) error
+	GetEvent(ctx context.Context, logger storage.Logger, id int) (storage.Event, error)
+	CreateEvent(ctx context.Context, logger storage.Logger, value storage.Event) (int, error)
+	UpdateEvent(ctx context.Context, logger storage.Logger, value storage.Event) error
+	DeleteEvent(ctx context.Context, logger storage.Logger, id int) error
+	GetListEventsonDayByDay(ctx context.Context, logger storage.Logger, day time.Time) ([]storage.Event, error)
+	GetListEventsOnWeekByDay(ctx context.Context, logger storage.Logger, day time.Time) ([]storage.Event, error)
+	GetListEventsOnMonthByDay(ctx context.Context, logger storage.Logger, day time.Time) ([]storage.Event, error)
 }
 
 func New(logger Logger, storage Storage) *App {
@@ -42,15 +42,15 @@ func New(logger Logger, storage Storage) *App {
 }
 
 func (a *App) InitStorage(ctx context.Context, config storage.Config) error {
-	return a.storage.Init(ctx, config)
+	return a.storage.Init(ctx, a.logger, config)
 }
 
 func (a *App) CloseStorage(ctx context.Context) error {
-	return a.storage.Close(ctx)
+	return a.storage.Close(ctx, a.logger)
 }
 
 func (a *App) GetEvent(ctx context.Context, id int) (storage.Event, error) {
-	event, err := a.storage.GetEvent(ctx, id)
+	event, err := a.storage.GetEvent(ctx, a.logger, id)
 	return event, err
 }
 
@@ -60,17 +60,18 @@ func (a *App) CreateEvent(ctx context.Context, title string, userID string, desc
 	if err != nil {
 		message := helpers.StringBuild("event create error(title - ", title, "),error: ", err.Error())
 		a.logger.Error(message)
+		return 0, err
 	}
-	id, err := a.storage.CreateEvent(ctx, event)
+	id, err := a.storage.CreateEvent(ctx, a.logger, event)
 	if err != nil {
 		message := helpers.StringBuild("event create error(title - ", title, "),error: ", err.Error())
 		a.logger.Error(message)
-	} else {
-		message := helpers.StringBuild("new event created(title - ", title, ")")
-		a.logger.Info(message)
+		return 0, err
 	}
+	message := helpers.StringBuild("new event created(title - ", title, ")")
+	a.logger.Info(message)
 
-	return id, err
+	return id, nil
 }
 
 func (a *App) UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error { //nolint:lll,revive
@@ -78,43 +79,44 @@ func (a *App) UpdateEvent(ctx context.Context, id int, title string, userID stri
 	if err != nil {
 		message := helpers.StringBuild("event create error(title - ", title, "),error: ", err.Error())
 		a.logger.Error(message)
+		return err
 	}
-	err = a.storage.UpdateEvent(ctx, event)
+	err = a.storage.UpdateEvent(ctx, a.logger, event)
 	if err != nil {
 		message := helpers.StringBuild("event update error(title - ", title, "),error: ", err.Error())
 		a.logger.Error(message)
-	} else {
-		message := helpers.StringBuild("event updated(title - ", title, ")")
-		a.logger.Info(message)
+		return err
 	}
+	message := helpers.StringBuild("event updated(title - ", title, ")")
+	a.logger.Info(message)
 
-	return err
+	return nil
 }
 
 func (a *App) DeleteEvent(ctx context.Context, id int) error {
-	err := a.storage.DeleteEvent(ctx, id)
+	err := a.storage.DeleteEvent(ctx, a.logger, id)
 	if err != nil {
 		message := helpers.StringBuild("event delete error(id - ", strconv.Itoa(id), "),error: ", err.Error())
 		a.logger.Error(message)
-	} else {
-		message := helpers.StringBuild("event deleted(id - ", strconv.Itoa(id), ")")
-		a.logger.Info(message)
+		return err
 	}
+	message := helpers.StringBuild("event deleted(id - ", strconv.Itoa(id), ")")
+	a.logger.Info(message)
 
-	return err
+	return nil
 }
 
 func (a *App) GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error) {
-	eventsList, err := a.storage.GetListEventsonDayByDay(ctx, day)
+	eventsList, err := a.storage.GetListEventsonDayByDay(ctx, a.logger, day)
 	return eventsList, err
 }
 
 func (a *App) GetListEventsOnWeekByDay(ctx context.Context, day time.Time) ([]storage.Event, error) {
-	eventsList, err := a.storage.GetListEventsOnWeekByDay(ctx, day)
+	eventsList, err := a.storage.GetListEventsOnWeekByDay(ctx, a.logger, day)
 	return eventsList, err
 }
 
 func (a *App) GetListEventsOnMonthByDay(ctx context.Context, day time.Time) ([]storage.Event, error) {
-	eventsList, err := a.storage.GetListEventsOnMonthByDay(ctx, day)
+	eventsList, err := a.storage.GetListEventsOnMonthByDay(ctx, a.logger, day)
 	return eventsList, err
 }

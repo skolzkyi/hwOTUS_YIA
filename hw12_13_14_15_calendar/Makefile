@@ -14,6 +14,11 @@ mysql-img-down:
 migrate-goose:
 	goose --dir=migrations mysql $(DSN) up
 
+generate:
+	rm -rf internal/server/grpc/pb
+	mkdir -p internal/server/grpc/pb
+	protoc api/EventService.proto --go_out=internal/server/grpc/pb --go-grpc_out=internal/server/grpc/pb
+
 build:
 	go build -v -o $(BIN) -ldflags "$(LDFLAGS)" ./cmd/calendar
 
@@ -41,4 +46,4 @@ install-lint-deps:
 lint: install-lint-deps
 	golangci-lint run ./...
 
-.PHONY: build run build-img mysql-img migrate-goose run-img version test lint
+.PHONY: generate build run build-img mysql-img migrate-goose run-img version test lint

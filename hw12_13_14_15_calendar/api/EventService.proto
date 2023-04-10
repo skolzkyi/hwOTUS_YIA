@@ -2,6 +2,71 @@ syntax = "proto3";
 
 package event;
 
-message Event {
-    // TODO
+option go_package = "./";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+service Calendar{
+  rpc GetEvent(GetEventRequest) returns (GetEventResponse);
+  rpc CreateEvent(CreateEventRequest) returns (CreateEventResponse);
+  rpc UpdateEvent(UpdateEventRequest) returns (UpdateEventResponse);
+  rpc DeleteEvent(DeleteEventRequest) returns (DeleteEventResponse);
+  rpc GetEventsOnDayByDay(GetEventsOnDayRequest) returns (GetEventsOnDayResponse);
+  rpc GetEventsOnWeekByDay(GetEventsOnDayRequest) returns (GetEventsOnDayResponse);
+  rpc GetEventsOnMonthByDay(GetEventsOnDayRequest) returns (GetEventsOnDayResponse);
 }
+
+message GetEventRequest{
+    int32 id = 1;
+ }
+ 
+ message GetEventResponse{
+    Event event = 1;
+    string error = 2;
+ }
+
+message CreateEventRequest{
+    Event event = 1;
+}
+
+message CreateEventResponse{
+  int32 id = 1;
+  string error = 2;
+}
+
+message UpdateEventRequest{
+    Event event = 1;
+}
+
+message UpdateEventResponse{
+    string error = 1;
+}
+
+message DeleteEventRequest{
+    int32 id = 1;
+}
+
+message DeleteEventResponse{
+    string error = 1;
+}
+
+message GetEventsOnDayRequest{
+  google.protobuf.Timestamp date = 1;
+}
+
+message GetEventsOnDayResponse{
+    repeated Event events = 1;
+    string error = 2;
+}
+
+message Event {
+    int32 id = 1;
+    string title = 2;
+    string userid = 3;
+    string description = 4;
+    google.protobuf.Timestamp datestart = 5;
+    google.protobuf.Timestamp datestop = 6;
+    google.protobuf.Duration eventmessagetimedelta = 7; 
+}
+  

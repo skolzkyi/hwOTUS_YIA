@@ -1369,3 +1369,35 @@ runtime.main
 2023-04-08T23:37:27.240+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:41302", "Request DateTime": "2023-04-08 23:37:27.240223308 +0400 +04 m=+11.424705259", "Method": "GET", "Request URL": "/", "Request Scheme": "", "Request Status": "", "Time of request work": "7.013µs", "Request User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0"}
 2023-04-08T23:37:27.438+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:41302", "Request DateTime": "2023-04-08 23:37:27.438555457 +0400 +04 m=+11.623037407", "Method": "GET", "Request URL": "/favicon.ico", "Request Scheme": "", "Request Status": "", "Time of request work": "4.794µs", "Request User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0"}
 2023-04-08T23:37:29.532+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:41302", "Request DateTime": "2023-04-08 23:37:29.532664981 +0400 +04 m=+13.717146931", "Method": "GET", "Request URL": "/", "Request Scheme": "", "Request Status": "", "Time of request work": "4.883µs", "Request User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0"}
+2023-04-10T22:00:38.385+0400	INFO	calendar is running...
+2023-04-10T22:00:38.386+0400	INFO	new event created(title - test0 - base event)
+2023-04-10T22:00:38.386+0400	INFO	new event created(title - test1 - +5days)
+2023-04-10T22:00:38.386+0400	ERROR	event create error(title - test2 - +6 days end date after week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:68
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:79
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:97
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-10T22:00:38.386+0400	ERROR	event create error(title - test3 - +8 days - next week),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:68
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Start
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server.go:80
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/calendar/main.go:97
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-10T22:00:38.386+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-10T22:00:38.386+0400	INFO	new event created(title - test5 - in this day)
+2023-04-10T22:01:10.621+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:48262", "Request DateTime": "2023-04-10 22:01:10.621147318 +0400 +04 m=+32.238100775", "Method": "GET", "Request URL": "/GetEventsOnDayByDay/", "Request Scheme": "", "Request Status": "", "Time of request work": "1.266544ms", "Request User-Agent": "PostmanRuntime/7.31.3"}
+2023-04-10T22:01:26.673+0400	INFO	new event created(title - From Postman)
+2023-04-10T22:01:26.673+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:48262", "Request DateTime": "2023-04-10 22:01:26.673227407 +0400 +04 m=+48.290180873", "Method": "POST", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "831.683µs", "Request User-Agent": "PostmanRuntime/7.31.3"}
+2023-04-10T22:01:51.239+0400	INFO	[client GetEventsOnDayByDay: GetEvent, Request DateTime: 2023-04-10 22:01:51.239405898 +0400 +04 m=+72.856359352Time of request work: 7.704µs
+2023-04-10T22:02:01.056+0400	INFO	[client GRPC: GetEvent, Request DateTime: 2023-04-10 22:02:01.056203861 +0400 +04 m=+82.673157320Time of request work: 5.79µs

@@ -6,14 +6,16 @@ import (
 	"net/http"
 	"time"
 
+	// pb "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/grpc/pb"
 	storage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/event"
 	"go.uber.org/zap"
 )
 
 type Server struct {
-	serv *http.Server
-	logg Logger
-	app  Application
+	serv   *http.Server
+	logg   Logger
+	app    Application
+	Config Config
 }
 
 type Config interface {
@@ -28,6 +30,8 @@ type Config interface {
 	GetDBConnMaxLifetime() time.Duration
 	GetDBMaxOpenConns() int
 	GetDBMaxIdleConns() int
+	GetDBTimeOut() time.Duration
+	GetGRPSPort() string
 }
 
 type Logger interface {
@@ -42,8 +46,8 @@ type Application interface {
 	InitStorage(ctx context.Context, config storage.Config) error
 	CloseStorage(ctx context.Context) error
 	GetEvent(ctx context.Context, id int) (storage.Event, error)
-	CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (int, error)  //nolint:lll
-	UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error //nolint:lll
+	CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (int, error)
+	UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
 	DeleteEvent(ctx context.Context, id int) error
 	GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
 	GetListEventsOnWeekByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
@@ -54,10 +58,10 @@ func NewServer(logger Logger, app Application, config Config) *Server {
 	server := Server{}
 	server.logg = logger
 	server.app = app
+	server.Config = config
 	server.serv = &http.Server{
-		Addr:              config.GetServerURL(),
-		Handler:           server.routes(),
-		ReadHeaderTimeout: 2 * time.Second,
+		Addr:    config.GetServerURL(),
+		Handler: server.routes(),
 	}
 
 	return &server

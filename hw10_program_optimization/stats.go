@@ -1,67 +1,44 @@
 package hw10programoptimization
 
 import (
-	"encoding/json"
-	"fmt"
+	"bufio"
+	"errors"
 	"io"
-	"io/ioutil"
-	"regexp"
 	"strings"
-)
 
-type User struct {
-	ID       int
-	Name     string
-	Username string
-	Email    string
-	Phone    string
-	Password string
-	Address  string
-}
+	"github.com/tidwall/gjson"
+)
 
 type DomainStat map[string]int
 
 func GetDomainStat(r io.Reader, domain string) (DomainStat, error) {
-	u, err := getUsers(r)
-	if err != nil {
-		return nil, fmt.Errorf("get users error: %w", err)
-	}
-	return countDomains(u, domain)
-}
-
-type users [100_000]User
-
-func getUsers(r io.Reader) (result users, err error) {
-	content, err := ioutil.ReadAll(r)
-	if err != nil {
-		return
-	}
-
-	lines := strings.Split(string(content), "\n")
-	for i, line := range lines {
-		var user User
-		if err = json.Unmarshal([]byte(line), &user); err != nil {
-			return
-		}
-		result[i] = user
-	}
-	return
-}
-
-func countDomains(u users, domain string) (DomainStat, error) {
 	result := make(DomainStat)
-
-	for _, user := range u {
-		matched, err := regexp.Match("\\."+domain, []byte(user.Email))
+	bufReader := bufio.NewReader(r)
+	var flag bool
+	searchDomain := "." + domain
+	for {
+		line, err := bufReader.ReadString('\n')
 		if err != nil {
-			return nil, err
+			if errors.Is(err, io.EOF) {
+				flag = true
+			} else {
+				return nil, err
+			}
 		}
+		email := gjson.Get(line, "Email").String()
+
+		matched := strings.Contains(email, searchDomain)
 
 		if matched {
-			num := result[strings.ToLower(strings.SplitN(user.Email, "@", 2)[1])]
+			domainstr := strings.ToLower(strings.SplitN(email, "@", 2)[1])
+			num := result[domainstr]
 			num++
-			result[strings.ToLower(strings.SplitN(user.Email, "@", 2)[1])] = num
+			result[domainstr] = num
+		}
+		if flag {
+			break
 		}
 	}
+
 	return result, nil
 }

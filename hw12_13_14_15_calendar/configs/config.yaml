@@ -1,0 +1,13 @@
+#YAML
+address: "127.0.0.1"
+port: "4000"
+ServerShutdownTimeout: "30s"
+dbName: "OTUSFinalLab"
+dbUser: "imapp"
+dbPassword: "LightInDark"
+dbConnMaxLifetime: "3m"
+dbMaxOpenConns: 20
+dbMaxIdleConns: 20
+dbTimeOut: "5s"
+workWithDBStorage: "true"
+logLevel: "debug"

@@ -2,30 +2,91 @@ package internalhttp
 
 import (
 	"context"
+	"errors"
+	"net/http"
+	"time"
+
+	storage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/event"
+	"go.uber.org/zap"
 )
 
-type Server struct { // TODO
+type Server struct {
+	serv *http.Server
+	logg Logger
+	app  Application
 }
 
-type Logger interface { // TODO
+type Config interface {
+	GetServerURL() string
+	GetAddress() string
+	GetPort() string
+	GetOSFilePathSeparator() string
+	GetServerShutdownTimeout() time.Duration
+	GetDBName() string
+	GetDBUser() string
+	GetDBPassword() string
+	GetDBConnMaxLifetime() time.Duration
+	GetDBMaxOpenConns() int
+	GetDBMaxIdleConns() int
 }
 
-type Application interface { // TODO
+type Logger interface {
+	Info(msg string)
+	Warning(msg string)
+	Error(msg string)
+	Fatal(msg string)
+	GetZapLogger() *zap.SugaredLogger
 }
 
-func NewServer(logger Logger, app Application) *Server {
-	return &Server{}
+type Application interface {
+	InitStorage(ctx context.Context, config storage.Config) error
+	CloseStorage(ctx context.Context) error
+	GetEvent(ctx context.Context, id int) (storage.Event, error)
+	CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (int, error)  //nolint:lll
+	UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error //nolint:lll
+	DeleteEvent(ctx context.Context, id int) error
+	GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
+	GetListEventsOnWeekByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
+	GetListEventsOnMonthByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
+}
+
+func NewServer(logger Logger, app Application, config Config) *Server {
+	server := Server{}
+	server.logg = logger
+	server.app = app
+	server.serv = &http.Server{
+		Addr:              config.GetServerURL(),
+		Handler:           server.routes(),
+		ReadHeaderTimeout: 2 * time.Second,
+	}
+
+	return &server
 }
 
 func (s *Server) Start(ctx context.Context) error {
-	// TODO
+	s.logg.Info("calendar is running...")
+	err := s.serv.ListenAndServe()
+	if err != nil {
+		if !errors.Is(err, http.ErrServerClosed) {
+			s.logg.Error("server start error: " + err.Error())
+			return err
+		}
+	}
 	<-ctx.Done()
-	return nil
+	return err
 }
 
 func (s *Server) Stop(ctx context.Context) error {
-	// TODO
-	return nil
+	err := s.serv.Shutdown(ctx)
+	if err != nil {
+		s.logg.Error("server shutdown error: " + err.Error())
+		return err
+	}
+	err = s.app.CloseStorage(ctx)
+	if err != nil {
+		s.logg.Error("server closeStorage error: " + err.Error())
+		return err
+	}
+	s.logg.Info("server graceful shutdown")
+	return err
 }
-
-// TODO

@@ -172,3 +172,177 @@ testing.tRunner
 2023-04-10T22:25:46.577+0400	INFO	new event created(title - test3 - +8 days - next week)
 2023-04-10T22:25:46.577+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
 2023-04-10T22:25:46.577+0400	INFO	new event created(title - test5 - in this day)
+2023-04-14T23:58:53.339+0400	INFO	new event created(title - testData)
+2023-04-14T23:58:53.340+0400	INFO	new event created(title - testData)
+2023-04-14T23:58:53.340+0400	ERROR	event create error(title - testData),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:68
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:155
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestCreateEventBadTimeBusy
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:117
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-14T23:58:53.340+0400	INFO	new event created(title - testData)
+2023-04-14T23:58:53.340+0400	INFO	new event created(title - testData - not Updated)
+2023-04-14T23:58:53.340+0400	INFO	event updated(title - testData)
+2023-04-14T23:58:53.340+0400	ERROR	event update error(title - testData),error: record not searched
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).UpdateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:87
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:214
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestUpdateEventBadID
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:195
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-14T23:58:53.340+0400	INFO	new event created(title - testData)
+2023-04-14T23:58:53.340+0400	INFO	event deleted(id - 0)
+2023-04-14T23:58:53.340+0400	ERROR	event delete error(id - 99),error: record not searched
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).DeleteEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:100
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:254
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestDeleteEventBadID
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:237
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test0 - base event)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test1 - +5days)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test5 - in this day)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test0 - base event)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test1 - +5days)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test5 - in this day)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test0 - base event)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test1 - +5days)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-14T23:58:53.341+0400	INFO	new event created(title - test5 - in this day)
+2023-04-15T00:02:57.130+0400	INFO	new event created(title - testData)
+2023-04-15T00:02:57.130+0400	INFO	new event created(title - testData)
+2023-04-15T00:02:57.130+0400	ERROR	event create error(title - testData),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:68
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:155
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestCreateEventBadTimeBusy
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:117
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-15T00:02:57.130+0400	INFO	new event created(title - testData)
+2023-04-15T00:02:57.130+0400	INFO	new event created(title - testData - not Updated)
+2023-04-15T00:02:57.130+0400	INFO	event updated(title - testData)
+2023-04-15T00:02:57.130+0400	ERROR	event update error(title - testData),error: record not searched
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).UpdateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:87
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:214
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestUpdateEventBadID
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:195
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-15T00:02:57.131+0400	INFO	new event created(title - testData)
+2023-04-15T00:02:57.131+0400	INFO	event deleted(id - 0)
+2023-04-15T00:02:57.131+0400	ERROR	event delete error(id - 99),error: record not searched
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).DeleteEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:100
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:254
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestDeleteEventBadID
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:237
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-15T00:02:57.131+0400	INFO	new event created(title - test0 - base event)
+2023-04-15T00:02:57.131+0400	INFO	new event created(title - test1 - +5days)
+2023-04-15T00:02:57.131+0400	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-15T00:02:57.131+0400	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-15T00:02:57.131+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-15T00:02:57.131+0400	INFO	new event created(title - test5 - in this day)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test0 - base event)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test1 - +5days)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test5 - in this day)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test0 - base event)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test1 - +5days)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-15T00:02:57.132+0400	INFO	new event created(title - test5 - in this day)
+2023-04-15T00:06:15.241+0400	INFO	new event created(title - testData)
+2023-04-15T00:06:15.241+0400	INFO	new event created(title - testData)
+2023-04-15T00:06:15.241+0400	ERROR	event create error(title - testData),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:68
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:155
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestCreateEventBadTimeBusy
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:117
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-15T00:06:15.241+0400	INFO	new event created(title - testData)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - testData - not Updated)
+2023-04-15T00:06:15.242+0400	INFO	event updated(title - testData)
+2023-04-15T00:06:15.242+0400	ERROR	event update error(title - testData),error: record not searched
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).UpdateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:87
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:214
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestUpdateEventBadID
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:195
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - testData)
+2023-04-15T00:06:15.242+0400	INFO	event deleted(id - 0)
+2023-04-15T00:06:15.242+0400	ERROR	event delete error(id - 99),error: record not searched
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).DeleteEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:100
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:254
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestDeleteEventBadID
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:237
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test0 - base event)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test1 - +5days)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test5 - in this day)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test0 - base event)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test1 - +5days)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-15T00:06:15.242+0400	INFO	new event created(title - test5 - in this day)
+2023-04-15T00:06:15.243+0400	INFO	new event created(title - test0 - base event)
+2023-04-15T00:06:15.243+0400	INFO	new event created(title - test1 - +5days)
+2023-04-15T00:06:15.243+0400	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-15T00:06:15.243+0400	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-15T00:06:15.243+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-15T00:06:15.243+0400	INFO	new event created(title - test5 - in this day)

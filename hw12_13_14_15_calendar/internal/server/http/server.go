@@ -31,7 +31,7 @@ type Config interface {
 	GetDBMaxOpenConns() int
 	GetDBMaxIdleConns() int
 	GetDBTimeOut() time.Duration
-	GetGRPSPort() string
+	GetGRPCPort() string
 }
 
 type Logger interface {

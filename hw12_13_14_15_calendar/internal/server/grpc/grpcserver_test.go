@@ -39,7 +39,7 @@ func (config *ConfigTest) GetPort() string {
 	return "4000"
 }
 
-func (config *ConfigTest) GetGRPSPort() string {
+func (config *ConfigTest) GetGRPCPort() string {
 	return "5000"
 }
 
@@ -144,11 +144,11 @@ func TestGetEvent(t *testing.T) {
 	convEvent := storage.Event{
 		ID:                    int(event.GetEvent().Id),
 		Title:                 event.GetEvent().Title,
-		UserID:                event.GetEvent().Userid,
+		UserID:                event.GetEvent().UserID,
 		Description:           event.GetEvent().Description,
-		DateStart:             event.GetEvent().Datestart.AsTime(),
-		DateStop:              event.GetEvent().Datestop.AsTime(),
-		EventMessageTimeDelta: event.GetEvent().GetEventmessagetimedelta().AsDuration(),
+		DateStart:             event.GetEvent().DateStart.AsTime(),
+		DateStop:              event.GetEvent().DateStop.AsTime(),
+		EventMessageTimeDelta: event.GetEvent().GetEventMessageTimeDelta().AsDuration(),
 	}
 	require.Equal(t, controlEvent, convEvent)
 	server.grpcserv.GracefulStop()
@@ -172,10 +172,10 @@ func TestCreateEvent(t *testing.T) {
 		Id:                    0,
 		Title:                 "from test proto",
 		Description:           "",
-		Userid:                "USER0",
-		Datestart:             timestamppb.New(time.Date(2023, 4, 10, 12, 0, 0, 1, time.UTC)),
-		Datestop:              timestamppb.New(time.Date(2023, 4, 10, 16, 0, 0, 1, time.UTC)),
-		Eventmessagetimedelta: durationpb.New(4 * time.Hour),
+		UserID:                "USER0",
+		DateStart:             timestamppb.New(time.Date(2023, 4, 10, 12, 0, 0, 1, time.UTC)),
+		DateStop:              timestamppb.New(time.Date(2023, 4, 10, 16, 0, 0, 1, time.UTC)),
+		EventMessageTimeDelta: durationpb.New(4 * time.Hour),
 	}
 	pbCrREvent.Event = &pbEvent
 	pbID, err := client.CreateEvent(ctx, &pbCrREvent)
@@ -207,10 +207,10 @@ func TestUpdateEvent(t *testing.T) {
 		Id:                    0,
 		Title:                 "updated from test proto",
 		Description:           "",
-		Userid:                "USER0",
-		Datestart:             timestamppb.New(time.Date(2023, 4, 10, 12, 0, 0, 1, time.UTC)),
-		Datestop:              timestamppb.New(time.Date(2023, 4, 10, 16, 0, 0, 1, time.UTC)),
-		Eventmessagetimedelta: durationpb.New(4 * time.Hour),
+		UserID:                "USER0",
+		DateStart:             timestamppb.New(time.Date(2023, 4, 10, 12, 0, 0, 1, time.UTC)),
+		DateStop:              timestamppb.New(time.Date(2023, 4, 10, 16, 0, 0, 1, time.UTC)),
+		EventMessageTimeDelta: durationpb.New(4 * time.Hour),
 	}
 
 	pbUpEvent.Event = &pbEvent

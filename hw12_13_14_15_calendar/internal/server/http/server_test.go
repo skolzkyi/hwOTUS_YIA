@@ -37,7 +37,7 @@ func (config *ConfigTest) GetPort() string {
 	return "4000"
 }
 
-func (config *ConfigTest) GetGRPSPort() string {
+func (config *ConfigTest) GetGRPCPort() string {
 	return "5000"
 }
 

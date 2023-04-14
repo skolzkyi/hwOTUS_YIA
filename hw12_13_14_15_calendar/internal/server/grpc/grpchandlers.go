@@ -13,7 +13,7 @@ import (
 func (g *GRPCServer) CreateEvent(ctx context.Context, in *pb.CreateEventRequest) (*pb.CreateEventResponse, error) {
 	t := time.Now()
 	var message pb.CreateEventResponse
-	id, err := g.app.CreateEvent(ctx, in.GetEvent().Title, in.GetEvent().Userid, in.GetEvent().Description, in.GetEvent().Datestart.AsTime(), in.GetEvent().Datestop.AsTime(), in.GetEvent().GetEventmessagetimedelta().AsDuration())
+	id, err := g.app.CreateEvent(ctx, in.GetEvent().Title, in.GetEvent().UserID, in.GetEvent().Description, in.GetEvent().DateStart.AsTime(), in.GetEvent().DateStop.AsTime(), in.GetEvent().GetEventMessageTimeDelta().AsDuration())
 	if err != nil {
 		message.Id = 0
 		message.Error = err.Error()
@@ -37,10 +37,10 @@ func (g *GRPCServer) GetEvent(ctx context.Context, in *pb.GetEventRequest) (*pb.
 		pbEvent.Id = int32(event.ID)
 		pbEvent.Title = event.Title
 		pbEvent.Description = event.Description
-		pbEvent.Userid = event.UserID
-		pbEvent.Datestart = timestamppb.New(event.DateStart)
-		pbEvent.Datestop = timestamppb.New(event.DateStop)
-		pbEvent.Eventmessagetimedelta = durationpb.New(event.EventMessageTimeDelta)
+		pbEvent.UserID = event.UserID
+		pbEvent.DateStart = timestamppb.New(event.DateStart)
+		pbEvent.DateStop = timestamppb.New(event.DateStop)
+		pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
 
 		message.Event = &pbEvent
 		message.Error = ""
@@ -53,7 +53,7 @@ func (g *GRPCServer) GetEvent(ctx context.Context, in *pb.GetEventRequest) (*pb.
 func (g *GRPCServer) UpdateEvent(ctx context.Context, in *pb.UpdateEventRequest) (*pb.UpdateEventResponse, error) {
 	t := time.Now()
 	var message pb.UpdateEventResponse
-	err := g.app.UpdateEvent(ctx, int(in.GetEvent().Id), in.GetEvent().Title, in.GetEvent().Userid, in.GetEvent().Description, in.GetEvent().Datestart.AsTime(), in.GetEvent().Datestop.AsTime(), in.GetEvent().GetEventmessagetimedelta().AsDuration())
+	err := g.app.UpdateEvent(ctx, int(in.GetEvent().Id), in.GetEvent().Title, in.GetEvent().UserID, in.GetEvent().Description, in.GetEvent().DateStart.AsTime(), in.GetEvent().DateStop.AsTime(), in.GetEvent().GetEventMessageTimeDelta().AsDuration())
 	if err != nil {
 		message.Error = err.Error()
 	} else {
@@ -90,10 +90,10 @@ func (g *GRPCServer) GetEventsOnDayByDay(ctx context.Context, in *pb.GetEventsOn
 			pbEvent.Id = int32(event.ID)
 			pbEvent.Title = event.Title
 			pbEvent.Description = event.Description
-			pbEvent.Userid = event.UserID
-			pbEvent.Datestart = timestamppb.New(event.DateStart)
-			pbEvent.Datestop = timestamppb.New(event.DateStop)
-			pbEvent.Eventmessagetimedelta = durationpb.New(event.EventMessageTimeDelta)
+			pbEvent.UserID = event.UserID
+			pbEvent.DateStart = timestamppb.New(event.DateStart)
+			pbEvent.DateStop = timestamppb.New(event.DateStop)
+			pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
 
 			message.Events = append(message.Events, &pbEvent)
 		}
@@ -116,10 +116,10 @@ func (g *GRPCServer) GetEventsOnWeekByDay(ctx context.Context, in *pb.GetEventsO
 			pbEvent.Id = int32(event.ID)
 			pbEvent.Title = event.Title
 			pbEvent.Description = event.Description
-			pbEvent.Userid = event.UserID
-			pbEvent.Datestart = timestamppb.New(event.DateStart)
-			pbEvent.Datestop = timestamppb.New(event.DateStop)
-			pbEvent.Eventmessagetimedelta = durationpb.New(event.EventMessageTimeDelta)
+			pbEvent.UserID = event.UserID
+			pbEvent.DateStart = timestamppb.New(event.DateStart)
+			pbEvent.DateStop = timestamppb.New(event.DateStop)
+			pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
 
 			message.Events = append(message.Events, &pbEvent)
 		}
@@ -142,10 +142,10 @@ func (g *GRPCServer) GetEventsOnMonthByDay(ctx context.Context, in *pb.GetEvents
 			pbEvent.Id = int32(event.ID)
 			pbEvent.Title = event.Title
 			pbEvent.Description = event.Description
-			pbEvent.Userid = event.UserID
-			pbEvent.Datestart = timestamppb.New(event.DateStart)
-			pbEvent.Datestop = timestamppb.New(event.DateStop)
-			pbEvent.Eventmessagetimedelta = durationpb.New(event.EventMessageTimeDelta)
+			pbEvent.UserID = event.UserID
+			pbEvent.DateStart = timestamppb.New(event.DateStart)
+			pbEvent.DateStop = timestamppb.New(event.DateStop)
+			pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
 
 			message.Events = append(message.Events, &pbEvent)
 

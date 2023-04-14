@@ -31,7 +31,7 @@ type Config interface {
 	GetDBMaxOpenConns() int
 	GetDBMaxIdleConns() int
 	GetDBTimeOut() time.Duration
-	GetGRPSPort() string
+	GetGRPCPort() string
 }
 
 type Logger interface {
@@ -64,13 +64,13 @@ func NewServer(logger Logger, app Application, config Config) *GRPCServer {
 }
 
 func (g *GRPCServer) Start() error {
-	l, err := net.Listen("tcp", net.JoinHostPort(g.Config.GetAddress(), g.Config.GetGRPSPort()))
+	l, err := net.Listen("tcp", net.JoinHostPort(g.Config.GetAddress(), g.Config.GetGRPCPort()))
 	if err != nil {
 		return err
 	}
 	err = g.grpcserv.Serve(l)
 	if err == nil {
-		g.logg.Info("GRPCserver run on: " + g.Config.GetAddress() + ":" + g.Config.GetGRPSPort())
+		g.logg.Info("GRPCserver run on: " + g.Config.GetAddress() + ":" + g.Config.GetGRPCPort())
 	}
 
 	return err

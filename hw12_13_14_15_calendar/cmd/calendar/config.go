@@ -18,7 +18,7 @@ type Config struct {
 	dbTimeOut             time.Duration
 	address               string
 	port                  string
-	grpsport              string
+	grpcPort              string
 	OSFilePathSeparator   string
 	dbName                string
 	dbUser                string
@@ -44,7 +44,7 @@ func (config *Config) Init(path string) error {
 
 	viper.SetDefault("address", "127.0.0.1")
 	viper.SetDefault("port", "4000")
-	viper.SetDefault("grpsport", "5000")
+	viper.SetDefault("grpsPort", "5000")
 	viper.SetDefault("ServerShutdownTimeout", 30*time.Second)
 	viper.SetDefault("dbName", "OTUSFinalLab")
 	viper.SetDefault("dbUser", "imapp")
@@ -71,7 +71,7 @@ func (config *Config) Init(path string) error {
 
 	config.address = viper.GetString("address")
 	config.port = viper.GetString("port")
-	config.grpsport = viper.GetString("grpsport")
+	config.grpcPort = viper.GetString("grpcPort")
 	config.ServerShutdownTimeout = viper.GetDuration("ServerShutdownTimeout")
 	config.dbName = viper.GetString("dbName")
 	config.dbUser = viper.GetString("dbUser")
@@ -99,8 +99,8 @@ func (config *Config) GetPort() string {
 	return config.port
 }
 
-func (config *Config) GetGRPSPort() string {
-	return config.grpsport
+func (config *Config) GetGRPCPort() string {
+	return config.grpcPort
 }
 
 func (config *Config) GetOSFilePathSeparator() string {

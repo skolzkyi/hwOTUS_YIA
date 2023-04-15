@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.9'
 
 services:
   mysq-db:
@@ -11,9 +11,32 @@ services:
       MYSQL_DATABASE: OTUSFinalLab
     ports:
     - "3306:3306"
+    expose:
+    - "3306"
+    volumes:
+    - ../migrations/001_migrations.sql:/docker-entrypoint-initdb.d/dump.sql
     networks:
     - ofl_network
-    
+  zookeeper:
+    hostname: zookeeper
+    image: wurstmeister/zookeeper:3.4.6
+    expose:
+    - "2181"
+    networks:
+    - ofl_network
+  kafka:
+    hostname: kafka
+    image: wurstmeister/kafka
+    env_file:
+    - ../configs/config_sheduler.env
+    depends_on:
+     zookeeper:
+        condition: service_started
+    expose:
+    - "9092"
+    networks:
+    - ofl_network 
+
 networks:
   ofl_network:
     driver: bridge

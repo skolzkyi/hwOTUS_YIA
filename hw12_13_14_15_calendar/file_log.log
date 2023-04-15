@@ -1401,3 +1401,138 @@ runtime.main
 2023-04-10T22:01:26.673+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:48262", "Request DateTime": "2023-04-10 22:01:26.673227407 +0400 +04 m=+48.290180873", "Method": "POST", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "831.683µs", "Request User-Agent": "PostmanRuntime/7.31.3"}
 2023-04-10T22:01:51.239+0400	INFO	[client GetEventsOnDayByDay: GetEvent, Request DateTime: 2023-04-10 22:01:51.239405898 +0400 +04 m=+72.856359352Time of request work: 7.704µs
 2023-04-10T22:02:01.056+0400	INFO	[client GRPC: GetEvent, Request DateTime: 2023-04-10 22:02:01.056203861 +0400 +04 m=+82.673157320Time of request work: 5.79µs
+2023-04-15T15:56:09.478+0400	INFO	calendar is running...
+2023-04-15T15:57:08.479+0400	INFO	new event created(title - From Postman)
+2023-04-15T15:57:08.479+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:38428", "Request DateTime": "2023-04-15 15:57:08.479718289 +0400 +04 m=+59.002420114", "Method": "POST", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "802.378µs", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:01:13.763+0400	INFO	calendar is running...
+2023-04-15T16:01:24.327+0400	INFO	new event created(title - From Postman)
+2023-04-15T16:01:24.327+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:01:24.327323203 +0400 +04 m=+10.580596747", "Method": "POST", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "14.191661ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:05:57.855+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:05:57.855031762 +0400 +04 m=+284.108305311", "Method": "GET", "Request URL": "/Event/3", "Request Scheme": "", "Request Status": "", "Time of request work": "14.844591ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:06:16.625+0400	INFO	event deleted(id - 3)
+2023-04-15T16:06:16.625+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:06:16.625442946 +0400 +04 m=+302.878716489", "Method": "DELETE", "Request URL": "/Event/3", "Request Scheme": "", "Request Status": "", "Time of request work": "10.599428ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:06:24.138+0400	INFO	new event created(title - From Postman)
+2023-04-15T16:06:24.138+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:06:24.138334165 +0400 +04 m=+310.391607711", "Method": "POST", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "16.525729ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:07:05.034+0400	INFO	event updated(title - From Postman - Update)
+2023-04-15T16:07:05.034+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:07:05.034201 +0400 +04 m=+351.287474571", "Method": "PUT", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "12.739237ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:07:46.623+0400	INFO	event updated(title - From Postman - Update)
+2023-04-15T16:07:46.623+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:07:46.623547688 +0400 +04 m=+392.876821234", "Method": "PUT", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "1.120339ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:07:58.237+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:07:58.237042319 +0400 +04 m=+404.490315866", "Method": "GET", "Request URL": "/Event/4", "Request Scheme": "", "Request Status": "", "Time of request work": "673.318µs", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:08:16.849+0400	INFO	event updated(title - From Postman - Update)
+2023-04-15T16:08:16.849+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:08:16.849501044 +0400 +04 m=+423.102774590", "Method": "PUT", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "1.030656ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:08:26.516+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:08:26.516414578 +0400 +04 m=+432.769688124", "Method": "GET", "Request URL": "/Event/4", "Request Scheme": "", "Request Status": "", "Time of request work": "731.463µs", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:10:09.470+0400	ERROR	event create error(title - From Postman),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:72
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:155
+net/http.HandlerFunc.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2122
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.loggingMiddleware.func1
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/middleware.go:13
+net/http.HandlerFunc.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2122
+net/http.(*ServeMux).ServeHTTP
+	/snap/go/current/src/net/http/server.go:2500
+net/http.serverHandler.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2936
+net/http.(*conn).serve
+	/snap/go/current/src/net/http/server.go:1995
+2023-04-15T16:10:09.470+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:10:09.470528264 +0400 +04 m=+535.723801806", "Method": "POST", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "14.1981ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:10:59.209+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:10:59.209720008 +0400 +04 m=+585.462993561", "Method": "POST", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "105.717µs", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:11:48.748+0400	INFO	new event created(title - From Postman)
+2023-04-15T16:11:48.748+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:11:48.7487062 +0400 +04 m=+635.001979742", "Method": "POST", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "16.072239ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:12:16.380+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:12:16.380853091 +0400 +04 m=+662.634126638", "Method": "GET", "Request URL": "/Event/5", "Request Scheme": "", "Request Status": "", "Time of request work": "580.949µs", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:12:48.709+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:12:48.709030908 +0400 +04 m=+694.962304466", "Method": "GET", "Request URL": "/GetListEventsNotificationByDay/", "Request Scheme": "", "Request Status": "", "Time of request work": "13.087372ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:16:16.276+0400	ERROR	event update error(title - From Postman - Update),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).UpdateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:91
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:214
+net/http.HandlerFunc.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2122
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.loggingMiddleware.func1
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/middleware.go:13
+net/http.HandlerFunc.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2122
+net/http.(*ServeMux).ServeHTTP
+	/snap/go/current/src/net/http/server.go:2500
+net/http.serverHandler.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2936
+net/http.(*conn).serve
+	/snap/go/current/src/net/http/server.go:1995
+2023-04-15T16:16:16.276+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:16:16.276654577 +0400 +04 m=+902.529928119", "Method": "PUT", "Request URL": "/Event/4", "Request Scheme": "", "Request Status": "", "Time of request work": "15.788125ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:16:43.823+0400	ERROR	event update error(title - From Postman - Update),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).UpdateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:91
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:214
+net/http.HandlerFunc.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2122
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.loggingMiddleware.func1
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/middleware.go:13
+net/http.HandlerFunc.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2122
+net/http.(*ServeMux).ServeHTTP
+	/snap/go/current/src/net/http/server.go:2500
+net/http.serverHandler.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2936
+net/http.(*conn).serve
+	/snap/go/current/src/net/http/server.go:1995
+2023-04-15T16:16:43.823+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:16:43.823558674 +0400 +04 m=+930.076832220", "Method": "PUT", "Request URL": "/Event/4", "Request Scheme": "", "Request Status": "", "Time of request work": "1.11328ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:17:01.753+0400	ERROR	event update error(title - From Postman - Update),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).UpdateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:91
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:214
+net/http.HandlerFunc.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2122
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.loggingMiddleware.func1
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/middleware.go:13
+net/http.HandlerFunc.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2122
+net/http.(*ServeMux).ServeHTTP
+	/snap/go/current/src/net/http/server.go:2500
+net/http.serverHandler.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2936
+net/http.(*conn).serve
+	/snap/go/current/src/net/http/server.go:1995
+2023-04-15T16:17:01.753+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:17:01.753505057 +0400 +04 m=+948.006778608", "Method": "PUT", "Request URL": "/Event/4", "Request Scheme": "", "Request Status": "", "Time of request work": "1.18036ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:17:28.711+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:17:28.711331306 +0400 +04 m=+974.964604853", "Method": "GET", "Request URL": "/GetEventsOnDayByDay/", "Request Scheme": "", "Request Status": "", "Time of request work": "11.393159ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:18:06.393+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:18:06.39347836 +0400 +04 m=+1012.646751907", "Method": "GET", "Request URL": "/Event/4", "Request Scheme": "", "Request Status": "", "Time of request work": "619.978µs", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:18:21.981+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:18:21.981027164 +0400 +04 m=+1028.234300710", "Method": "GET", "Request URL": "/Event/5", "Request Scheme": "", "Request Status": "", "Time of request work": "574.227µs", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:19:23.326+0400	ERROR	event create error(title - From Postman),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:72
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:155
+net/http.HandlerFunc.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2122
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.loggingMiddleware.func1
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/middleware.go:13
+net/http.HandlerFunc.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2122
+net/http.(*ServeMux).ServeHTTP
+	/snap/go/current/src/net/http/server.go:2500
+net/http.serverHandler.ServeHTTP
+	/snap/go/current/src/net/http/server.go:2936
+net/http.(*conn).serve
+	/snap/go/current/src/net/http/server.go:1995
+2023-04-15T16:19:23.326+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:19:23.326740201 +0400 +04 m=+1089.580013748", "Method": "POST", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "14.27862ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:19:56.620+0400	INFO	new event created(title - From Postman)
+2023-04-15T16:19:56.620+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:19:56.620881258 +0400 +04 m=+1122.874154804", "Method": "POST", "Request URL": "/Event/", "Request Scheme": "", "Request Status": "", "Time of request work": "25.709771ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:20:19.586+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:20:19.586150419 +0400 +04 m=+1145.839423978", "Method": "GET", "Request URL": "/GetListEventsNotificationByDay/", "Request Scheme": "", "Request Status": "", "Time of request work": "12.24562ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:21:00.625+0400	INFO	event deleted(count deletions - 2)
+2023-04-15T16:21:00.625+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:21:00.625849536 +0400 +04 m=+1186.879123083", "Method": "DELETE", "Request URL": "/DeleteOldEventsByDay/", "Request Scheme": "", "Request Status": "", "Time of request work": "16.219934ms", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:21:51.833+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:21:51.833217425 +0400 +04 m=+1238.086490970", "Method": "GET", "Request URL": "/GetEventsOnDayByDay/", "Request Scheme": "", "Request Status": "", "Time of request work": "525.752µs", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:22:17.656+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:22:17.656395863 +0400 +04 m=+1263.909669411", "Method": "GET", "Request URL": "/GetEventsOnDayByDay/", "Request Scheme": "", "Request Status": "", "Time of request work": "498.463µs", "Request User-Agent": "PostmanRuntime/7.32.2"}
+2023-04-15T16:22:25.592+0400	INFO	http middleware log	{"Client IP": "127.0.0.1:54492", "Request DateTime": "2023-04-15 16:22:25.592428566 +0400 +04 m=+1271.845702119", "Method": "GET", "Request URL": "/Event/4", "Request Scheme": "", "Request Status": "", "Time of request work": "2.967833ms", "Request User-Agent": "PostmanRuntime/7.32.2"}

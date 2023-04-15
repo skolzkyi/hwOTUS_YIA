@@ -12,6 +12,9 @@ func (s *Server) routes() *http.ServeMux {
 	mux.HandleFunc("/GetEventsOnDayByDay/", loggingMiddleware(s.GetEventsOnDayByDay, s.logg))
 	mux.HandleFunc("/GetEventsOnWeekByDay/", loggingMiddleware(s.GetEventsOnWeekByDay, s.logg))
 	mux.HandleFunc("/GetEventsOnMonthByDay/", loggingMiddleware(s.GetEventsOnMonthByDay, s.logg))
+	mux.HandleFunc("/GetListEventsNotificationByDay/", loggingMiddleware(s.GetListEventsNotificationByDay, s.logg))
+	mux.HandleFunc("/DeleteOldEventsByDay/", loggingMiddleware(s.DeleteOldEventsByDay, s.logg))
+
 
 	return mux
 }

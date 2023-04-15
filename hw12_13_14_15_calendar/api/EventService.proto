@@ -15,6 +15,8 @@ service Calendar{
   rpc GetEventsOnDayByDay(GetEventsOnDayRequest) returns (GetEventsOnDayResponse);
   rpc GetEventsOnWeekByDay(GetEventsOnDayRequest) returns (GetEventsOnDayResponse);
   rpc GetEventsOnMonthByDay(GetEventsOnDayRequest) returns (GetEventsOnDayResponse);
+  rpc GetListEventsNotificationByDay(GetEventsOnDayRequest) returns (GetEventsOnDayResponse);
+  rpc DeleteOldEvents(DeleteOldEventsRequest) returns (DeleteOldEventsResponse);
 }
 
 message GetEventRequest{
@@ -51,6 +53,15 @@ message DeleteEventResponse{
     string error = 1;
 }
 
+message DeleteOldEventsRequest{
+    google.protobuf.Timestamp date = 1;
+}
+
+message DeleteOldEventsResponse{
+    int32 count = 1;
+    string error = 2;
+}
+
 message GetEventsOnDayRequest{
   google.protobuf.Timestamp date = 1;
 }
@@ -63,10 +74,10 @@ message GetEventsOnDayResponse{
 message Event {
     int32 id = 1;
     string title = 2;
-    string userid = 3;
+    string userID = 3;
     string description = 4;
-    google.protobuf.Timestamp datestart = 5;
-    google.protobuf.Timestamp datestop = 6;
-    google.protobuf.Duration eventmessagetimedelta = 7; 
+    google.protobuf.Timestamp dateStart = 5;
+    google.protobuf.Timestamp dateStop = 6;
+    google.protobuf.Duration eventMessageTimeDelta = 7; 
 }
   

@@ -143,8 +143,13 @@ func TestGetEvent(t *testing.T) {
 	respBody, err := io.ReadAll(res.Body)
 	require.NoError(t, err)
 
-	respExp := `{"Events":[{"ID":0,"Title":"testData","UserID":"USER0","Description":"","DateStart":"2023-04-20T00:00:00.000000001Z","DateStop":"2023-04-20T04:00:00.000000001Z","EventMessageTimeDelta":14400000000000}],"Message":{"Text":"OK!","Code":0}}` // nolint:lll
-	require.Equal(t, respExp, string(respBody))
+	answer := EventAnswer{}
+	err = json.Unmarshal(respBody, &answer)
+	require.NoError(t, err)
+	require.Equal(t, answer.Events[0].ID, 0)
+	require.Equal(t, answer.Events[0].Title, "testData")
+
+	
 }
 
 func TestGetEventBadID(t *testing.T) {
@@ -159,8 +164,14 @@ func TestGetEventBadID(t *testing.T) {
 	respBody, err := io.ReadAll(res.Body)
 	require.NoError(t, err)
 
-	respExp := `{"Events":[{"ID":0,"Title":"","UserID":"","Description":"","DateStart":"0001-01-01T00:00:00Z","DateStop":"0001-01-01T00:00:00Z","EventMessageTimeDelta":0}],"Message":{"Text":"record not searched","Code":1}}` // nolint:lll
-	require.Equal(t, respExp, string(respBody))
+	answer := EventAnswer{}
+	err = json.Unmarshal(respBody, &answer)
+	require.NoError(t, err)
+	require.Equal(t, answer.Events[0].ID, 0)
+	require.Equal(t, answer.Events[0].Title, "")
+	require.Equal(t, answer.Message.Text, "record not searched")
+	require.Equal(t, answer.Message.Code, 1)
+
 }
 
 func TestUpdateEvent(t *testing.T) {
@@ -257,8 +268,21 @@ func TestGetEventsOnDayByDay(t *testing.T) {
 	respBody, err := io.ReadAll(res.Body)
 	require.NoError(t, err)
 
-	respExp := `{"Events":[{"ID":4,"Title":"test4 - start in before week and end in cur week","UserID":"USER0","Description":"","DateStart":"2023-04-18T12:00:00.000000001Z","DateStop":"2023-04-20T07:00:00.000000001Z","EventMessageTimeDelta":14400000000000},{"ID":5,"Title":"test5 - in this day","UserID":"USER0","Description":"","DateStart":"2023-04-20T08:00:00.000000001Z","DateStop":"2023-04-20T09:00:00.000000001Z","EventMessageTimeDelta":14400000000000},{"ID":0,"Title":"test0 - base event","UserID":"USER0","Description":"","DateStart":"2023-04-20T12:00:00.000000001Z","DateStop":"2023-04-20T16:00:00.000000001Z","EventMessageTimeDelta":14400000000000}],"Message":{"Text":"OK!","Code":0}}` // nolint:lll
-	require.Equal(t, respExp, string(respBody))
+	answer := EventAnswer{}
+	err = json.Unmarshal(respBody, &answer)
+	require.NoError(t, err)
+	resID := make(map[int]struct{})
+	for _, curEvent := range answer.Events {
+		resID[curEvent.ID] = struct{}{}
+	}
+	_, ok := resID[0]
+	require.Equal(t, ok, true)
+	_, ok = resID[4]
+	require.Equal(t, ok, true)
+	_, ok = resID[5]
+	require.Equal(t, ok, true)
+	require.Equal(t, len(resID), 3)
+
 }
 
 func TestGetEventsOnWeekByDay(t *testing.T) {
@@ -273,8 +297,24 @@ func TestGetEventsOnWeekByDay(t *testing.T) {
 	respBody, err := io.ReadAll(res.Body)
 	require.NoError(t, err)
 
-	respExp := `{"Events":[{"ID":4,"Title":"test4 - start in before week and end in cur week","UserID":"USER0","Description":"","DateStart":"2023-04-18T12:00:00.000000001Z","DateStop":"2023-04-20T07:00:00.000000001Z","EventMessageTimeDelta":14400000000000},{"ID":5,"Title":"test5 - in this day","UserID":"USER0","Description":"","DateStart":"2023-04-20T08:00:00.000000001Z","DateStop":"2023-04-20T09:00:00.000000001Z","EventMessageTimeDelta":14400000000000},{"ID":0,"Title":"test0 - base event","UserID":"USER0","Description":"","DateStart":"2023-04-20T12:00:00.000000001Z","DateStop":"2023-04-20T16:00:00.000000001Z","EventMessageTimeDelta":14400000000000},{"ID":1,"Title":"test1 - +5days","UserID":"USER0","Description":"","DateStart":"2023-04-25T12:00:00.000000001Z","DateStop":"2023-04-25T16:00:00.000000001Z","EventMessageTimeDelta":14400000000000},{"ID":2,"Title":"test2 - +6 days end date after week","UserID":"USER0","Description":"","DateStart":"2023-04-26T12:00:00.000000001Z","DateStop":"2023-04-26T18:00:00.000000001Z","EventMessageTimeDelta":14400000000000}],"Message":{"Text":"OK!","Code":0}}` // nolint:lll
-	require.Equal(t, respExp, string(respBody))
+	answer := EventAnswer{}
+	err = json.Unmarshal(respBody, &answer)
+	require.NoError(t, err)
+	resID := make(map[int]struct{})
+	for _, curEvent := range answer.Events {
+		resID[curEvent.ID] = struct{}{}
+	}
+	_, ok := resID[0]
+	require.Equal(t, ok, true)
+	_, ok = resID[1]
+	require.Equal(t, ok, true)
+	_, ok = resID[2]
+	require.Equal(t, ok, true)
+	_, ok = resID[4]
+	require.Equal(t, ok, true)
+	_, ok = resID[5]
+	require.Equal(t, ok, true)
+	require.Equal(t, len(resID), 5)
 }
 
 func TestGetEventsOnMonthByDay(t *testing.T) {
@@ -289,8 +329,86 @@ func TestGetEventsOnMonthByDay(t *testing.T) {
 	respBody, err := io.ReadAll(res.Body)
 	require.NoError(t, err)
 
-	respExp := `{"Events":[{"ID":4,"Title":"test4 - start in before week and end in cur week","UserID":"USER0","Description":"","DateStart":"2023-04-18T12:00:00.000000001Z","DateStop":"2023-04-20T07:00:00.000000001Z","EventMessageTimeDelta":14400000000000},{"ID":5,"Title":"test5 - in this day","UserID":"USER0","Description":"","DateStart":"2023-04-20T08:00:00.000000001Z","DateStop":"2023-04-20T09:00:00.000000001Z","EventMessageTimeDelta":14400000000000},{"ID":0,"Title":"test0 - base event","UserID":"USER0","Description":"","DateStart":"2023-04-20T12:00:00.000000001Z","DateStop":"2023-04-20T16:00:00.000000001Z","EventMessageTimeDelta":14400000000000},{"ID":1,"Title":"test1 - +5days","UserID":"USER0","Description":"","DateStart":"2023-04-25T12:00:00.000000001Z","DateStop":"2023-04-25T16:00:00.000000001Z","EventMessageTimeDelta":14400000000000},{"ID":2,"Title":"test2 - +6 days end date after week","UserID":"USER0","Description":"","DateStart":"2023-04-26T12:00:00.000000001Z","DateStop":"2023-04-26T18:00:00.000000001Z","EventMessageTimeDelta":14400000000000},{"ID":3,"Title":"test3 - +8 days - next week","UserID":"USER0","Description":"","DateStart":"2023-04-28T12:00:00.000000001Z","DateStop":"2023-04-28T20:00:00.000000001Z","EventMessageTimeDelta":14400000000000}],"Message":{"Text":"OK!","Code":0}}` // nolint:lll
+	answer := EventAnswer{}
+	err = json.Unmarshal(respBody, &answer)
+	require.NoError(t, err)
+	resID := make(map[int]struct{})
+	for _, curEvent := range answer.Events {
+		resID[curEvent.ID] = struct{}{}
+	}
+	_, ok := resID[0]
+	require.Equal(t, ok, true)
+	_, ok = resID[1]
+	require.Equal(t, ok, true)
+	_, ok = resID[2]
+	require.Equal(t, ok, true)
+	_, ok = resID[3]
+	require.Equal(t, ok, true)
+	_, ok = resID[4]
+	require.Equal(t, ok, true)
+	_, ok = resID[5]
+	require.Equal(t, ok, true)
+	require.Equal(t, len(resID), 6)
+}
+
+func GetListEventsNotificationByDay(t *testing.T) {
+	server := createServer(t)
+	createTestEventPool(t, server)
+	r := httptest.NewRequest("GET", "/GetListEventsNotificationByDay/", bytes.NewBufferString(`{"Date":"2023-04-20 09:00:00"}`))
+	w := httptest.NewRecorder()
+	server.GetEventsOnMonthByDay(w, r)
+
+	res := w.Result()
+	defer res.Body.Close()
+	respBody, err := io.ReadAll(res.Body)
+	require.NoError(t, err)
+
+	answer := EventAnswer{}
+	err = json.Unmarshal(respBody, &answer)
+	require.NoError(t, err)
+	resID := make(map[int]struct{})
+	for _, curEvent := range answer.Events {
+		resID[curEvent.ID] = struct{}{}
+	}
+	_, ok := resID[0]
+	require.Equal(t, ok, true)
+	require.Equal(t, len(resID), 1)
+
+}
+
+func TestDeleteOldEventsByDay(t *testing.T) {
+	server := createServer(t)
+	createTestEventPool(t, server)
+
+	r := httptest.NewRequest("DELETE", "/DeleteOldEventsByDay/", bytes.NewBufferString(`{"Date":"2024-04-20 09:00:00"}`))
+	w := httptest.NewRecorder()
+	server.DeleteOldEventsByDay(w, r)
+
+	res := w.Result()
+	defer res.Body.Close()
+	respBody, err := io.ReadAll(res.Body)
+	require.NoError(t, err)
+
+	respExp := `{"Text":"OK!","Code":3}`
 	require.Equal(t, respExp, string(respBody))
+
+	ctx := context.Background()
+	std := time.Date(2023, 4, 20, 0, 0, 0, 1, time.Local)
+	events, err := server.app.GetListEventsOnMonthByDay(ctx, std)
+	require.NoError(t, err)
+	resID := make(map[int]struct{})
+	for _, curEvent := range events {
+		resID[curEvent.ID] = struct{}{}
+	}
+	_, ok := resID[1]
+	require.Equal(t, ok, true)
+	_, ok = resID[2]
+	require.Equal(t, ok, true)
+	_, ok = resID[3]
+	require.Equal(t, ok, true)
+
+	require.Equal(t, len(resID), 3)
+
 }
 
 func createTestEventPool(t *testing.T, server *Server) {

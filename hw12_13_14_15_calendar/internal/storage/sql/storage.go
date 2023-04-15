@@ -167,6 +167,78 @@ func (s *Storage) DeleteEvent(ctx context.Context, logger storage.Logger, id int
 	return nil
 }
 
+func (s *Storage) GetListEventsNotificationByDay(ctx context.Context,logger storage.Logger, dateTime time.Time) ([]storage.Event, error) {
+	resEvents := make([]storage.Event, 0)
+	dateTimeStr := dateTime.Format("2006-01-02 15:04:05")
+	stmt := "SELECT id, title , userID, description , dateStart, dateStop, eventMessageTimeDelta FROM eventsTable WHERE CAST('" + dateTimeStr + "' AS DATE) BETWEEN DATE_SUB(CAST('" + dateTimeStr + "' AS DATE), INTERVAL eventMessageTimeDelta*1000 MICROSECOND)  AND CAST(dateStart AS DATE) AND CAST('" + dateTimeStr + "' AS DATE) < CAST(dateStart AS DATE) ORDER BY dateStart ASC"
+
+	rows, err := s.DB.QueryContext(ctx, stmt)
+	if err != nil {
+		logger.Error("SQL QueryContext stmt GetListEventsNotificationByDay error: " + err.Error() + " stmt: " + stmt)
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	event := storage.Event{}
+
+	var ntStart mysql.NullTime
+	var ntEnd mysql.NullTime
+	var int64Delta int64
+	for rows.Next() {
+		err = rows.Scan(&event.ID, &event.Title, &event.UserID, &event.Description, &ntStart, &ntEnd, &int64Delta)
+		if err != nil {
+			logger.Error("SQL rows scan GetListEventsNotificationByDay error")
+			return nil, err
+		}
+		if ntStart.Valid {
+			event.DateStart = ntStart.Time
+		} else {
+			logger.Error("SQL GetListEventsNotificationByDay dateTime convert error")
+			err = ErrSQLTimeConvert
+			return nil, err
+		}
+		if ntEnd.Valid {
+			event.DateStop = ntEnd.Time
+		} else {
+			logger.Error("SQL GetListEventsNotificationByDay dateTime convert error")
+			err = ErrSQLTimeConvert
+			return nil, err
+		}
+		dr := time.Duration(int64Delta) * time.Millisecond
+		event.EventMessageTimeDelta = dr
+
+		resEvents = append(resEvents, event)
+		event = storage.Event{}
+	}
+
+	if err = rows.Err(); err != nil {
+		logger.Error("SQL GetListEventsNotificationByDay rows error: " + err.Error())
+		return nil, err
+	}
+
+	return resEvents, nil
+
+}
+
+func (s *Storage) DeleteOldEventsByDay(ctx context.Context,logger storage.Logger, dateTime time.Time) (int, error) {
+	controlDateTime := dateTime.Add(-8760 * time.Hour) // -365 days
+	controlDateTimeStr := controlDateTime.Format("2006-01-02 15:04:05")
+	stmt := "DELETE from eventsTable WHERE CAST(dateStop AS DATE) < CAST('" + controlDateTimeStr + "' AS DATE)"
+
+	res, err := s.DB.ExecContext(ctx, stmt)
+	if err != nil {
+		logger.Error("SQL DeleteOldEventsByDay DB exec error: " + err.Error())
+		return 0, err
+	}
+	count, err := res.RowsAffected()
+	if err != nil {
+		logger.Error("SQL DeleteOldEventsByDay rows affected error: " + err.Error())
+		return 0, err
+	}
+	return int(count), nil
+}
+
 // small name not informative.
 func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, logger storage.Logger, startTime time.Time, endTime time.Time) ([]storage.Event, error) { //nolint:lll
 	resEvents := make([]storage.Event, 0)
@@ -190,6 +262,7 @@ func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, logger
 	for rows.Next() {
 		err = rows.Scan(&event.ID, &event.Title, &event.UserID, &event.Description, &ntStart, &ntEnd, &int64Delta)
 		if err != nil {
+			logger.Error("SQL rows scan getListEventsBetweenTwoDateInclude error")
 			return nil, err
 		}
 		if ntStart.Valid {

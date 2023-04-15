@@ -4,6 +4,7 @@ import (
 	"errors"
 	"strconv"
 	"time"
+	"go.uber.org/zap"
 
 	helpers "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/helpers"
 )
@@ -29,6 +30,7 @@ type Config interface {
 	GetDBMaxOpenConns() int
 	GetDBMaxIdleConns() int
 	GetDBTimeOut() time.Duration
+	GetGRPCPort() string
 }
 
 type Logger interface {
@@ -36,6 +38,7 @@ type Logger interface {
 	Warning(msg string)
 	Error(msg string)
 	Fatal(msg string)
+	GetZapLogger() *zap.SugaredLogger
 }
 
 type Event struct {

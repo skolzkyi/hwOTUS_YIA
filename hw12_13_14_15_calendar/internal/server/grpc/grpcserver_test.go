@@ -274,6 +274,7 @@ func TestGetEventsOnDayByDay(t *testing.T) {
 	require.Equal(t, ok, true)
 	_, ok = resID[5]
 	require.Equal(t, ok, true)
+	require.Equal(t, len(resID), 3)
 	server.grpcserv.GracefulStop()
 }
 
@@ -307,6 +308,7 @@ func TestGetListEventsOnWeekByDay(t *testing.T) {
 	require.Equal(t, ok, true)
 	_, ok = resID[5]
 	require.Equal(t, ok, true)
+	require.Equal(t, len(resID), 5)
 	server.grpcserv.GracefulStop()
 }
 
@@ -342,6 +344,72 @@ func TestGetListEventsOnMonthByDay(t *testing.T) {
 	require.Equal(t, ok, true)
 	_, ok = resID[5]
 	require.Equal(t, ok, true)
+	require.Equal(t, len(resID), 6)
+	server.grpcserv.GracefulStop()
+}
+
+func TestGetListEventsNotificationByDay(t *testing.T) {
+	server := createGRPCserver(t)
+	createTestEventPool(t, server)
+	go func(t *testing.T) {
+		if err := server.grpcserv.Serve(lis); err != nil {
+			t.Fatal(err)
+		}
+	}(t)
+	ctx := context.Background()
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	require.NoError(t, err)
+	defer conn.Close()
+	client := pb.NewCalendarClient(conn)
+
+	pbResp, err := client.GetListEventsNotificationByDay(ctx, &pb.GetEventsOnDayRequest{Date: timestamppb.New(time.Date(2023, 4, 20, 9, 0, 0, 1, time.UTC))})
+	require.NoError(t, err)
+	resID := make(map[int32]struct{})
+	for _, curEvent := range pbResp.GetEvents() {
+		resID[curEvent.GetId()] = struct{}{}
+	}
+	_, ok := resID[0]
+	require.Equal(t, ok, true)
+	require.Equal(t, len(resID), 1)
+	server.grpcserv.GracefulStop()
+}
+
+func TestDeleteOldEventsByDay(t *testing.T) {
+	server := createGRPCserver(t)
+	createTestEventPool(t, server)
+	go func(t *testing.T) {
+		if err := server.grpcserv.Serve(lis); err != nil {
+			t.Fatal(err)
+		}
+	}(t)
+	ctx := context.Background()
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	require.NoError(t, err)
+	defer conn.Close()
+	client := pb.NewCalendarClient(conn)
+
+	pbResp, err := client.DeleteOldEvents(ctx, &pb.DeleteOldEventsRequest{Date: timestamppb.New(time.Date(2024, 4, 20, 9, 0, 0, 1, time.UTC))})
+	require.NoError(t, err)
+	errstr := pbResp.GetError()
+	count := pbResp.GetCount()
+	require.Equal(t, errstr, "")
+	require.Equal(t, count, int32(3))
+
+	std := time.Date(2023, 4, 20, 0, 0, 0, 1, time.Local)
+	events, err := server.app.GetListEventsOnMonthByDay(ctx, std)
+	require.NoError(t, err)
+	resID := make(map[int]struct{})
+	for _, curEvent := range events {
+		resID[curEvent.ID] = struct{}{}
+	}
+	_, ok := resID[1]
+	require.Equal(t, ok, true)
+	_, ok = resID[2]
+	require.Equal(t, ok, true)
+	_, ok = resID[3]
+	require.Equal(t, ok, true)
+
+	require.Equal(t, len(resID), 3)
 	server.grpcserv.GracefulStop()
 }
 

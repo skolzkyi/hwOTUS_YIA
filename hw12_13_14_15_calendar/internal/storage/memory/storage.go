@@ -141,6 +141,54 @@ func (s *Storage) getListEventsBetweenTwoDateInclude(ctx context.Context, _ stor
 	}
 }
 
+func (s *Storage) GetListEventsNotificationByDay(ctx context.Context,_ storage.Logger, dateTime time.Time) ([]storage.Event, error) {
+	resEvents := make([]storage.Event, 0)
+	select {
+	case <-ctx.Done():
+		return nil, storage.ErrStorageTimeout
+	default:
+		s.mu.RLock()
+		for _, curEvent := range s.m {
+			controlTime := curEvent.DateStart.Add(-1 * curEvent.EventMessageTimeDelta)
+			if (dateTime.After(controlTime) || dateTime.Equal(controlTime)) && curEvent.DateStart.After(dateTime) {
+				resEvents = append(resEvents, curEvent)
+			}
+		}
+		s.mu.RUnlock()
+		sort.SliceStable(resEvents, func(i, j int) bool {
+			return resEvents[i].DateStart.Before(resEvents[j].DateStart)
+		})
+		return resEvents, nil
+	}
+}
+
+func (s *Storage) DeleteOldEventsByDay(ctx context.Context,_ storage.Logger, dateTime time.Time) (int, error) {
+	var curEvent storage.Event
+	var i int
+	idEventForDeletion := make(map[int]struct{})
+	controlTime := dateTime.Add(-8760 * time.Hour)
+	select {
+	case <-ctx.Done():
+		return i, storage.ErrStorageTimeout
+	default:
+		s.mu.RLock()
+		for _, curEvent = range s.m {
+			if curEvent.DateStop.Before(controlTime) { // -365 days
+				idEventForDeletion[curEvent.ID] = struct{}{}
+			}
+		}
+		s.mu.RUnlock()
+		s.mu.Lock()
+		for curId := range idEventForDeletion {
+			delete(s.m, curId)
+			i++
+		}
+		s.mu.Unlock()
+
+		return i, nil
+	}
+}
+
 func (s *Storage) GetListEventsonDayByDay(ctx context.Context, logger storage.Logger, day time.Time) ([]storage.Event, error) { //nolint:lll
 	dayStart := helpers.DateStartTime(day)
 	dayEnd := helpers.DateEndTime(day)

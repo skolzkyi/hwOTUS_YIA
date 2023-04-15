@@ -156,3 +156,45 @@ func (g *GRPCServer) GetEventsOnMonthByDay(ctx context.Context, in *pb.GetEvents
 	g.logg.Info(logmessage)
 	return &message, nil
 }
+
+func (g *GRPCServer) GetListEventsNotificationByDay(ctx context.Context, in *pb.GetEventsOnDayRequest) (*pb.GetEventsOnDayResponse, error) {
+	t := time.Now()
+	var message pb.GetEventsOnDayResponse
+	events, err := g.app.GetListEventsNotificationByDay(ctx, in.GetDate().AsTime())
+	if err != nil {
+		message.Error = err.Error()
+	} else {
+		for _, event := range events {
+			pbEvent := pb.Event{}
+			pbEvent.Id = int32(event.ID)
+			pbEvent.Title = event.Title
+			pbEvent.Description = event.Description
+			pbEvent.UserID = event.UserID
+			pbEvent.DateStart = timestamppb.New(event.DateStart)
+			pbEvent.DateStop = timestamppb.New(event.DateStop)
+			pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
+
+			message.Events = append(message.Events, &pbEvent)
+
+		}
+		message.Error = ""
+	}
+	logmessage := helpers.StringBuild("[client GetListEventsNotificationByDay: GetEvent, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String())
+	g.logg.Info(logmessage)
+	return &message, nil
+}
+
+func (g *GRPCServer) DeleteOldEvents(ctx context.Context, in *pb.DeleteOldEventsRequest) (*pb.DeleteOldEventsResponse, error) {
+	t := time.Now()
+	var message pb.DeleteOldEventsResponse
+	count, err := g.app.DeleteOldEventsByDay(ctx, in.GetDate().AsTime())
+	if err != nil {
+		message.Error = err.Error()
+	} else {
+		message.Error = ""
+	}
+	message.Count = int32(count)
+	logmessage := helpers.StringBuild("[client GRPC: DeleteOldEvents, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String())
+	g.logg.Info(logmessage)
+	return &message, nil
+}

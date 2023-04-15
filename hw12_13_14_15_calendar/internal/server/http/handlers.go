@@ -444,3 +444,114 @@ func (s *Server) GetEventsOnMonthByDay(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func (s *Server) GetListEventsNotificationByDay(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != http.MethodGet {
+		apiErrHandler(ErrUnsupportedMethod, &w)
+		return
+	} else {
+		ctx, cancel := context.WithTimeout(r.Context(), s.Config.GetdbTimeOut())
+		defer cancel()
+		newMessage := outputJSON{}
+		tflayout := "2006-01-02 15:04:05"
+		inpDate := InputDate{}
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			apiErrHandler(err, &w)
+			return
+		}
+
+		err = json.Unmarshal(body, &inpDate)
+		if err != nil {
+			apiErrHandler(err, &w)
+			return
+		}
+
+		date, err := time.Parse(tflayout, inpDate.Date)
+		if err != nil {
+			apiErrHandler(err, &w)
+			return
+		}
+
+		List, errInner := s.app.GetListEventsNotificationByDay(ctx, date)
+		if errInner != nil {
+			newMessage.Text = errInner.Error()
+			newMessage.Code = 1
+		} else {
+			newMessage.Text = "OK!"
+			newMessage.Code = 0
+		}
+
+		EvAnswer := EventAnswer{}
+		EvAnswer.Events = List
+		EvAnswer.Message = newMessage
+		jsonstring, err := json.Marshal(EvAnswer)
+		if err != nil {
+			apiErrHandler(err, &w)
+			return
+		}
+
+		_, err = w.Write(jsonstring)
+		if err != nil {
+			apiErrHandler(err, &w)
+			return
+		}
+
+		return
+	}
+}
+
+func (s *Server) DeleteOldEventsByDay(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != http.MethodDelete {
+		apiErrHandler(ErrUnsupportedMethod, &w)
+		return
+	} else {
+		ctx, cancel := context.WithTimeout(r.Context(), s.Config.GetdbTimeOut())
+		defer cancel()
+		newMessage := outputJSON{}
+		tflayout := "2006-01-02 15:04:05"
+		inpDate := InputDate{}
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			apiErrHandler(err, &w)
+			return
+		}
+
+		err = json.Unmarshal(body, &inpDate)
+		if err != nil {
+			apiErrHandler(err, &w)
+			return
+		}
+
+		date, err := time.Parse(tflayout, inpDate.Date)
+		if err != nil {
+			apiErrHandler(err, &w)
+			return
+		}
+
+		count, errInner := s.app.DeleteOldEventsByDay(ctx, date)
+		if errInner != nil {
+			newMessage.Text = errInner.Error()
+			newMessage.Code = 1
+		} else {
+			newMessage.Text = "OK!"
+			newMessage.Code = count
+		}
+
+		jsonstring, err := json.Marshal(newMessage)
+		if err != nil {
+			apiErrHandler(err, &w)
+			return
+		}
+
+		_, err = w.Write(jsonstring)
+		if err != nil {
+			apiErrHandler(err, &w)
+			return
+		}
+
+		return
+	}
+}

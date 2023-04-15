@@ -1,4 +1,6 @@
 BIN := "./bin/calendar"
+SCHEDULER_BIN := "./bin/calendar_scheduler"
+SENDER_BIN := "./bin/calendar_sender"
 DOCKER_IMG="calendar:develop"
 DSN="imapp:LightInDark@/OTUSFinalLab?parseTime=true"
 
@@ -21,9 +23,13 @@ generate:
 
 build:
 	go build -v -o $(BIN) -ldflags "$(LDFLAGS)" ./cmd/calendar
+	go build -v -o $(SCHEDULER_BIN) -ldflags "$(LDFLAGS)" ./cmd/scheduler
+	go build -v -o $(SENDER_BIN) -ldflags "$(LDFLAGS)" ./cmd/sender
 
 run: build
-	$(BIN) -config ./configs/config.yaml
+	$(BIN) -config ./configs/config.env
+	$(SCHEDULER_BIN) -config ./configs/config_sheduler.env
+	$(SENDER_BIN) -config ./configs/config_sender.env
 
 build-img:
 	docker build \
@@ -45,5 +51,11 @@ install-lint-deps:
 
 lint: install-lint-deps
 	golangci-lint run ./...
+
+up:
+	docker-compose -f build/docker-compose.yaml up
+
+down:
+	docker-compose -f build/docker-compose.yaml down
 
 .PHONY: generate build run build-img mysql-img migrate-goose run-img version test lint

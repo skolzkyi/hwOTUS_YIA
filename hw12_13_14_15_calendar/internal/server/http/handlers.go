@@ -451,7 +451,7 @@ func (s *Server) GetListEventsNotificationByDay(w http.ResponseWriter, r *http.R
 		apiErrHandler(ErrUnsupportedMethod, &w)
 		return
 	} else {
-		ctx, cancel := context.WithTimeout(r.Context(), s.Config.GetdbTimeOut())
+		ctx, cancel := context.WithTimeout(r.Context(), s.Config.GetDBTimeOut())
 		defer cancel()
 		newMessage := outputJSON{}
 		tflayout := "2006-01-02 15:04:05"
@@ -508,7 +508,7 @@ func (s *Server) DeleteOldEventsByDay(w http.ResponseWriter, r *http.Request) {
 		apiErrHandler(ErrUnsupportedMethod, &w)
 		return
 	} else {
-		ctx, cancel := context.WithTimeout(r.Context(), s.Config.GetdbTimeOut())
+		ctx, cancel := context.WithTimeout(r.Context(), s.Config.GetDBTimeOut())
 		defer cancel()
 		newMessage := outputJSON{}
 		tflayout := "2006-01-02 15:04:05"

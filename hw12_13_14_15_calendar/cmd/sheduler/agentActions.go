@@ -22,7 +22,7 @@ type Notification struct {
 	User      string
 }
 
-func AgentActionGetListEventsNotificationByDayAgent(ctx context.Context, config Config, log logger.LoggerWrap, firstStart bool) error {
+func AgentActionGetListEventsNotificationByDayAgent(ctx context.Context, config Config, log logger.LogWrap, firstStart bool) error {
 	curDate := time.Now()
 	address := config.GetServerURL() + ":" + config.GetGRPSPort()
 	conn, err := grpc.DialContext(ctx, address, grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -57,8 +57,8 @@ func AgentActionGetListEventsNotificationByDayAgent(ctx context.Context, config 
 			notif := Notification{
 				ID:        int(curEvent.GetId()),
 				Title:     curEvent.GetTitle(),
-				DateStart: curEvent.GetDatestart().AsTime().Format("2006-01-02 15:04:05"),
-				User:      curEvent.GetUserid(),
+				DateStart: curEvent.GetDateStart().AsTime().Format("2006-01-02 15:04:05"),
+				User:      curEvent.GetUserID(),
 			}
 			jsonstring, err := json.Marshal(notif)
 			if err != nil {
@@ -81,7 +81,7 @@ func AgentActionGetListEventsNotificationByDayAgent(ctx context.Context, config 
 	return nil
 }
 
-func AgentActionDeleteOldEventsByDay(ctx context.Context, config Config, log logger.LoggerWrap, _ bool) error {
+func AgentActionDeleteOldEventsByDay(ctx context.Context, config Config, log logger.LogWrap, _ bool) error {
 	curDate := time.Now()
 	//curDate := time.Date(2024, 4, 19, 0, 0, 0, 1, time.UTC)
 	address := config.GetServerURL() + ":" + config.GetGRPSPort()

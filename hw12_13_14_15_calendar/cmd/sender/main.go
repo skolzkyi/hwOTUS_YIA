@@ -46,7 +46,7 @@ func main() {
 		fmt.Println(err)
 	}
 	fmt.Println("config: ", config)
-	logg, err := logger.New(config.Logger.Level)
+	log, err := logger.New(config.Logger.Level)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -57,27 +57,27 @@ func main() {
 
 	kafkaReader := kafka.NewReader()
 	kafkaReader.Init(config.GetKafkaAddr(), config.GetKafkaPort(), config.GetKafkaTopicName(), "C_sender")
-	logg.Info("Sender up")
+	log.Info("Sender up")
 	for {
 		select {
 		case <-ctx.Done():
-			logg.Info("Sender down")
+			log.Info("Sender down")
 			err = kafkaReader.Close()
 			if err != nil {
-				logg.Error("KafkaReader close error: " + err.Error())
+				log.Error("KafkaReader close error: " + err.Error())
 			}
 			os.Exit(1)
 		default:
 			kafkaMessage, err := kafkaReader.ReadMessage(ctx)
 			if err != nil {
-				logg.Error("Sender crush on read kafka messages: " + err.Error())
+				log.Error("Sender crush on read kafka messages: " + err.Error())
 				cancel()
 			}
 			if kafkaMessage != "" {
 				notif := Notification{}
 				err = json.Unmarshal([]byte(kafkaMessage), &notif)
 				if err != nil {
-					logg.Error("Sender error unmarshalling notification: " + err.Error())
+					log.Error("Sender error unmarshalling notification: " + err.Error())
 					continue
 				}
 				sendNotification(notif)

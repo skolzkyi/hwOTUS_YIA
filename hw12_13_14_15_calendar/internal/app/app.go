@@ -33,8 +33,8 @@ type Storage interface {
 	GetListEventsonDayByDay(ctx context.Context, logger storage.Logger, day time.Time) ([]storage.Event, error)
 	GetListEventsOnWeekByDay(ctx context.Context, logger storage.Logger, day time.Time) ([]storage.Event, error)
 	GetListEventsOnMonthByDay(ctx context.Context, logger storage.Logger, day time.Time) ([]storage.Event, error)
-	GetListEventsNotificationByDay(ctx context.Context, dateTime time.Time) ([]storage.Event, error)
-	DeleteOldEventsByDay(ctx context.Context, dateTime time.Time) (int, error)
+	GetListEventsNotificationByDay(ctx context.Context,logger storage.Logger, dateTime time.Time) ([]storage.Event, error)
+	DeleteOldEventsByDay(ctx context.Context,logger storage.Logger, dateTime time.Time) (int, error)
 }
 
 func New(logger Logger, storage Storage) *App {

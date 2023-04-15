@@ -182,8 +182,8 @@ func (s *Storage) GetListEventsNotificationByDay(ctx context.Context,logger stor
 
 	event := storage.Event{}
 
-	var ntStart mysql.NullTime
-	var ntEnd mysql.NullTime
+	var ntStart sql.NullTime
+	var ntEnd sql.NullTime
 	var int64Delta int64
 	for rows.Next() {
 		err = rows.Scan(&event.ID, &event.Title, &event.UserID, &event.Description, &ntStart, &ntEnd, &int64Delta)

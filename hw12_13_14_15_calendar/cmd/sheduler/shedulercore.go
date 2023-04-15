@@ -9,7 +9,7 @@ import (
 
 type Sheduler struct {
 	agents   []*Agent
-	Logger   *logger.LoggerWrap
+	Logger   *logger.LogWrap
 	periodic time.Duration
 	ticker   *time.Ticker
 }
@@ -17,7 +17,7 @@ type Sheduler struct {
 func NewSheduler() *Sheduler {
 	return &Sheduler{}
 }
-func (s *Sheduler) Init(logg *logger.LoggerWrap, periodic time.Duration) {
+func (s *Sheduler) Init(logg *logger.LogWrap, periodic time.Duration) {
 	s.Logger = logg
 	s.agents = make([]*Agent, 0)
 	s.periodic = periodic
@@ -58,7 +58,7 @@ func (s *Sheduler) RunAgents(ctx context.Context, config Config) {
 type Agent struct {
 	name           string
 	periodic       time.Duration
-	action         func(ctx context.Context, config Config, log logger.LoggerWrap, firstStart bool) error
+	action         func(ctx context.Context, config Config, log logger.LogWrap, firstStart bool) error
 	lastActionTime time.Time
 	lastError      error
 	firstStart     bool
@@ -67,7 +67,7 @@ type Agent struct {
 func NewAgent() *Agent {
 	return &Agent{}
 }
-func (a *Agent) Init(name string, periodic time.Duration, action func(ctx context.Context, config Config, log logger.LoggerWrap, firstStart bool) error) {
+func (a *Agent) Init(name string, periodic time.Duration, action func(ctx context.Context, config Config, log logger.LogWrap, firstStart bool) error) {
 	a.name = name
 	a.periodic = periodic
 	a.action = action

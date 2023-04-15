@@ -10,10 +10,10 @@ GIT_HASH := $(shell git log --format="%h" -n 1)
 LDFLAGS := -X main.release="develop" -X main.buildDate=$(shell date -u +%Y-%m-%dT%H:%M:%S) -X main.gitHash=$(GIT_HASH)
 
 mysql-img:
-	docker-compose -f ./deployments/docker-compose2.yaml up -d
+	docker-compose -f ./deployments/docker-compose3.yaml up -d
 	
 mysql-img-down:
-	docker-compose -f ./deployments/docker-compose2.yaml down
+	docker-compose -f ./deployments/docker-compose3.yaml down
 
 migrate-goose:
 	goose --dir=migrations mysql $(DSN) up
@@ -29,9 +29,9 @@ build:
 	go build -v -o $(SENDER_BIN) -ldflags "$(LDFLAGS)" ./cmd/sender
 
 run: build
-	$(BIN) -config ./configs/config.env
-	#$(SCHEDULER_BIN) -config ./configs/config_sheduler.env
-	#$(SENDER_BIN) -config ./configs/config_sender.env
+	$(BIN) -config ./configs/config.env > calenrarCLog.txt &
+	$(SCHEDULER_BIN) > shedulerClog.txt &
+	$(SENDER_BIN)  > senderClog.txt
 
 build-img:
 	docker build \

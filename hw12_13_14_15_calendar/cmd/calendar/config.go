@@ -42,7 +42,7 @@ func (config *Config) Init(path string) error {
 		return err
 	}
 
-	viper.SetDefault("ADDRESS", "127.0.0.1")
+	viper.SetDefault("ADDRESS", "kafka")
 	viper.SetDefault("PORT", "4000")
 	viper.SetDefault("GRPC_PORT", "5000")
 	viper.SetDefault("SERVER_SHUTDOWN_TIMEOUT", 30*time.Second)

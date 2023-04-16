@@ -7,7 +7,7 @@ services:
     env_file:
     - ../configs/config.env
     ports:
-    - "3307:3306"
+    - "3306:3306"
     volumes:
     - ../migrations/001_migration.sql:/docker-entrypoint-initdb.d/dump.sql
     networks:

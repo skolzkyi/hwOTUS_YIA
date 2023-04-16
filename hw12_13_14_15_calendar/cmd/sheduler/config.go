@@ -46,7 +46,7 @@ func (config *Config) Init(path string) error {
 	viper.SetDefault("SHEDULER_SHUTDOWN_TIMEOUT", 30*time.Second)
 	viper.SetDefault("NOTIFICATION_EVENT_PERIOD", 30*time.Second)
 	viper.SetDefault("CLEAN_OLD_EVENT_PERIOD", 30*time.Second)
-	viper.SetDefault("SHEDULER_PERIOD", 10*time.Second)
+	viper.SetDefault("SHEDULER_PERIOD", 59*time.Second)
 	viper.SetDefault("GRPC_PORT", "5000")
 	viper.SetDefault("SERVER_URL", "127.0.0.1")
 

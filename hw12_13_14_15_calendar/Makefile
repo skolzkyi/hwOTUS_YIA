@@ -30,8 +30,8 @@ build:
 
 run: build
 	$(BIN) -config ./configs/config.env > calenrarCLog.txt &
-	$(SCHEDULER_BIN) > shedulerClog.txt &
-	$(SENDER_BIN)  > senderClog.txt
+	$(SCHEDULER_BIN) -config ./configs/config_sheduler.env > shedulerClog.txt &
+	$(SENDER_BIN)  -config ./configs/config_sender.env > senderClog.txt
 
 build-img:
 	docker build \

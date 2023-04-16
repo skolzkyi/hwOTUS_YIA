@@ -1,0 +1,18 @@
+config:  {{debug} 3000000000 30000000000 127.0.0.1 9092 NotificationCal}
+2023-04-16T18:47:01.884+0400	INFO	Sender up
+entering loop for consumer group, C_sender
+
+Unable to establish connection to consumer group coordinator for group C_sender: read tcp 127.0.0.1:40650->127.0.0.1:9092: read: connection reset by peer
+read tcp 127.0.0.1:40650->127.0.0.1:9092: read: connection reset by peer
+Unable to establish connection to consumer group coordinator for group C_sender: EOF
+EOF
+Unable to establish connection to consumer group coordinator for group C_sender: read tcp 127.0.0.1:48096->127.0.0.1:9092: read: connection reset by peer
+read tcp 127.0.0.1:48096->127.0.0.1:9092: read: connection reset by peer
+2023-04-16T18:47:11.896+0400	ERROR	Sender crush on read kafka messages: read tcp 127.0.0.1:48096->127.0.0.1:9092: read: connection reset by peer
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sender/main.go:73
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:47:11.896+0400	INFO	Sender down

@@ -1,0 +1,26 @@
+config:  {{debug} 30s 180000000000 5000000000 127.0.0.1 4000 5000 / OTUSFinalLab imapp LightInDark 20 20 true}
+2023-04-16T18:47:01.897+0400	INFO	calendar is running...
+2023-04-16T18:48:00.972+0400	INFO	[client GetListEventsNotificationByDay: GetEvent, Request DateTime: 2023-04-16 18:48:00.972897033 +0400 +04 m=+59.110472492Time of request work: 24.611819ms
+2023-04-16T18:48:00.975+0400	INFO	event deleted(count deletions - 0)
+2023-04-16T18:48:00.975+0400	INFO	[client GRPC: DeleteOldEvents, Request DateTime: 2023-04-16 18:48:00.975401192 +0400 +04 m=+59.112976645Time of request work: 802.51µs
+2023-04-16T18:48:59.891+0400	INFO	[client GetListEventsNotificationByDay: GetEvent, Request DateTime: 2023-04-16 18:48:59.89164287 +0400 +04 m=+118.029218329Time of request work: 447.542µs
+2023-04-16T18:48:59.892+0400	INFO	event deleted(count deletions - 0)
+2023-04-16T18:48:59.892+0400	INFO	[client GRPC: DeleteOldEvents, Request DateTime: 2023-04-16 18:48:59.892719037 +0400 +04 m=+118.030294498Time of request work: 185.708µs
+2023-04-16T18:49:58.892+0400	INFO	[client GetListEventsNotificationByDay: GetEvent, Request DateTime: 2023-04-16 18:49:58.8922049 +0400 +04 m=+177.029780360Time of request work: 413.003µs
+2023-04-16T18:49:58.893+0400	INFO	event deleted(count deletions - 0)
+2023-04-16T18:49:58.893+0400	INFO	[client GRPC: DeleteOldEvents, Request DateTime: 2023-04-16 18:49:58.893383154 +0400 +04 m=+177.030958610Time of request work: 196.254µs
+2023-04-16T18:50:57.891+0400	INFO	[client GetListEventsNotificationByDay: GetEvent, Request DateTime: 2023-04-16 18:50:57.891955041 +0400 +04 m=+236.029530495Time of request work: 885.744µs
+2023-04-16T18:50:57.893+0400	INFO	event deleted(count deletions - 0)
+2023-04-16T18:50:57.893+0400	INFO	[client GRPC: DeleteOldEvents, Request DateTime: 2023-04-16 18:50:57.89305572 +0400 +04 m=+236.030631174Time of request work: 183.035µs
+2023-04-16T18:51:56.892+0400	INFO	[client GetListEventsNotificationByDay: GetEvent, Request DateTime: 2023-04-16 18:51:56.892103747 +0400 +04 m=+295.029679205Time of request work: 463.849µs
+2023-04-16T18:51:56.893+0400	INFO	event deleted(count deletions - 0)
+2023-04-16T18:51:56.893+0400	INFO	[client GRPC: DeleteOldEvents, Request DateTime: 2023-04-16 18:51:56.893428294 +0400 +04 m=+295.031003762Time of request work: 217.782µs
+2023-04-16T18:52:55.897+0400	INFO	[client GetListEventsNotificationByDay: GetEvent, Request DateTime: 2023-04-16 18:52:55.897866524 +0400 +04 m=+354.035442112Time of request work: 1.62573ms
+2023-04-16T18:52:55.902+0400	INFO	event deleted(count deletions - 0)
+2023-04-16T18:52:55.902+0400	INFO	[client GRPC: DeleteOldEvents, Request DateTime: 2023-04-16 18:52:55.902637262 +0400 +04 m=+354.040212716Time of request work: 213.384µs
+2023-04-16T18:53:54.895+0400	INFO	[client GetListEventsNotificationByDay: GetEvent, Request DateTime: 2023-04-16 18:53:54.895672329 +0400 +04 m=+413.033247790Time of request work: 443.038µs
+2023-04-16T18:53:54.897+0400	INFO	event deleted(count deletions - 0)
+2023-04-16T18:53:54.897+0400	INFO	[client GRPC: DeleteOldEvents, Request DateTime: 2023-04-16 18:53:54.897148116 +0400 +04 m=+413.034723576Time of request work: 154.817µs
+2023-04-16T18:54:53.892+0400	INFO	[client GetListEventsNotificationByDay: GetEvent, Request DateTime: 2023-04-16 18:54:53.892503304 +0400 +04 m=+472.030078757Time of request work: 937.581µs
+2023-04-16T18:54:53.893+0400	INFO	event deleted(count deletions - 0)
+2023-04-16T18:54:53.893+0400	INFO	[client GRPC: DeleteOldEvents, Request DateTime: 2023-04-16 18:54:53.893532968 +0400 +04 m=+472.031108428Time of request work: 157.289µs

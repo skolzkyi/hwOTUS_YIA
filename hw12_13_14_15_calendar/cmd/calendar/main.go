@@ -23,7 +23,7 @@ import (
 var configFilePath string
 
 func init() {
-	flag.StringVar(&configFilePath, "config", "./configs", "Path to config.yaml")
+	flag.StringVar(&configFilePath, "config", "./configs/config.env", "Path to config.env")
 }
 
 func main() {

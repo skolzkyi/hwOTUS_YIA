@@ -22,14 +22,12 @@ services:
     networks:
     - ofl_network
   zookeeper:
-    hostname: zookeeper
     image: wurstmeister/zookeeper:3.4.6
-    expose:
-    - "2181"
+    ports:
+      - "2181:2181"
     networks:
     - ofl_network
   kafka:
-    hostname: kafka
     image: wurstmeister/kafka
     restart: always
     env_file:
@@ -37,11 +35,12 @@ services:
     depends_on:
      zookeeper:
         condition: service_started
-    expose:
-    - "9092"
+    ports:
+    - "9092:9092"
     networks:
-    - ofl_network 
+    - ofl_network
 
 networks:
   ofl_network:
     driver: bridge
+  

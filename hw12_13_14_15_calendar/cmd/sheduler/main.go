@@ -13,7 +13,7 @@ import (
 var configFilePath string
 
 func init() {
-	flag.StringVar(&configFilePath, "config_sheduler", "./configs", "Path to config_sheduler.env")
+	flag.StringVar(&configFilePath, "config", "./configs/config_sheduler.env", "Path to config_sheduler.env")
 }
 
 func main() {

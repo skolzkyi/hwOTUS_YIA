@@ -29,7 +29,7 @@ func (n *Notification) String() string {
 var configFilePath string
 
 func init() {
-	flag.StringVar(&configFilePath, "config_sender", "./configs", "Path to config_sender.env")
+	flag.StringVar(&configFilePath, "config", "./configs/config_sender.env", "Path to config_sender.env")
 }
 
 func main() {

@@ -1,0 +1,219 @@
+config:  {{debug} 3000000000 30000000000 30000000000 30000000000 59000000000 127.0.0.1 9092 CLNotification1 5000 127.0.0.1 true}
+2023-04-16T18:47:01.877+0400	INFO	Sheduler Up
+2023-04-16T18:48:00.946+0400	INFO	ShedulerAgentStarted: GetListEventsNotificationByDayAgent
+2023-04-16T18:48:00.973+0400	INFO	pbEventsLen: 1
+messages:  [{ 0 0 0 [] [123 34 73 68 34 58 52 44 34 84 105 116 108 101 34 58 34 70 114 111 109 32 80 111 115 116 109 97 110 34 44 34 68 97 116 101 83 116 97 114 116 34 58 34 50 48 50 51 45 49 48 45 48 52 32 49 53 58 48 52 58 48 53 34 44 34 85 115 101 114 34 58 34 85 83 69 82 48 34 125] [] <nil> 0001-01-01 00:00:00 +0000 UTC}]
+WrmP:  read tcp 127.0.0.1:52386->127.0.0.1:9092: read: connection reset by peer
+2023-04-16T18:48:00.973+0400	ERROR	kafka WriteMessagesPack error: read tcp 127.0.0.1:52386->127.0.0.1:9092: read: connection reset by peer
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.AgentActionGetListEventsNotificationByDayAgent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/agentActions.go:72
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:43
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:48:00.973+0400	ERROR	ShedulerAgentError: read tcp 127.0.0.1:52386->127.0.0.1:9092: read: connection reset by peer (GetListEventsNotificationByDayAgent)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:45
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:48:00.973+0400	INFO	ShedulerAgentStarted: DeleteOldEventsByDayAgent
+2023-04-16T18:48:00.975+0400	INFO	Result: Count delOldEvent -  0; Err - 
+2023-04-16T18:48:00.975+0400	INFO	ShedulerAgentStopped: DeleteOldEventsByDayAgent
+2023-04-16T18:48:59.890+0400	INFO	ShedulerAgentStarted: GetListEventsNotificationByDayAgent
+2023-04-16T18:48:59.891+0400	INFO	pbEventsLen: 1
+messages:  [{ 0 0 0 [] [123 34 73 68 34 58 52 44 34 84 105 116 108 101 34 58 34 70 114 111 109 32 80 111 115 116 109 97 110 34 44 34 68 97 116 101 83 116 97 114 116 34 58 34 50 48 50 51 45 49 48 45 48 52 32 49 53 58 48 52 58 48 53 34 44 34 85 115 101 114 34 58 34 85 83 69 82 48 34 125] [] <nil> 0001-01-01 00:00:00 +0000 UTC}]
+WrmP:  read tcp 127.0.0.1:50154->127.0.0.1:9092: read: connection reset by peer
+2023-04-16T18:48:59.891+0400	ERROR	kafka WriteMessagesPack error: read tcp 127.0.0.1:50154->127.0.0.1:9092: read: connection reset by peer
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.AgentActionGetListEventsNotificationByDayAgent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/agentActions.go:72
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:43
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:48:59.891+0400	ERROR	ShedulerAgentError: read tcp 127.0.0.1:50154->127.0.0.1:9092: read: connection reset by peer (GetListEventsNotificationByDayAgent)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:45
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:48:59.891+0400	INFO	ShedulerAgentStarted: DeleteOldEventsByDayAgent
+2023-04-16T18:48:59.892+0400	INFO	Result: Count delOldEvent -  0; Err - 
+2023-04-16T18:48:59.892+0400	INFO	ShedulerAgentStopped: DeleteOldEventsByDayAgent
+2023-04-16T18:49:58.890+0400	INFO	ShedulerAgentStarted: GetListEventsNotificationByDayAgent
+2023-04-16T18:49:58.892+0400	INFO	pbEventsLen: 1
+messages:  [{ 0 0 0 [] [123 34 73 68 34 58 52 44 34 84 105 116 108 101 34 58 34 70 114 111 109 32 80 111 115 116 109 97 110 34 44 34 68 97 116 101 83 116 97 114 116 34 58 34 50 48 50 51 45 49 48 45 48 52 32 49 53 58 48 52 58 48 53 34 44 34 85 115 101 114 34 58 34 85 83 69 82 48 34 125] [] <nil> 0001-01-01 00:00:00 +0000 UTC}]
+WrmP:  unexpected EOF
+2023-04-16T18:49:58.892+0400	ERROR	kafka WriteMessagesPack error: unexpected EOF
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.AgentActionGetListEventsNotificationByDayAgent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/agentActions.go:72
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:43
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:49:58.892+0400	ERROR	ShedulerAgentError: unexpected EOF (GetListEventsNotificationByDayAgent)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:45
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:49:58.892+0400	INFO	ShedulerAgentStarted: DeleteOldEventsByDayAgent
+2023-04-16T18:49:58.893+0400	INFO	Result: Count delOldEvent -  0; Err - 
+2023-04-16T18:49:58.893+0400	INFO	ShedulerAgentStopped: DeleteOldEventsByDayAgent
+2023-04-16T18:50:57.890+0400	INFO	ShedulerAgentStarted: GetListEventsNotificationByDayAgent
+2023-04-16T18:50:57.892+0400	INFO	pbEventsLen: 1
+messages:  [{ 0 0 0 [] [123 34 73 68 34 58 52 44 34 84 105 116 108 101 34 58 34 70 114 111 109 32 80 111 115 116 109 97 110 34 44 34 68 97 116 101 83 116 97 114 116 34 58 34 50 48 50 51 45 49 48 45 48 52 32 49 53 58 48 52 58 48 53 34 44 34 85 115 101 114 34 58 34 85 83 69 82 48 34 125] [] <nil> 0001-01-01 00:00:00 +0000 UTC}]
+WrmP:  read tcp 127.0.0.1:34008->127.0.0.1:9092: read: connection reset by peer
+2023-04-16T18:50:57.892+0400	ERROR	kafka WriteMessagesPack error: read tcp 127.0.0.1:34008->127.0.0.1:9092: read: connection reset by peer
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.AgentActionGetListEventsNotificationByDayAgent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/agentActions.go:72
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:43
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:50:57.892+0400	ERROR	ShedulerAgentError: read tcp 127.0.0.1:34008->127.0.0.1:9092: read: connection reset by peer (GetListEventsNotificationByDayAgent)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:45
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:50:57.892+0400	INFO	ShedulerAgentStarted: DeleteOldEventsByDayAgent
+2023-04-16T18:50:57.893+0400	INFO	Result: Count delOldEvent -  0; Err - 
+2023-04-16T18:50:57.893+0400	INFO	ShedulerAgentStopped: DeleteOldEventsByDayAgent
+2023-04-16T18:51:56.890+0400	INFO	ShedulerAgentStarted: GetListEventsNotificationByDayAgent
+2023-04-16T18:51:56.892+0400	INFO	pbEventsLen: 1
+messages:  [{ 0 0 0 [] [123 34 73 68 34 58 52 44 34 84 105 116 108 101 34 58 34 70 114 111 109 32 80 111 115 116 109 97 110 34 44 34 68 97 116 101 83 116 97 114 116 34 58 34 50 48 50 51 45 49 48 45 48 52 32 49 53 58 48 52 58 48 53 34 44 34 85 115 101 114 34 58 34 85 83 69 82 48 34 125] [] <nil> 0001-01-01 00:00:00 +0000 UTC}]
+WrmP:  read tcp 127.0.0.1:57218->127.0.0.1:9092: read: connection reset by peer
+2023-04-16T18:51:56.892+0400	ERROR	kafka WriteMessagesPack error: read tcp 127.0.0.1:57218->127.0.0.1:9092: read: connection reset by peer
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.AgentActionGetListEventsNotificationByDayAgent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/agentActions.go:72
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:43
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:51:56.892+0400	ERROR	ShedulerAgentError: read tcp 127.0.0.1:57218->127.0.0.1:9092: read: connection reset by peer (GetListEventsNotificationByDayAgent)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:45
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:51:56.892+0400	INFO	ShedulerAgentStarted: DeleteOldEventsByDayAgent
+2023-04-16T18:51:56.893+0400	INFO	Result: Count delOldEvent -  0; Err - 
+2023-04-16T18:51:56.893+0400	INFO	ShedulerAgentStopped: DeleteOldEventsByDayAgent
+2023-04-16T18:52:55.891+0400	INFO	ShedulerAgentStarted: GetListEventsNotificationByDayAgent
+2023-04-16T18:52:55.899+0400	INFO	pbEventsLen: 1
+messages:  [{ 0 0 0 [] [123 34 73 68 34 58 52 44 34 84 105 116 108 101 34 58 34 70 114 111 109 32 80 111 115 116 109 97 110 34 44 34 68 97 116 101 83 116 97 114 116 34 58 34 50 48 50 51 45 49 48 45 48 52 32 49 53 58 48 52 58 48 53 34 44 34 85 115 101 114 34 58 34 85 83 69 82 48 34 125] [] <nil> 0001-01-01 00:00:00 +0000 UTC}]
+WrmP:  read tcp 127.0.0.1:56010->127.0.0.1:9092: read: connection reset by peer
+2023-04-16T18:52:55.899+0400	ERROR	kafka WriteMessagesPack error: read tcp 127.0.0.1:56010->127.0.0.1:9092: read: connection reset by peer
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.AgentActionGetListEventsNotificationByDayAgent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/agentActions.go:72
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:43
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:52:55.899+0400	ERROR	ShedulerAgentError: read tcp 127.0.0.1:56010->127.0.0.1:9092: read: connection reset by peer (GetListEventsNotificationByDayAgent)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:45
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:52:55.899+0400	INFO	ShedulerAgentStarted: DeleteOldEventsByDayAgent
+2023-04-16T18:52:55.903+0400	INFO	Result: Count delOldEvent -  0; Err - 
+2023-04-16T18:52:55.903+0400	INFO	ShedulerAgentStopped: DeleteOldEventsByDayAgent
+2023-04-16T18:53:54.890+0400	INFO	ShedulerAgentStarted: GetListEventsNotificationByDayAgent
+2023-04-16T18:53:54.895+0400	INFO	pbEventsLen: 1
+messages:  [{ 0 0 0 [] [123 34 73 68 34 58 52 44 34 84 105 116 108 101 34 58 34 70 114 111 109 32 80 111 115 116 109 97 110 34 44 34 68 97 116 101 83 116 97 114 116 34 58 34 50 48 50 51 45 49 48 45 48 52 32 49 53 58 48 52 58 48 53 34 44 34 85 115 101 114 34 58 34 85 83 69 82 48 34 125] [] <nil> 0001-01-01 00:00:00 +0000 UTC}]
+WrmP:  unexpected EOF
+2023-04-16T18:53:54.896+0400	ERROR	kafka WriteMessagesPack error: unexpected EOF
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.AgentActionGetListEventsNotificationByDayAgent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/agentActions.go:72
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:43
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:53:54.896+0400	ERROR	ShedulerAgentError: unexpected EOF (GetListEventsNotificationByDayAgent)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:45
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:53:54.896+0400	INFO	ShedulerAgentStarted: DeleteOldEventsByDayAgent
+2023-04-16T18:53:54.897+0400	INFO	Result: Count delOldEvent -  0; Err - 
+2023-04-16T18:53:54.897+0400	INFO	ShedulerAgentStopped: DeleteOldEventsByDayAgent
+2023-04-16T18:54:53.890+0400	INFO	ShedulerAgentStarted: GetListEventsNotificationByDayAgent
+2023-04-16T18:54:53.892+0400	INFO	pbEventsLen: 1
+messages:  [{ 0 0 0 [] [123 34 73 68 34 58 52 44 34 84 105 116 108 101 34 58 34 70 114 111 109 32 80 111 115 116 109 97 110 34 44 34 68 97 116 101 83 116 97 114 116 34 58 34 50 48 50 51 45 49 48 45 48 52 32 49 53 58 48 52 58 48 53 34 44 34 85 115 101 114 34 58 34 85 83 69 82 48 34 125] [] <nil> 0001-01-01 00:00:00 +0000 UTC}]
+WrmP:  read tcp 127.0.0.1:44436->127.0.0.1:9092: read: connection reset by peer
+2023-04-16T18:54:53.892+0400	ERROR	kafka WriteMessagesPack error: read tcp 127.0.0.1:44436->127.0.0.1:9092: read: connection reset by peer
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.AgentActionGetListEventsNotificationByDayAgent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/agentActions.go:72
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:43
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:54:53.892+0400	ERROR	ShedulerAgentError: read tcp 127.0.0.1:44436->127.0.0.1:9092: read: connection reset by peer (GetListEventsNotificationByDayAgent)
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+main.(*Sheduler).RunAgents
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/shedulercore.go:45
+main.main
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/cmd/sheduler/main.go:50
+runtime.main
+	/snap/go/current/src/runtime/proc.go:250
+2023-04-16T18:54:53.892+0400	INFO	ShedulerAgentStarted: DeleteOldEventsByDayAgent
+2023-04-16T18:54:53.893+0400	INFO	Result: Count delOldEvent -  0; Err - 
+2023-04-16T18:54:53.893+0400	INFO	ShedulerAgentStopped: DeleteOldEventsByDayAgent
+2023-04-16T18:55:05.071+0400	INFO	Sheduler Down

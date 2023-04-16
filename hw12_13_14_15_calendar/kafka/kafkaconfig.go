@@ -4,12 +4,18 @@ import (
 	"errors"
 	"net"
 	"strconv"
+	"fmt"
 
 	"github.com/segmentio/kafka-go"
 )
 
 var ErrDialLeader = errors.New("failed to dial leader")
 var ErrCloseConn = errors.New("failed to close connection")
+
+func logf(msg string, a ...interface{}) {
+	fmt.Printf(msg, a...)
+	fmt.Println()
+}
 
 func CreateTopic(topicName string, kafkaURL string, kafkaPort string) error {
 	conn, err := kafka.Dial("tcp", kafkaURL+":"+kafkaPort)

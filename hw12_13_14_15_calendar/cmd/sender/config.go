@@ -35,7 +35,7 @@ func (config *Config) Init(path string) error {
 
 	viper.SetDefault("S_KAFKA_ADDR", "127.0.0.1")
 	viper.SetDefault("S_KAFKA_PORT", "9092")
-	viper.SetDefault("KAFKA_CREATE_TOPICS", "NotificationCal")
+	viper.SetDefault("KAFKA_CREATE_TOPICS", "CLNotifications1")
 	viper.SetDefault("S_KAFKA_TIMEOUT", 3*time.Second)
 	viper.SetDefault("SENDER_SHUTDOWN_TIMEOUT", 30*time.Second)
 

@@ -51,7 +51,7 @@ func AgentActionGetListEventsNotificationByDayAgent(ctx context.Context, config 
 			}
 		}
 		kafkaWriter := kafka.NewWriter()
-		kafkaWriter.Init(config.GetKafkaAddr(), config.GetKafkaPort(), config.GetKafkaTopicName())
+		kafkaWriter.Init(config.GetKafkaAddr(), config.GetKafkaPort(), config.GetKafkaTopicName(),config.GetKafkaAutoCreateTopicEnable())
 		kafkaMessages := make([]string, 0)
 		for _, curEvent := range events {
 			notif := Notification{

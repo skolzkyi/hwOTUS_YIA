@@ -53,7 +53,7 @@ func (config *Config) Init(path string) error {
 	viper.SetDefault("DB_MAX_OPEN_CONNS", 20)
 	viper.SetDefault("DB_MAX_IDLE_CONNS", 20)
 	viper.SetDefault("DB_TIMEOUT", 5*time.Second)
-	viper.SetDefault("WORK_W_DB_STORAGE", true)
+	viper.SetDefault("WORK_W_DB_STORAGE", false)
 	viper.SetDefault("LOG_LEVEL", "debug")
 
 	viper.AddConfigPath(path)

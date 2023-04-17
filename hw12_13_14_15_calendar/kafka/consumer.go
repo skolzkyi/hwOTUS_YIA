@@ -34,6 +34,7 @@ func (r *KReader) Init(addr string, port string, topicname string, group_ID stri
 		MaxBytes: 10e6, // 10MB
 		Logger:      kafka.LoggerFunc(logf),
 	    ErrorLogger: kafka.LoggerFunc(logf),
+		StartOffset: kafka.FirstOffset,
 	})
 
 }

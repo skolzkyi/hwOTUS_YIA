@@ -9,7 +9,7 @@ services:
     ports:
     - "3306:3306"
     volumes:
-    - ../migrations/001_migration.sql:/docker-entrypoint-initdb.d/dump.sql
+    - ../migrations/dc_migration.sql:/docker-entrypoint-initdb.d/dump.sql
     networks:
     - ofl_network
   phpmyadmin:

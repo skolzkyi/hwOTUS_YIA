@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/segmentio/kafka-go"
 	kafkago "github.com/segmentio/kafka-go"
@@ -24,25 +25,36 @@ func NewWriter() *Writer {
 	}
 }
 
-func (w *Writer) Init(addr string, port string, topicname string) {
+func (w *Writer) Init(addr string, port string, topicName string, autoTopicCreation bool) {
 
 	w.kWriter = &kafka.Writer{
 		Addr:     kafka.TCP(addr + ":" + port),
-		Topic:    topicname,
+		Topic:    topicName,
 		Logger:      kafka.LoggerFunc(logf),
 	    ErrorLogger: kafka.LoggerFunc(logf),
-		//Balancer: &kafka.LeastBytes{},
+		Balancer: &kafka.LeastBytes{},
+		AllowAutoTopicCreation: autoTopicCreation,
 	}
 }
 
 func (w *Writer) WriteMessagesPack(ctx context.Context, messagesPack []string) error {
+	var err error
 	kMessages := make([]kafkago.Message, 0)
 	for _, curMes := range messagesPack {
 		kMessages = append(kMessages, kafka.Message{Value: []byte(curMes)})
 	}
 	fmt.Println("messages: ",kMessages)
-	err := w.kWriter.WriteMessages(ctx, kMessages...)
-    fmt.Println("WrmP: ",err.Error())
+	retries := 3
+	for i := 0; i < retries; i++ {
+		err = w.kWriter.WriteMessages(ctx, kMessages...)
+    	fmt.Println("WrmP: ",err.Error())
+		
+		if errors.Is(err, kafka.LeaderNotAvailable) || errors.Is(err, context.DeadlineExceeded) {
+        	time.Sleep(time.Millisecond * 250)
+        	continue
+    	}
+	}
+	
 	return err
 }
 

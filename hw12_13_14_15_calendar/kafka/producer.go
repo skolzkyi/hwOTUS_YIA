@@ -3,7 +3,7 @@ package kafka
 import (
 	"context"
 	"errors"
-	"fmt"
+	//"fmt"
 	"time"
 
 	"github.com/segmentio/kafka-go"
@@ -13,16 +13,13 @@ import (
 var ErrWriteMessage = errors.New("failed to write messages")
 
 type Writer struct {
-	kWriter *kafkago.Writer
+	kWriter *kafka.Writer
 }
 
 
 
-func NewWriter() *Writer {
-	writer := &kafkago.Writer{}
-	return &Writer{
-		kWriter: writer,
-	}
+func NewWriter() Writer {
+	return Writer{}
 }
 
 func (w *Writer) Init(addr string, port string, topicName string, autoTopicCreation bool) {
@@ -34,31 +31,42 @@ func (w *Writer) Init(addr string, port string, topicName string, autoTopicCreat
 	    ErrorLogger: kafka.LoggerFunc(logf),
 		Balancer: &kafka.LeastBytes{},
 		AllowAutoTopicCreation: autoTopicCreation,
+		BatchSize:    1,
+        BatchTimeout: 10 * time.Millisecond,
+		Async: true,
 	}
 }
 
 func (w *Writer) WriteMessagesPack(ctx context.Context, messagesPack []string) error {
-	var err error
-	kMessages := make([]kafkago.Message, 0)
-	for _, curMes := range messagesPack {
-		kMessages = append(kMessages, kafka.Message{Value: []byte(curMes)})
-	}
-	fmt.Println("messages: ",kMessages)
-	retries := 3
-	for i := 0; i < retries; i++ {
-		err = w.kWriter.WriteMessages(ctx, kMessages...)
-    	fmt.Println("WrmP: ",err.Error())
+	defer recoveryFunction()
+
+	if len(messagesPack) > 0{
+		kMessages := make([]kafkago.Message, 0)
+		for _, curMes := range messagesPack {
+			kMessages = append(kMessages, kafka.Message{Key:[]byte(""),Value: []byte(curMes)})
+		}
 		
-		if errors.Is(err, kafka.LeaderNotAvailable) || errors.Is(err, context.DeadlineExceeded) {
-        	time.Sleep(time.Millisecond * 250)
-        	continue
-    	}
+		retries := 3
+		for i := 0; i < retries; i++ {
+			err := w.kWriter.WriteMessages(ctx, kMessages...)
+		
+			if errors.Is(err, kafka.LeaderNotAvailable) || errors.Is(err, context.DeadlineExceeded) {
+        		time.Sleep(time.Millisecond * 250)
+        		continue
+    		} else {
+				if err == nil {
+					break
+				} 
+				return err
+			}
+		}
 	}
-	
-	return err
+	return nil
 }
 
 func (w *Writer) Close() error {
 	err := w.kWriter.Close()
 	return err
 }
+
+

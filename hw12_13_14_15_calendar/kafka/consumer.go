@@ -16,12 +16,8 @@ type KReader struct {
 }
 
 
-func NewReader() *KReader {
-	reader := &kafkago.Reader{}
-	return &KReader{
-		kReader: reader,
-	}
-
+func NewReader() KReader {
+	return KReader{}
 }
 
 func (r *KReader) Init(addr string, port string, topicname string, group_ID string) {
@@ -40,7 +36,7 @@ func (r *KReader) Init(addr string, port string, topicname string, group_ID stri
 }
 
 func (r *KReader) ReadMessage(ctx context.Context) (string, error) {
-
+	defer recoveryFunction()
 	m, err := r.kReader.ReadMessage(ctx)
 	if err != nil {
 		return "", err

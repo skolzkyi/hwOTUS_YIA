@@ -5,6 +5,7 @@ import (
 	"net"
 	"strconv"
 	"fmt"
+	"runtime/debug"
 
 	"github.com/segmentio/kafka-go"
 )
@@ -15,6 +16,13 @@ var ErrCloseConn = errors.New("failed to close connection")
 func logf(msg string, a ...interface{}) {
 	fmt.Printf(msg, a...)
 	fmt.Println()
+}
+
+func recoveryFunction() {
+	if recoveryMessage:=recover(); recoveryMessage != nil {
+	  fmt.Println("kafka_recovery_message(panic): ",recoveryMessage)
+	  fmt.Println("stack: ", string(debug.Stack()))
+	}
 }
 
 func CreateTopic(topicName string, kafkaURL string, kafkaPort string) error {

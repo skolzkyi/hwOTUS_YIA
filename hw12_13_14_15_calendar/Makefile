@@ -9,11 +9,11 @@ DSN="imapp:LightInDark@/OTUSFinalLab?parseTime=true"
 GIT_HASH := $(shell git log --format="%h" -n 1)
 LDFLAGS := -X main.release="develop" -X main.buildDate=$(shell date -u +%Y-%m-%dT%H:%M:%S) -X main.gitHash=$(GIT_HASH)
 
-mysql-img:
-	docker-compose -f ./deployments/docker-compose3.yaml up -d
+ex-services-img-up:
+	docker-compose -f ./deployments/docker-compose_only_ex_services.yaml up -d
 	
-mysql-img-down:
-	docker-compose -f ./deployments/docker-compose3.yaml down
+ex-services-img-down:
+	docker-compose -f ./deployments/docker-compose_only_ex_services.yaml down
 
 migrate-goose:
 	goose --dir=migrations mysql $(DSN) up
@@ -29,7 +29,7 @@ build:
 	go build -v -o $(SENDER_BIN) -ldflags "$(LDFLAGS)" ./cmd/sender
 
 run: build
-	$(BIN) -config ./configs/config.env > calenrarCLog.txt &
+	$(BIN) -config ./configs/config.env > calendarCLog.txt &
 	$(SCHEDULER_BIN) -config ./configs/config_sheduler.env > shedulerClog.txt &
 	$(SENDER_BIN)  -config ./configs/config_sender.env > senderClog.txt
 
@@ -70,9 +70,9 @@ lint: install-lint-deps
 	golangci-lint run ./...
 
 up:
-	docker-compose -f build/docker-compose.yaml up
+	docker-compose -f ./deployments/docker-compose.yaml up --build > deployLog.txt
 
 down:
-	docker-compose -f build/docker-compose.yaml down
+	docker-compose -f ./deployments/docker-compose.yaml down
 
-.PHONY: generate build run build-img mysql-img migrate-goose run-img version test lint
+.PHONY: generate build run build-img ex-services-img-up run-img stop-img version test lint up down 

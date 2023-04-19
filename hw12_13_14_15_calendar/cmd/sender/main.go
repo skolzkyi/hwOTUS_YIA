@@ -57,6 +57,7 @@ func main() {
 
 	kafkaReader := kafka.NewReader()
 	kafkaReader.Init(config.GetKafkaAddr(), config.GetKafkaPort(), config.GetKafkaTopicName(), "C_sender")
+	log.Info("kafkaAddr: "+config.GetKafkaAddr())
 	log.Info("Sender up")
 	for {
 		select {
@@ -71,7 +72,7 @@ func main() {
 			kafkaMessage, err := kafkaReader.ReadMessage(ctx)
 			if err != nil {
 				log.Error("Sender crush on read kafka messages: " + err.Error())
-				cancel()
+				//cancel()
 			}
 			if kafkaMessage != "" {
 				notif := Notification{}

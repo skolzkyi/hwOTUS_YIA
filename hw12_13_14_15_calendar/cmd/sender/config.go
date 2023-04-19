@@ -33,7 +33,7 @@ func (config *Config) Init(path string) error {
 		return err
 	}
 
-	viper.SetDefault("S_KAFKA_ADDR", "127.0.0.1")
+	viper.SetDefault("S_KAFKA_ADDR", "kafka")
 	viper.SetDefault("S_KAFKA_PORT", "9092")
 	viper.SetDefault("KAFKA_CREATE_TOPICS", "CLNotifications1")
 	viper.SetDefault("S_KAFKA_TIMEOUT", 3*time.Second)
@@ -46,14 +46,14 @@ func (config *Config) Init(path string) error {
 	viper.SetConfigType("env")
 
 	viper.AutomaticEnv()
-
+/*
 	err := viper.ReadInConfig()
 	if err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
 			return err
 		}
 	}
-
+*/
 	config.kafkaAddr = viper.GetString("S_KAFKA_ADDR")
 	config.kafkaPort = viper.GetString("S_KAFKA_PORT")
 	config.kafkaTopicName = viper.GetString("KAFKA_CREATE_TOPICS")

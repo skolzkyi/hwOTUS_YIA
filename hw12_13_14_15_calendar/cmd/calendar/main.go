@@ -44,7 +44,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-
+	log.Info("servAddr: "+config.GetAddress())
 	var storage app.Storage
 	ctxStor, cancelStore := context.WithTimeout(context.Background(), config.GetDBTimeOut())
 	if config.workWithDBStorage {

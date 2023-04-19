@@ -1,7 +1,7 @@
 # Собираем в гошке
 FROM golang:1.19 as build
 
-ENV BIN_FILE /opt/calendar/sheduler-app
+ENV BIN_FILE /opt/sheduler/sheduler-app
 ENV CODE_DIR /go/src/
 
 WORKDIR ${CODE_DIR}
@@ -28,10 +28,10 @@ LABEL ORGANIZATION="OTUS Online Education"
 LABEL SERVICE="sheduler"
 LABEL MAINTAINERS="skolzkyi@gmail.com"
 
-ENV BIN_FILE "/opt/calendar/sheduler-app"
+ENV BIN_FILE "/opt/sheduler/sheduler-app"
 COPY --from=build ${BIN_FILE} ${BIN_FILE}
 
-ENV CONFIG_FILE /etc/calendar/config.env
-COPY ./configs/config_sheduler.env ${CONFIG_FILE}
+ENV CONFIG_FILE /etc/sheduler/config_sheduler.env
+COPY ./configs/dc/config_sheduler.env ${CONFIG_FILE}
 
-CMD ${BIN_FILE} -config ${CONFIG_FILE}
+CMD ${BIN_FILE} -config ${CONFIG_FILE}  > shedulerClog.txt

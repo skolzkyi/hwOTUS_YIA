@@ -30,7 +30,7 @@ func main() {
 		fmt.Println(err)
 	}
 	fmt.Println("config: ", config)
-	logg, err := logger.New(config.Logger.Level)
+	log, err := logger.New(config.Logger.Level)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -38,9 +38,10 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(),
 		syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
 	defer cancel()
-
+	log.Info("servAddr: "+config.GetServerURL())
+	log.Info("kafkaAddr: "+config.GetKafkaAddr())
 	sheduler := NewSheduler()
-	sheduler.Init(logg, config.GetShedulerPeriod())
+	sheduler.Init(log, config.GetShedulerPeriod())
 	notificationAgent := NewAgent()
 	notificationAgent.Init("GetListEventsNotificationByDayAgent", config.GetNotificationEventPeriod(), AgentActionGetListEventsNotificationByDayAgent)
 	oldEventCleaningAgent := NewAgent()

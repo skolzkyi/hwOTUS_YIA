@@ -9,6 +9,7 @@ WORKDIR ${CODE_DIR}
 # Кэшируем слои с модулями
 COPY go.mod .
 COPY go.sum .
+RUN go mod download github.com/sagikazarmark/crypt
 RUN go mod download
 
 COPY . ${CODE_DIR}
@@ -31,6 +32,6 @@ ENV BIN_FILE "/opt/calendar/calendar-app"
 COPY --from=build ${BIN_FILE} ${BIN_FILE}
 
 ENV CONFIG_FILE /etc/calendar/config.env
-COPY ./configs/config.env ${CONFIG_FILE}
+COPY ./configs/dc/config.env ${CONFIG_FILE}
 
-CMD ${BIN_FILE} -config ${CONFIG_FILE}
+CMD ${BIN_FILE} -config ${CONFIG_FILE} > calenrarCLog.txt

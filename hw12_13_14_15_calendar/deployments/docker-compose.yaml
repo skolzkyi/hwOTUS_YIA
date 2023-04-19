@@ -1,42 +1,110 @@
 version: '3.9'
 
 services:
-  mysq-db:
+  calendar:
+    container_name: calendar
+    build:
+      context: ../
+      dockerfile: ./build/Dockerfile
+    env_file:
+    - ../configs/dc/config.env
+    restart: always
+    ports:
+      - "8888:4000"
+      - "5000:5000"
+    depends_on:
+      mysql-db:
+        condition: service_started
+    volumes:
+      - "./configs:/app/configs"
+    networks:
+    - ofl_network
+  sheduler:
+    container_name: sheduler
+    build:
+      context: ../
+      dockerfile: ./build/sheduler/Dockerfile
+    env_file:
+    - ../configs/dc/config_sheduler.env
+    restart: always
+    volumes:
+      - "./configs:/app/configs"
+    depends_on:
+       mysql-db:
+        condition: service_started
+       kafka:
+        condition: service_started
+       calendar:
+        condition: service_started
+    networks:
+    - ofl_network
+  sender:
+    container_name: sender
+    build:
+      context: ../
+      dockerfile: ./build/sender/Dockerfile
+    env_file:
+    - ../configs/dc/config_sender.env
+    restart: always
+    volumes:
+      - "./configs:/app/configs"
+    depends_on:
+       mysql-db:
+        condition: service_started
+       kafka:
+        condition: service_started
+       calendar:
+        condition: service_started
+       sheduler:
+        condition: service_started
+    networks:
+      - ofl_network
+  mysql-db:
+    container_name: mysql-db
     image: mysql:8
     restart: always
-    environment:
-      MYSQL_USER: imapp
-      MYSQL_PASSWORD: LightInDark
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: OTUSFinalLab
+    env_file:
+    - ../configs/config.env
     ports:
     - "3306:3306"
-    expose:
-    - "3306"
     volumes:
-    - ../migrations/001_migrations.sql:/docker-entrypoint-initdb.d/dump.sql
+    - ../migrations/dc_migration.sql:/docker-entrypoint-initdb.d/dump.sql
+    networks:
+    - ofl_network
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "9999:80"
+    environment:
+      - PMA_ARBITRARY=1
     networks:
     - ofl_network
   zookeeper:
-    hostname: zookeeper
+    container_name: zookeeper
     image: wurstmeister/zookeeper:3.4.6
-    expose:
-    - "2181"
+    ports:
+      - "2181:2181"
     networks:
     - ofl_network
   kafka:
-    hostname: kafka
+    container_name:  kafka
     image: wurstmeister/kafka
+    restart: always
     env_file:
-    - ../configs/config_sheduler.env
+    - ../configs/dc/config_sheduler.env
     depends_on:
-     zookeeper:
+      zookeeper:
         condition: service_started
     expose:
     - "9092"
+    ports:
+    - "9092:9092"
     networks:
-    - ofl_network 
+    - ofl_network
 
 networks:
   ofl_network:
     driver: bridge
+  

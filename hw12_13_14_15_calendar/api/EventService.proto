@@ -25,7 +25,8 @@ message GetEventRequest{
  
  message GetEventResponse{
     Event event = 1;
-    string error = 2;
+    int32 id = 2;
+    string error = 3;
  }
 
 message CreateEventRequest{
@@ -42,7 +43,8 @@ message UpdateEventRequest{
 }
 
 message UpdateEventResponse{
-    string error = 1;
+    int32 id = 1;
+    string error = 2;
 }
 
 message DeleteEventRequest{
@@ -50,7 +52,8 @@ message DeleteEventRequest{
 }
 
 message DeleteEventResponse{
-    string error = 1;
+    int32 id = 1;
+    string error = 2;
 }
 
 message DeleteOldEventsRequest{
@@ -59,7 +62,8 @@ message DeleteOldEventsRequest{
 
 message DeleteOldEventsResponse{
     int32 count = 1;
-    string error = 2;
+    int32 id = 2;
+    string error = 3;
 }
 
 message GetEventsOnDayRequest{
@@ -68,7 +72,8 @@ message GetEventsOnDayRequest{
 
 message GetEventsOnDayResponse{
     repeated Event events = 1;
-    string error = 2;
+    int32 id = 2;
+    string error = 3;
 }
 
 message Event {

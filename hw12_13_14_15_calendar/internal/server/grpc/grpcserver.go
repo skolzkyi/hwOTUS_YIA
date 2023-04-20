@@ -4,6 +4,7 @@ import (
 	"context"
 	"net"
 	"time"
+	"sync"
 
 	pb "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/grpc/pb"
 	storage "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/storage/event"
@@ -16,6 +17,8 @@ type GRPCServer struct {
 	logg     Logger
 	app      Application
 	Config   Config
+	mu        sync.RWMutex
+	errMap   map[error]int32
 }
 
 type Config interface {
@@ -61,7 +64,7 @@ func NewServer(logger Logger, app Application, config Config) *GRPCServer {
 	server.Config = config
 	server.grpcserv = grpc.NewServer()
 	pb.RegisterCalendarServer(server.grpcserv, &server)
-
+	server.errMap = initErrGRPCMap()
 	return &server
 }
 
@@ -87,4 +90,23 @@ func (g *GRPCServer) Stop(ctx context.Context) error {
 	}
 	g.logg.Info("GRPCserver graceful shutdown")
 	return err
+}
+
+func (g *GRPCServer) getGRPCErrorCode(err error) int32 {
+	g.mu.RLock()
+	defer g.mu.RUnlock()
+	errCode,ok:=g.errMap[err]
+	if !ok {
+		errCode = 500 // UNKNOWN
+	}
+	return errCode
+}
+
+func initErrGRPCMap() map[error]int32 {
+	errMap:= make(map[error]int32)
+	errMap[storage.ErrNoRecord]= 404 // NOT_FOUND
+	errMap[storage.ErrStorageTimeout]= 504 // DEADLINE_EXCEEDED
+	errMap[storage.ErrDateBusy]= 500 // INTERNAL
+	errMap[storage.ErrIDNotUnique]= 400 // INVALID_ARGUMENT
+	return errMap
 }

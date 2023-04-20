@@ -101,10 +101,10 @@ func AgentActionDeleteOldEventsByDay(ctx context.Context, config Config, log log
 		return err
 	}
 	errorFromServer := outData.GetError()
-	log.Info("Result: Count delOldEvent -  " + strconv.Itoa(int(outData.GetCount())) + "; Err - " + outData.GetError())
+	log.Info("Result: Count delOldEvent -  " + strconv.Itoa(int(outData.GetCount())) + "; Code - " + strconv.Itoa(int(outData.GetId()))+"; Err - " + outData.GetError())
 
 	if errorFromServer != "" {
-		log.Error("AgentActionDeleteOldEventsByDay error on server: " + err.Error())
+		log.Error("AgentActionDeleteOldEventsByDay error on server: " + strconv.Itoa(int(outData.GetId()))+"; "+err.Error())
 		return errors.New(errorFromServer)
 	}
 

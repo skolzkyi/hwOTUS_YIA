@@ -15,11 +15,11 @@ func (g *GRPCServer) CreateEvent(ctx context.Context, in *pb.CreateEventRequest)
 	var message pb.CreateEventResponse
 	id, err := g.app.CreateEvent(ctx, in.GetEvent().Title, in.GetEvent().UserID, in.GetEvent().Description, in.GetEvent().DateStart.AsTime(), in.GetEvent().DateStop.AsTime(), in.GetEvent().GetEventMessageTimeDelta().AsDuration())
 	if err != nil {
-		message.Id = 0
+		message.Id = g.getGRPCErrorCode(err)
 		message.Error = err.Error()
 	} else {
 		message.Id = int32(id)
-		message.Error = ""
+		message.Error = "OK!"
 	}
 	logmessage := helpers.StringBuild("[client GRPC: CreateEvent, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String())
 	g.logg.Info(logmessage)
@@ -32,6 +32,7 @@ func (g *GRPCServer) GetEvent(ctx context.Context, in *pb.GetEventRequest) (*pb.
 	var pbEvent pb.Event
 	event, err := g.app.GetEvent(ctx, int(in.GetId()))
 	if err != nil {
+		message.Id = g.getGRPCErrorCode(err)
 		message.Error = err.Error()
 	} else {
 		pbEvent.Id = int32(event.ID)
@@ -43,7 +44,8 @@ func (g *GRPCServer) GetEvent(ctx context.Context, in *pb.GetEventRequest) (*pb.
 		pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
 
 		message.Event = &pbEvent
-		message.Error = ""
+		message.Id = 200
+		message.Error = "OK!"
 	}
 	logmessage := helpers.StringBuild("[client GRPC: GetEvent, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String())
 	g.logg.Info(logmessage)
@@ -55,9 +57,11 @@ func (g *GRPCServer) UpdateEvent(ctx context.Context, in *pb.UpdateEventRequest)
 	var message pb.UpdateEventResponse
 	err := g.app.UpdateEvent(ctx, int(in.GetEvent().Id), in.GetEvent().Title, in.GetEvent().UserID, in.GetEvent().Description, in.GetEvent().DateStart.AsTime(), in.GetEvent().DateStop.AsTime(), in.GetEvent().GetEventMessageTimeDelta().AsDuration())
 	if err != nil {
+		message.Id = g.getGRPCErrorCode(err)
 		message.Error = err.Error()
 	} else {
-		message.Error = ""
+		message.Id = 200
+		message.Error = "OK!"
 	}
 	logmessage := helpers.StringBuild("[client GRPC: UpdateEvent, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String())
 	g.logg.Info(logmessage)
@@ -69,9 +73,11 @@ func (g *GRPCServer) DeleteEvent(ctx context.Context, in *pb.DeleteEventRequest)
 	var message pb.DeleteEventResponse
 	err := g.app.DeleteEvent(ctx, int(in.GetId()))
 	if err != nil {
+		message.Id = g.getGRPCErrorCode(err)
 		message.Error = err.Error()
 	} else {
-		message.Error = ""
+		message.Id = 200
+		message.Error = "OK!"
 	}
 	logmessage := helpers.StringBuild("[client GRPC: DeleteEvent, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String())
 	g.logg.Info(logmessage)
@@ -83,6 +89,7 @@ func (g *GRPCServer) GetEventsOnDayByDay(ctx context.Context, in *pb.GetEventsOn
 	var message pb.GetEventsOnDayResponse
 	events, err := g.app.GetListEventsonDayByDay(ctx, in.GetDate().AsTime())
 	if err != nil {
+		message.Id = g.getGRPCErrorCode(err)
 		message.Error = err.Error()
 	} else {
 		for _, event := range events {
@@ -97,7 +104,8 @@ func (g *GRPCServer) GetEventsOnDayByDay(ctx context.Context, in *pb.GetEventsOn
 
 			message.Events = append(message.Events, &pbEvent)
 		}
-		message.Error = ""
+		message.Id = 200
+		message.Error = "OK!"
 	}
 	logmessage := helpers.StringBuild("[client GetEventsOnDayByDay: GetEvent, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String())
 	g.logg.Info(logmessage)
@@ -109,6 +117,7 @@ func (g *GRPCServer) GetEventsOnWeekByDay(ctx context.Context, in *pb.GetEventsO
 	var message pb.GetEventsOnDayResponse
 	events, err := g.app.GetListEventsOnWeekByDay(ctx, in.GetDate().AsTime())
 	if err != nil {
+		message.Id = g.getGRPCErrorCode(err)
 		message.Error = err.Error()
 	} else {
 		for _, event := range events {
@@ -123,7 +132,8 @@ func (g *GRPCServer) GetEventsOnWeekByDay(ctx context.Context, in *pb.GetEventsO
 
 			message.Events = append(message.Events, &pbEvent)
 		}
-		message.Error = ""
+		message.Id = 200
+		message.Error = "OK!"
 	}
 	logmessage := helpers.StringBuild("[client GetEventsOnWeekByDay: GetEvent, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String())
 	g.logg.Info(logmessage)
@@ -135,6 +145,7 @@ func (g *GRPCServer) GetEventsOnMonthByDay(ctx context.Context, in *pb.GetEvents
 	var message pb.GetEventsOnDayResponse
 	events, err := g.app.GetListEventsOnMonthByDay(ctx, in.GetDate().AsTime())
 	if err != nil {
+		message.Id = g.getGRPCErrorCode(err)
 		message.Error = err.Error()
 	} else {
 		for _, event := range events {
@@ -150,7 +161,8 @@ func (g *GRPCServer) GetEventsOnMonthByDay(ctx context.Context, in *pb.GetEvents
 			message.Events = append(message.Events, &pbEvent)
 
 		}
-		message.Error = ""
+		message.Id = 200
+		message.Error = "OK!"
 	}
 	logmessage := helpers.StringBuild("[client GetEventsOnMonthByDay: GetEvent, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String())
 	g.logg.Info(logmessage)
@@ -162,6 +174,7 @@ func (g *GRPCServer) GetListEventsNotificationByDay(ctx context.Context, in *pb.
 	var message pb.GetEventsOnDayResponse
 	events, err := g.app.GetListEventsNotificationByDay(ctx, in.GetDate().AsTime())
 	if err != nil {
+		message.Id = g.getGRPCErrorCode(err)
 		message.Error = err.Error()
 	} else {
 		for _, event := range events {
@@ -177,7 +190,8 @@ func (g *GRPCServer) GetListEventsNotificationByDay(ctx context.Context, in *pb.
 			message.Events = append(message.Events, &pbEvent)
 
 		}
-		message.Error = ""
+		message.Id = 200
+		message.Error = "OK!"
 	}
 	logmessage := helpers.StringBuild("[client GetListEventsNotificationByDay: GetEvent, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String())
 	g.logg.Info(logmessage)
@@ -189,9 +203,11 @@ func (g *GRPCServer) DeleteOldEvents(ctx context.Context, in *pb.DeleteOldEvents
 	var message pb.DeleteOldEventsResponse
 	count, err := g.app.DeleteOldEventsByDay(ctx, in.GetDate().AsTime())
 	if err != nil {
+		message.Id = g.getGRPCErrorCode(err)
 		message.Error = err.Error()
 	} else {
-		message.Error = ""
+		message.Id = 200
+		message.Error = "OK!"
 	}
 	message.Count = int32(count)
 	logmessage := helpers.StringBuild("[client GRPC: DeleteOldEvents, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String())

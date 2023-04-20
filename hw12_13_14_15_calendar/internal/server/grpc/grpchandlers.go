@@ -159,7 +159,6 @@ func (g *GRPCServer) GetEventsOnMonthByDay(ctx context.Context, in *pb.GetEvents
 			pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
 
 			message.Events = append(message.Events, &pbEvent)
-
 		}
 		message.Id = 200
 		message.Error = "OK!"
@@ -188,7 +187,6 @@ func (g *GRPCServer) GetListEventsNotificationByDay(ctx context.Context, in *pb.
 			pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
 
 			message.Events = append(message.Events, &pbEvent)
-
 		}
 		message.Id = 200
 		message.Error = "OK!"

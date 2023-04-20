@@ -23,7 +23,7 @@ type Notification struct {
 }
 
 func (n *Notification) String() string {
-	return helpers.StringBuild("[ID: ", strconv.Itoa(n.ID), ", Title: ", n.Title, " DateStart: ", n.DateStart, " User: ", n.User)
+	return helpers.StringBuild("[ID: ", strconv.Itoa(n.ID), ", Title: ", n.Title, " DateStart: ", n.DateStart, " User: ", n.User) //nolint:lll
 }
 
 var configFilePath string
@@ -57,7 +57,7 @@ func main() {
 
 	kafkaReader := kafka.NewReader()
 	kafkaReader.Init(config.GetKafkaAddr(), config.GetKafkaPort(), config.GetKafkaTopicName(), "C_sender")
-	log.Info("kafkaAddr: "+config.GetKafkaAddr())
+	log.Info("kafkaAddr: " + config.GetKafkaAddr())
 	log.Info("Sender up")
 	for {
 		select {
@@ -67,12 +67,12 @@ func main() {
 			if err != nil {
 				log.Error("KafkaReader close error: " + err.Error())
 			}
-			os.Exit(1)
+			os.Exit(1) //nolint:gocritic
 		default:
 			kafkaMessage, err := kafkaReader.ReadMessage(ctx)
 			if err != nil {
 				log.Error("Sender crush on read kafka messages: " + err.Error())
-				//cancel()
+				cancel()
 			}
 			if kafkaMessage != "" {
 				notif := Notification{}

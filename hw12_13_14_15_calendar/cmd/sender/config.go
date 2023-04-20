@@ -46,14 +46,14 @@ func (config *Config) Init(path string) error {
 	viper.SetConfigType("env")
 
 	viper.AutomaticEnv()
-/*
+
 	err := viper.ReadInConfig()
 	if err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok { //nolint:errorlint
 			return err
 		}
 	}
-*/
+
 	config.kafkaAddr = viper.GetString("S_KAFKA_ADDR")
 	config.kafkaPort = viper.GetString("S_KAFKA_PORT")
 	config.kafkaTopicName = viper.GetString("KAFKA_CREATE_TOPICS")
@@ -63,40 +63,28 @@ func (config *Config) Init(path string) error {
 	config.Logger.Level = viper.GetString("LOG_LEVEL")
 
 	return nil
-
 }
 
 func (config *Config) GetKafkaURL() string {
-
 	return config.kafkaAddr + ":" + config.kafkaPort
-
 }
 
 func (config *Config) GetKafkaAddr() string {
-
 	return config.kafkaAddr
-
 }
 
 func (config *Config) GetKafkaPort() string {
-
 	return config.kafkaPort
-
 }
 
 func (config *Config) GetKafkaTopicName() string {
-
 	return config.kafkaTopicName
-
 }
 
 func (config *Config) GetSenderShutdownTimeout() time.Duration {
-
 	return config.senderShutdownTimeout
-
 }
 
 func (config *Config) GetKafkaTimeOut() time.Duration {
-
 	return config.kafkaTimeOut
 }

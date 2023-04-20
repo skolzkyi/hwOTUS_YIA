@@ -44,7 +44,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	log.Info("servAddr: "+config.GetAddress())
+	log.Info("servAddr: " + config.GetAddress())
 	var storage app.Storage
 	ctxStor, cancelStore := context.WithTimeout(context.Background(), config.GetDBTimeOut())
 	if config.workWithDBStorage {
@@ -90,7 +90,7 @@ func main() {
 		if err := GRPCserver.Start(); err != nil {
 			log.Error("failed to start grpc server: " + err.Error())
 			cancel()
-			os.Exit(1) //nolint:gocritic
+			os.Exit(1) //nolint:gocritic,nolintlint
 		}
 	}()
 

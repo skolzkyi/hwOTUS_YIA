@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/segmentio/kafka-go"
-	kafkago "github.com/segmentio/kafka-go"
 )
 
 var ErrWriteMessage = errors.New("failed to write messages")
@@ -23,7 +22,6 @@ func NewWriter() Writer {
 }
 
 func (w *Writer) Init(addr string, port string, topicName string, autoTopicCreation bool) {
-
 	w.kWriter = &kafka.Writer{
 		Addr:     kafka.TCP(addr + ":" + port),
 		Topic:    topicName,
@@ -41,7 +39,7 @@ func (w *Writer) WriteMessagesPack(ctx context.Context, messagesPack []string) e
 	defer recoveryFunction()
 
 	if len(messagesPack) > 0{
-		kMessages := make([]kafkago.Message, 0)
+		kMessages := make([]kafka.Message, 0)
 		for _, curMes := range messagesPack {
 			kMessages = append(kMessages, kafka.Message{Key:[]byte(""),Value: []byte(curMes)})
 		}

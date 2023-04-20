@@ -63,15 +63,15 @@ func apiErrHandler(err error, w *http.ResponseWriter) {
 	}
 }
 
-func (s *Server) helloWorld(w http.ResponseWriter, r *http.Request) {
+func (s *Server) helloWorld(w http.ResponseWriter, _ *http.Request) {
 	w.Write([]byte("Hello world!"))
 }
 
 func (s *Server) Event_REST(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
-	ctx, _ := context.WithTimeout(context.Background(), s.Config.GetDBTimeOut())
-
+	ctx, cancel := context.WithTimeout(context.Background(), s.Config.GetDBTimeOut())
+	defer cancel()
 	switch r.Method {
 
 	case http.MethodGet:
@@ -79,7 +79,7 @@ func (s *Server) Event_REST(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Get")
 		newMessage := outputJSON{}
 		EvAnswer := EventAnswer{}
-		EvAnswer.Events = make([]storage.Event, 1, 1)
+		EvAnswer.Events = make([]storage.Event, 1)
 		path := strings.Trim(r.URL.Path, "/")
 		pathParts := strings.Split(path, "/")
 		if len(pathParts) < 2 {
@@ -288,168 +288,167 @@ func (s *Server) GetEventsOnDayByDay(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		apiErrHandler(ErrUnsupportedMethod, &w)
 		return
-	} else {
-		ctx, _ := context.WithTimeout(context.Background(), s.Config.GetDBTimeOut())
-		newMessage := outputJSON{}
-		tflayout := "2006-01-02 15:04:05"
-		inpDate := InputDate{}
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		err = json.Unmarshal(body, &inpDate)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		dateStart, err := time.Parse(tflayout, inpDate.Date)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-		fmt.Println("controlDate: ", dateStart)
-		List, errInner := s.app.GetListEventsonDayByDay(ctx, dateStart)
-		if errInner != nil {
-			newMessage.Text = errInner.Error()
-			newMessage.Code = 1
-			w.Header().Add("ErrCustom",errInner.Error())
-		} else {
-			newMessage.Text = "OK!"
-			newMessage.Code = 0
-		}
-
-		EvAnswer := EventAnswer{}
-		EvAnswer.Events = List
-		EvAnswer.Message = newMessage
-		jsonstring, err := json.Marshal(EvAnswer)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		_, err = w.Write(jsonstring)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
+	} 
+	ctx, cancel := context.WithTimeout(context.Background(), s.Config.GetDBTimeOut())
+	defer cancel()
+	newMessage := outputJSON{}
+	tflayout := "2006-01-02 15:04:05"
+	inpDate := InputDate{}
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		apiErrHandler(err, &w)
 		return
 	}
+
+	err = json.Unmarshal(body, &inpDate)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	dateStart, err := time.Parse(tflayout, inpDate.Date)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+	fmt.Println("controlDate: ", dateStart)
+	List, errInner := s.app.GetListEventsonDayByDay(ctx, dateStart)
+	if errInner != nil {
+		newMessage.Text = errInner.Error()
+		newMessage.Code = 1
+		w.Header().Add("ErrCustom",errInner.Error())
+	} else {
+		newMessage.Text = "OK!"
+		newMessage.Code = 0
+	}
+
+	EvAnswer := EventAnswer{}
+	EvAnswer.Events = List
+	EvAnswer.Message = newMessage
+	jsonstring, err := json.Marshal(EvAnswer)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	_, err = w.Write(jsonstring)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	return	
 }
 
 func (s *Server) GetEventsOnWeekByDay(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		apiErrHandler(ErrUnsupportedMethod, &w)
 		return
-	} else {
-		ctx, _ := context.WithTimeout(context.Background(), s.Config.GetDBTimeOut())
-		newMessage := outputJSON{}
-		tflayout := "2006-01-02 15:04:05"
-		inpDate := InputDate{}
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		err = json.Unmarshal(body, &inpDate)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		dateStart, err := time.Parse(tflayout, inpDate.Date)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		List, errInner := s.app.GetListEventsOnWeekByDay(ctx, dateStart)
-		if errInner != nil {
-			newMessage.Text = errInner.Error()
-			newMessage.Code = 1
-			w.Header().Add("ErrCustom",errInner.Error())
-		} else {
-			newMessage.Text = "OK!"
-			newMessage.Code = 0
-		}
-
-		EvAnswer := EventAnswer{}
-		EvAnswer.Events = List
-		EvAnswer.Message = newMessage
-		jsonstring, err := json.Marshal(EvAnswer)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		_, err = w.Write(jsonstring)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
+	} 
+	ctx, cancel := context.WithTimeout(context.Background(), s.Config.GetDBTimeOut())
+	defer cancel()
+	newMessage := outputJSON{}
+	tflayout := "2006-01-02 15:04:05"
+	inpDate := InputDate{}
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		apiErrHandler(err, &w)
 		return
 	}
+
+	err = json.Unmarshal(body, &inpDate)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	dateStart, err := time.Parse(tflayout, inpDate.Date)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	List, errInner := s.app.GetListEventsOnWeekByDay(ctx, dateStart)
+	if errInner != nil {
+		newMessage.Text = errInner.Error()
+		newMessage.Code = 1
+		w.Header().Add("ErrCustom",errInner.Error())
+	} else {
+		newMessage.Text = "OK!"
+		newMessage.Code = 0
+	}
+
+	EvAnswer := EventAnswer{}
+	EvAnswer.Events = List
+	EvAnswer.Message = newMessage
+	jsonstring, err := json.Marshal(EvAnswer)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	_, err = w.Write(jsonstring)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	return	
 }
 
 func (s *Server) GetEventsOnMonthByDay(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		apiErrHandler(ErrUnsupportedMethod, &w)
 		return
-	} else {
-		ctx, _ := context.WithTimeout(context.Background(), s.Config.GetDBTimeOut())
-		newMessage := outputJSON{}
-		tflayout := "2006-01-02 15:04:05"
-		inpDate := InputDate{}
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		err = json.Unmarshal(body, &inpDate)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		dateStart, err := time.Parse(tflayout, inpDate.Date)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		List, errInner := s.app.GetListEventsOnMonthByDay(ctx, dateStart)
-		if errInner != nil {
-			newMessage.Text = errInner.Error()
-			newMessage.Code = 1
-			w.Header().Add("ErrCustom",errInner.Error())
-		} else {
-			newMessage.Text = "OK!"
-			newMessage.Code = 0
-		}
-
-		EvAnswer := EventAnswer{}
-		EvAnswer.Events = List
-		EvAnswer.Message = newMessage
-		jsonstring, err := json.Marshal(EvAnswer)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		_, err = w.Write(jsonstring)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
+	} 
+	ctx, _ := context.WithTimeout(context.Background(), s.Config.GetDBTimeOut())
+	newMessage := outputJSON{}
+	tflayout := "2006-01-02 15:04:05"
+	inpDate := InputDate{}
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		apiErrHandler(err, &w)
 		return
 	}
+
+	err = json.Unmarshal(body, &inpDate)
+	if err != nil {
+	apiErrHandler(err, &w)
+		return
+	}
+
+	dateStart, err := time.Parse(tflayout, inpDate.Date)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	List, errInner := s.app.GetListEventsOnMonthByDay(ctx, dateStart)
+	if errInner != nil {
+		newMessage.Text = errInner.Error()
+		newMessage.Code = 1
+		w.Header().Add("ErrCustom",errInner.Error())
+	} else {
+		newMessage.Text = "OK!"
+		newMessage.Code = 0
+	}
+
+	EvAnswer := EventAnswer{}
+	EvAnswer.Events = List
+	EvAnswer.Message = newMessage
+	jsonstring, err := json.Marshal(EvAnswer)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	_, err = w.Write(jsonstring)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	return
 }
 
 func (s *Server) GetListEventsNotificationByDay(w http.ResponseWriter, r *http.Request) {
@@ -457,110 +456,107 @@ func (s *Server) GetListEventsNotificationByDay(w http.ResponseWriter, r *http.R
 	if r.Method != http.MethodGet {
 		apiErrHandler(ErrUnsupportedMethod, &w)
 		return
-	} else {
-		ctx, cancel := context.WithTimeout(r.Context(), s.Config.GetDBTimeOut())
-		defer cancel()
-		newMessage := outputJSON{}
-		tflayout := "2006-01-02 15:04:05"
-		inpDate := InputDate{}
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		err = json.Unmarshal(body, &inpDate)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		date, err := time.Parse(tflayout, inpDate.Date)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		List, errInner := s.app.GetListEventsNotificationByDay(ctx, date)
-		if errInner != nil {
-			newMessage.Text = errInner.Error()
-			newMessage.Code = 1
-			w.Header().Add("ErrCustom",errInner.Error())
-		} else {
-			newMessage.Text = "OK!"
-			newMessage.Code = 0
-		}
-
-		EvAnswer := EventAnswer{}
-		EvAnswer.Events = List
-		EvAnswer.Message = newMessage
-		jsonstring, err := json.Marshal(EvAnswer)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		_, err = w.Write(jsonstring)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
+	} 
+	ctx, cancel := context.WithTimeout(r.Context(), s.Config.GetDBTimeOut())
+	defer cancel()
+	newMessage := outputJSON{}
+	tflayout := "2006-01-02 15:04:05"
+	inpDate := InputDate{}
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		apiErrHandler(err, &w)
 		return
 	}
+
+	err = json.Unmarshal(body, &inpDate)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	date, err := time.Parse(tflayout, inpDate.Date)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	List, errInner := s.app.GetListEventsNotificationByDay(ctx, date)
+	if errInner != nil {
+		newMessage.Text = errInner.Error()
+		newMessage.Code = 1
+		w.Header().Add("ErrCustom",errInner.Error())
+	} else {
+		newMessage.Text = "OK!"
+		newMessage.Code = 0
+	}
+
+	EvAnswer := EventAnswer{}
+	EvAnswer.Events = List
+	EvAnswer.Message = newMessage
+	jsonstring, err := json.Marshal(EvAnswer)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	_, err = w.Write(jsonstring)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	return
 }
 
 func (s *Server) DeleteOldEventsByDay(w http.ResponseWriter, r *http.Request) {
-
 	if r.Method != http.MethodDelete {
 		apiErrHandler(ErrUnsupportedMethod, &w)
 		return
-	} else {
-		ctx, cancel := context.WithTimeout(r.Context(), s.Config.GetDBTimeOut())
-		defer cancel()
-		newMessage := outputJSON{}
-		tflayout := "2006-01-02 15:04:05"
-		inpDate := InputDate{}
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		err = json.Unmarshal(body, &inpDate)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		date, err := time.Parse(tflayout, inpDate.Date)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		count, errInner := s.app.DeleteOldEventsByDay(ctx, date)
-		if errInner != nil {
-			newMessage.Text = errInner.Error()
-			newMessage.Code = 1
-			w.Header().Add("ErrCustom",errInner.Error())
-		} else {
-			newMessage.Text = "OK!"
-			newMessage.Code = count
-		}
-
-		jsonstring, err := json.Marshal(newMessage)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
-		_, err = w.Write(jsonstring)
-		if err != nil {
-			apiErrHandler(err, &w)
-			return
-		}
-
+	} 
+	ctx, cancel := context.WithTimeout(r.Context(), s.Config.GetDBTimeOut())
+	defer cancel()
+	newMessage := outputJSON{}
+	tflayout := "2006-01-02 15:04:05"
+	inpDate := InputDate{}
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		apiErrHandler(err, &w)
 		return
 	}
+
+	err = json.Unmarshal(body, &inpDate)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	date, err := time.Parse(tflayout, inpDate.Date)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	count, errInner := s.app.DeleteOldEventsByDay(ctx, date)
+	if errInner != nil {
+		newMessage.Text = errInner.Error()
+		newMessage.Code = 1
+		w.Header().Add("ErrCustom",errInner.Error())
+	} else {
+		newMessage.Text = "OK!"
+		newMessage.Code = count
+	}
+
+	jsonstring, err := json.Marshal(newMessage)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	_, err = w.Write(jsonstring)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	return
 }

@@ -38,14 +38,14 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(),
 		syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
 	defer cancel()
-	log.Info("servAddr: "+config.GetServerURL())
-	log.Info("kafkaAddr: "+config.GetKafkaAddr())
+	log.Info("servAddr: " + config.GetServerURL())
+	log.Info("kafkaAddr: " + config.GetKafkaAddr())
 	sheduler := NewSheduler()
 	sheduler.Init(log, config.GetShedulerPeriod())
 	notificationAgent := NewAgent()
-	notificationAgent.Init("GetListEventsNotificationByDayAgent", config.GetNotificationEventPeriod(), AgentActionGetListEventsNotificationByDayAgent)
+	notificationAgent.Init("GetListEventsNotificationByDayAgent", config.GetNotificationEventPeriod(), AgentActionGetListEventsNotificationByDayAgent) //nolint:lll
 	oldEventCleaningAgent := NewAgent()
-	oldEventCleaningAgent.Init("DeleteOldEventsByDayAgent", config.GetCleanOldEventPeriod(), AgentActionDeleteOldEventsByDay)
+	oldEventCleaningAgent.Init("DeleteOldEventsByDayAgent", config.GetCleanOldEventPeriod(), AgentActionDeleteOldEventsByDay) //nolint:lll
 	sheduler.AddAgent(notificationAgent)
 	sheduler.AddAgent(oldEventCleaningAgent)
 	sheduler.RunAgents(ctx, config)

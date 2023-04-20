@@ -6,13 +6,12 @@ import (
 	
 
 	"github.com/segmentio/kafka-go"
-	kafkago "github.com/segmentio/kafka-go"
 )
 
 var ErrReadMessage = errors.New("failed to read messages")
 
 type KReader struct {
-	kReader *kafkago.Reader
+	kReader *kafka.Reader
 }
 
 
@@ -32,7 +31,6 @@ func (r *KReader) Init(addr string, port string, topicname string, group_ID stri
 	    ErrorLogger: kafka.LoggerFunc(logf),
 		StartOffset: kafka.FirstOffset,
 	})
-
 }
 
 func (r *KReader) ReadMessage(ctx context.Context) (string, error) {

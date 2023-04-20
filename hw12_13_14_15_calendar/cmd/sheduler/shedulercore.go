@@ -17,14 +17,17 @@ type Sheduler struct {
 func NewSheduler() *Sheduler {
 	return &Sheduler{}
 }
+
 func (s *Sheduler) Init(logg *logger.LogWrap, periodic time.Duration) {
 	s.Logger = logg
 	s.agents = make([]*Agent, 0)
 	s.periodic = periodic
 }
+
 func (s *Sheduler) AddAgent(agent *Agent) {
 	s.agents = append(s.agents, agent)
 }
+
 func (s *Sheduler) RunAgents(ctx context.Context, config Config) {
 	s.Logger.Info("Sheduler Up")
 	s.ticker = time.NewTicker(s.periodic)
@@ -37,8 +40,9 @@ func (s *Sheduler) RunAgents(ctx context.Context, config Config) {
 			for _, curAgent := range s.agents {
 				curTime := time.Now()
 				controlTime := curAgent.lastActionTime.Add(curAgent.periodic)
-				if controlTime.Before(curTime) || controlTime.Equal(curTime) || curAgent.lastActionTime.IsZero() || curAgent.firstStart {
-					ctxAct, _ := context.WithTimeout(ctx, 10*time.Second)
+				if controlTime.Before(curTime) || controlTime.Equal(curTime) || curAgent.lastActionTime.IsZero() || curAgent.firstStart { //nolint:lll
+					ctxAct, cancel := context.WithTimeout(ctx, 10*time.Second)
+					defer cancel()
 					s.Logger.Info("ShedulerAgentStarted: " + curAgent.name)
 					err := curAgent.action(ctxAct, config, *s.Logger, curAgent.firstStart)
 					if err != nil {
@@ -67,7 +71,8 @@ type Agent struct {
 func NewAgent() *Agent {
 	return &Agent{}
 }
-func (a *Agent) Init(name string, periodic time.Duration, action func(ctx context.Context, config Config, log logger.LogWrap, firstStart bool) error) {
+
+func (a *Agent) Init(name string, periodic time.Duration, action func(ctx context.Context, config Config, log logger.LogWrap, firstStart bool) error) { //nolint:lll
 	a.name = name
 	a.periodic = periodic
 	a.action = action

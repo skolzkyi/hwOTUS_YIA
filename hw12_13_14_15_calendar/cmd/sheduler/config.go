@@ -48,7 +48,7 @@ func (config *Config) Init(path string) error {
 	viper.SetDefault("CLEAN_OLD_EVENT_PERIOD", 1*time.Hour)
 	viper.SetDefault("SHEDULER_PERIOD", 59*time.Second)
 	viper.SetDefault("GRPC_PORT", "5000")
-	//viper.SetDefault("SERVER_URL", "calendar")
+	viper.SetDefault("SERVER_URL", "calendar")
 
 	viper.SetDefault("LOG_LEVEL", "debug")
 	viper.SetDefault("KAFKA_AUTO_CREATE_TOPICS_ENABLE", true)
@@ -61,7 +61,7 @@ func (config *Config) Init(path string) error {
 
 	err := viper.ReadInConfig()
 	if err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok { //nolint:errorlint
 			return err
 		}
 	}
@@ -80,72 +80,52 @@ func (config *Config) Init(path string) error {
 	config.kafkaAutoCreateTopicEnable = viper.GetBool("KAFKA_AUTO_CREATE_TOPICS_ENABLE")
 
 	return nil
-
 }
 
 func (config *Config) GetKafkaURL() string {
-
 	return config.kafkaAddr + ":" + config.kafkaPort
-
 }
 
 func (config *Config) GetKafkaAddr() string {
-
 	return config.kafkaAddr
-
 }
 
 func (config *Config) GetKafkaPort() string {
-
 	return config.kafkaPort
-
 }
 
 func (config *Config) GetKafkaTopicName() string {
-
 	return config.kafkaTopicName
-
 }
 
 func (config *Config) GetShedulerShutdownTimeout() time.Duration {
-
 	return config.shedulerShutdownTimeout
-
 }
 
 func (config *Config) GetNotificationEventPeriod() time.Duration {
-
 	return config.notificationEventPeriod
 }
 
 func (config *Config) GetKafkaTimeOut() time.Duration {
-
 	return config.kafkaTimeOut
 }
 
 func (config *Config) GetCleanOldEventPeriod() time.Duration {
-
 	return config.cleanOldEventPeriod
 }
 
 func (config *Config) GetShedulerPeriod() time.Duration {
-
 	return config.shedulerPeriod
 }
 
 func (config *Config) GetGRPSPort() string {
-
 	return config.grpsport
-
 }
 
 func (config *Config) GetServerURL() string {
-
 	return config.serverURL
-
 }
 
 func (config *Config) GetKafkaAutoCreateTopicEnable() bool {
-
 	return config.kafkaAutoCreateTopicEnable
 }

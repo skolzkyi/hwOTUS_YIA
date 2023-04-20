@@ -19,6 +19,7 @@ import (
 	"google.golang.org/grpc/test/bufconn"
 	"google.golang.org/protobuf/types/known/durationpb"
 	"google.golang.org/protobuf/types/known/timestamppb"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type ConfigTest struct{}
@@ -119,13 +120,13 @@ func bufDialer(context.Context, string) (net.Conn, error) {
 func TestGetEvent(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) {
+	go func(t *testing.T) { //nolint:staticcheck
 		if err := server.grpcserv.Serve(lis); err != nil {
 			t.Fatal(err)
 		}
 	}(t)
 	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithTransportCredentials(insecure.NewCredentials())) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	defer conn.Close()
 	client := pb.NewCalendarClient(conn)
@@ -157,13 +158,13 @@ func TestGetEvent(t *testing.T) {
 func TestCreateEvent(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) {
+	go func(t *testing.T) { //nolint:staticcheck
 		if err := server.grpcserv.Serve(lis); err != nil {
 			t.Fatal(err)
 		}
 	}(t)
 	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithTransportCredentials(insecure.NewCredentials())) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	defer conn.Close()
 	client := pb.NewCalendarClient(conn)
@@ -192,13 +193,13 @@ func TestCreateEvent(t *testing.T) {
 func TestUpdateEvent(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) {
+	go func(t *testing.T) { //nolint:staticcheck
 		if err := server.grpcserv.Serve(lis); err != nil {
 			t.Fatal(err)
 		}
 	}(t)
 	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithTransportCredentials(insecure.NewCredentials())) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	defer conn.Close()
 	client := pb.NewCalendarClient(conn)
@@ -218,7 +219,7 @@ func TestUpdateEvent(t *testing.T) {
 	require.NoError(t, err)
 	errstr := pbID.GetError()
 
-	require.Equal(t, errstr, "")
+	require.Equal(t, errstr, "OK!")
 	UpdEvent, err := server.app.GetEvent(ctx, 0)
 	require.NoError(t, err)
 	require.Equal(t, UpdEvent.Title, "updated from test proto")
@@ -234,7 +235,7 @@ func TestDeleteEvent(t *testing.T) {
 		}
 	}(t)
 	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithTransportCredentials(insecure.NewCredentials())) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	defer conn.Close()
 	client := pb.NewCalendarClient(conn)
@@ -242,7 +243,7 @@ func TestDeleteEvent(t *testing.T) {
 	require.NoError(t, err)
 	errstr := pbDelResp.GetError()
 
-	require.Equal(t, errstr, "")
+	require.Equal(t, errstr, "OK!")
 	_, err = server.app.GetEvent(ctx, 0)
 	require.Truef(t, errors.Is(err, storage.ErrNoRecord), "actual error %q", err)
 	server.grpcserv.GracefulStop()
@@ -257,12 +258,12 @@ func TestGetEventsOnDayByDay(t *testing.T) {
 		}
 	}(t)
 	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithTransportCredentials(insecure.NewCredentials())) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	defer conn.Close()
 	client := pb.NewCalendarClient(conn)
 
-	pbResp, err := client.GetEventsOnDayByDay(ctx, &pb.GetEventsOnDayRequest{Date: timestamppb.New(time.Date(2023, 4, 20, 12, 0, 0, 1, time.UTC))})
+	pbResp, err := client.GetEventsOnDayByDay(ctx, &pb.GetEventsOnDayRequest{Date: timestamppb.New(time.Date(2023, 4, 20, 12, 0, 0, 1, time.UTC))}) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	resID := make(map[int32]struct{})
 	for _, curEvent := range pbResp.GetEvents() {
@@ -287,12 +288,12 @@ func TestGetListEventsOnWeekByDay(t *testing.T) {
 		}
 	}(t)
 	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithTransportCredentials(insecure.NewCredentials())) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	defer conn.Close()
 	client := pb.NewCalendarClient(conn)
 
-	pbResp, err := client.GetEventsOnWeekByDay(ctx, &pb.GetEventsOnDayRequest{Date: timestamppb.New(time.Date(2023, 4, 20, 12, 0, 0, 1, time.UTC))})
+	pbResp, err := client.GetEventsOnWeekByDay(ctx, &pb.GetEventsOnDayRequest{Date: timestamppb.New(time.Date(2023, 4, 20, 12, 0, 0, 1, time.UTC))}) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	resID := make(map[int32]struct{})
 	for _, curEvent := range pbResp.GetEvents() {
@@ -321,12 +322,12 @@ func TestGetListEventsOnMonthByDay(t *testing.T) {
 		}
 	}(t)
 	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithTransportCredentials(insecure.NewCredentials())) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	defer conn.Close()
 	client := pb.NewCalendarClient(conn)
 
-	pbResp, err := client.GetEventsOnMonthByDay(ctx, &pb.GetEventsOnDayRequest{Date: timestamppb.New(time.Date(2023, 4, 20, 12, 0, 0, 1, time.UTC))})
+	pbResp, err := client.GetEventsOnMonthByDay(ctx, &pb.GetEventsOnDayRequest{Date: timestamppb.New(time.Date(2023, 4, 20, 12, 0, 0, 1, time.UTC))}) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	resID := make(map[int32]struct{})
 	for _, curEvent := range pbResp.GetEvents() {
@@ -357,12 +358,12 @@ func TestGetListEventsNotificationByDay(t *testing.T) {
 		}
 	}(t)
 	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure()) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	defer conn.Close()
 	client := pb.NewCalendarClient(conn)
 
-	pbResp, err := client.GetListEventsNotificationByDay(ctx, &pb.GetEventsOnDayRequest{Date: timestamppb.New(time.Date(2023, 4, 20, 9, 0, 0, 1, time.UTC))})
+	pbResp, err := client.GetListEventsNotificationByDay(ctx, &pb.GetEventsOnDayRequest{Date: timestamppb.New(time.Date(2023, 4, 20, 9, 0, 0, 1, time.UTC))}) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	resID := make(map[int32]struct{})
 	for _, curEvent := range pbResp.GetEvents() {
@@ -383,16 +384,16 @@ func TestDeleteOldEventsByDay(t *testing.T) {
 		}
 	}(t)
 	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithTransportCredentials(insecure.NewCredentials())) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	defer conn.Close()
 	client := pb.NewCalendarClient(conn)
 
-	pbResp, err := client.DeleteOldEvents(ctx, &pb.DeleteOldEventsRequest{Date: timestamppb.New(time.Date(2024, 4, 20, 9, 0, 0, 1, time.UTC))})
+	pbResp, err := client.DeleteOldEvents(ctx, &pb.DeleteOldEventsRequest{Date: timestamppb.New(time.Date(2024, 4, 20, 9, 0, 0, 1, time.UTC))}) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	errstr := pbResp.GetError()
 	count := pbResp.GetCount()
-	require.Equal(t, errstr, "")
+	require.Equal(t, errstr, "OK!")
 	require.Equal(t, count, int32(3))
 
 	std := time.Date(2023, 4, 20, 0, 0, 0, 1, time.Local)
@@ -418,27 +419,27 @@ func createTestEventPool(t *testing.T, server *GRPCServer) {
 	ctx := context.Background()
 	std := time.Date(2023, 4, 20, 12, 0, 0, 1, time.UTC)
 	emtd := 4 * time.Hour
-	_, err := server.app.CreateEvent(ctx, "test0 - base event", "USER0", "", std, std.Add(4*time.Hour), emtd)
+	_, err := server.app.CreateEvent(ctx, "test0 - base event", "USER0", "", std, std.Add(4*time.Hour), emtd) //nolint:lll,nolintlint
 	if err != nil {
 		t.Fatal()
 	}
-	_, err = server.app.CreateEvent(ctx, "test1 - +5days", "USER0", "", std.Add(120*time.Hour), std.Add(124*time.Hour), emtd)
+	_, err = server.app.CreateEvent(ctx, "test1 - +5days", "USER0", "", std.Add(120*time.Hour), std.Add(124*time.Hour), emtd) //nolint:lll,nolintlint
 	if err != nil {
 		t.Fatal()
 	}
-	_, err = server.app.CreateEvent(ctx, "test2 - +6 days end date after week", "USER0", "", std.Add(144*time.Hour), std.Add(150*time.Hour), emtd)
+	_, err = server.app.CreateEvent(ctx, "test2 - +6 days end date after week", "USER0", "", std.Add(144*time.Hour), std.Add(150*time.Hour), emtd) //nolint:lll,nolintlint
 	if err != nil {
 		t.Fatal()
 	}
-	_, err = server.app.CreateEvent(ctx, "test3 - +8 days - next week", "USER0", "", std.Add(192*time.Hour), std.Add(200*time.Hour), emtd)
+	_, err = server.app.CreateEvent(ctx, "test3 - +8 days - next week", "USER0", "", std.Add(192*time.Hour), std.Add(200*time.Hour), emtd) //nolint:lll,nolintlint
 	if err != nil {
 		t.Fatal()
 	}
-	_, err = server.app.CreateEvent(ctx, "test4 - start in before week and end in cur week", "USER0", "", std.Add(-48*time.Hour), std.Add(-5*time.Hour), emtd)
+	_, err = server.app.CreateEvent(ctx, "test4 - start in before week and end in cur week", "USER0", "", std.Add(-48*time.Hour), std.Add(-5*time.Hour), emtd) //nolint:lll
 	if err != nil {
 		t.Fatal()
 	}
-	_, err = server.app.CreateEvent(ctx, "test5 - in this day", "USER0", "", std.Add(-4*time.Hour), std.Add(-3*time.Hour), emtd)
+	_, err = server.app.CreateEvent(ctx, "test5 - in this day", "USER0", "", std.Add(-4*time.Hour), std.Add(-3*time.Hour), emtd) //nolint:lll,nolintlint
 	if err != nil {
 		t.Fatal()
 	}

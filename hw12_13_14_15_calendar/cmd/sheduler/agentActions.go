@@ -22,7 +22,7 @@ type Notification struct {
 	User      string
 }
 
-func AgentActionGetListEventsNotificationByDayAgent(ctx context.Context, config Config, log logger.LogWrap, firstStart bool) error {
+func AgentActionGetListEventsNotificationByDayAgent(ctx context.Context, config Config, log logger.LogWrap, firstStart bool) error { //nolint:lll
 	curDate := time.Now()
 	address := config.GetServerURL() + ":" + config.GetGRPSPort()
 	conn, err := grpc.DialContext(ctx, address, grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -42,7 +42,7 @@ func AgentActionGetListEventsNotificationByDayAgent(ctx context.Context, config 
 	}
 	events := outData.GetEvents()
 	log.Info("pbEventsLen: " + strconv.Itoa(len(events)))
-	if len(events) > 0 {
+	if len(events) > 0 { //nolint:nestif
 		if firstStart && !config.GetKafkaAutoCreateTopicEnable() {
 			err = kafka.CreateTopic(config.GetKafkaTopicName(), config.GetKafkaAddr(), config.kafkaPort)
 			if err != nil {
@@ -51,7 +51,7 @@ func AgentActionGetListEventsNotificationByDayAgent(ctx context.Context, config 
 			}
 		}
 		kafkaWriter := kafka.NewWriter()
-		kafkaWriter.Init(config.GetKafkaAddr(), config.GetKafkaPort(), config.GetKafkaTopicName(),config.GetKafkaAutoCreateTopicEnable())
+		kafkaWriter.Init(config.GetKafkaAddr(), config.GetKafkaPort(), config.GetKafkaTopicName(), config.GetKafkaAutoCreateTopicEnable()) //nolint:lll
 		kafkaMessages := make([]string, 0)
 		for _, curEvent := range events {
 			notif := Notification{
@@ -83,7 +83,7 @@ func AgentActionGetListEventsNotificationByDayAgent(ctx context.Context, config 
 
 func AgentActionDeleteOldEventsByDay(ctx context.Context, config Config, log logger.LogWrap, _ bool) error {
 	curDate := time.Now()
-	//curDate := time.Date(2024, 4, 19, 0, 0, 0, 1, time.UTC)
+	// curDate := time.Date(2024, 4, 19, 0, 0, 0, 1, time.UTC)
 	address := config.GetServerURL() + ":" + config.GetGRPSPort()
 	conn, err := grpc.DialContext(ctx, address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
@@ -101,10 +101,10 @@ func AgentActionDeleteOldEventsByDay(ctx context.Context, config Config, log log
 		return err
 	}
 	errorFromServer := outData.GetError()
-	log.Info("Result: Count delOldEvent -  " + strconv.Itoa(int(outData.GetCount())) + "; Code - " + strconv.Itoa(int(outData.GetId()))+"; Err - " + outData.GetError())
+	log.Info("Result: Count delOldEvent -  " + strconv.Itoa(int(outData.GetCount())) + "; Code - " + strconv.Itoa(int(outData.GetId())) + "; Err - " + outData.GetError()) //nolint:lll
 
 	if errorFromServer != "" {
-		log.Error("AgentActionDeleteOldEventsByDay error on server: " + strconv.Itoa(int(outData.GetId()))+"; "+err.Error())
+		log.Error("AgentActionDeleteOldEventsByDay error on server: " + strconv.Itoa(int(outData.GetId())) + "; " + err.Error()) //nolint:lll
 		return errors.New(errorFromServer)
 	}
 

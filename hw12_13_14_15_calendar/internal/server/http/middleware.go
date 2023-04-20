@@ -3,8 +3,6 @@ package internalhttp
 import (
 	"net/http"
 	"time"
-	//"io"
-	//"encoding/json"
 
 	zap "go.uber.org/zap"
 )

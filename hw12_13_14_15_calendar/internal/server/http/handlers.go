@@ -96,6 +96,7 @@ func (s *Server) Event_REST(w http.ResponseWriter, r *http.Request) {
 		if errInner != nil {
 			newMessage.Text = errInner.Error()
 			newMessage.Code = 1
+			w.Header().Add("ErrCustom",errInner.Error())
 		} else {
 			newMessage.Text = "OK!"
 			newMessage.Code = 0
@@ -156,6 +157,7 @@ func (s *Server) Event_REST(w http.ResponseWriter, r *http.Request) {
 		if errInner != nil {
 			newMessage.Text = errInner.Error()
 			newMessage.Code = 1
+			w.Header().Add("ErrCustom",errInner.Error())
 		} else {
 			newMessage.Text = "OK!"
 			newMessage.Code = id
@@ -215,6 +217,7 @@ func (s *Server) Event_REST(w http.ResponseWriter, r *http.Request) {
 		if errInner != nil {
 			newMessage.Text = errInner.Error()
 			newMessage.Code = 1
+			w.Header().Add("ErrCustom",errInner.Error())
 		} else {
 			newMessage.Text = "OK!"
 			newMessage.Code = 0
@@ -255,6 +258,7 @@ func (s *Server) Event_REST(w http.ResponseWriter, r *http.Request) {
 		if errInner != nil {
 			newMessage.Text = errInner.Error()
 			newMessage.Code = 1
+			w.Header().Add("ErrCustom",errInner.Error())
 		} else {
 			newMessage.Text = "OK!"
 			newMessage.Code = 0
@@ -311,6 +315,7 @@ func (s *Server) GetEventsOnDayByDay(w http.ResponseWriter, r *http.Request) {
 		if errInner != nil {
 			newMessage.Text = errInner.Error()
 			newMessage.Code = 1
+			w.Header().Add("ErrCustom",errInner.Error())
 		} else {
 			newMessage.Text = "OK!"
 			newMessage.Code = 0
@@ -366,6 +371,7 @@ func (s *Server) GetEventsOnWeekByDay(w http.ResponseWriter, r *http.Request) {
 		if errInner != nil {
 			newMessage.Text = errInner.Error()
 			newMessage.Code = 1
+			w.Header().Add("ErrCustom",errInner.Error())
 		} else {
 			newMessage.Text = "OK!"
 			newMessage.Code = 0
@@ -421,6 +427,7 @@ func (s *Server) GetEventsOnMonthByDay(w http.ResponseWriter, r *http.Request) {
 		if errInner != nil {
 			newMessage.Text = errInner.Error()
 			newMessage.Code = 1
+			w.Header().Add("ErrCustom",errInner.Error())
 		} else {
 			newMessage.Text = "OK!"
 			newMessage.Code = 0
@@ -478,6 +485,7 @@ func (s *Server) GetListEventsNotificationByDay(w http.ResponseWriter, r *http.R
 		if errInner != nil {
 			newMessage.Text = errInner.Error()
 			newMessage.Code = 1
+			w.Header().Add("ErrCustom",errInner.Error())
 		} else {
 			newMessage.Text = "OK!"
 			newMessage.Code = 0
@@ -535,6 +543,7 @@ func (s *Server) DeleteOldEventsByDay(w http.ResponseWriter, r *http.Request) {
 		if errInner != nil {
 			newMessage.Text = errInner.Error()
 			newMessage.Code = 1
+			w.Header().Add("ErrCustom",errInner.Error())
 		} else {
 			newMessage.Text = "OK!"
 			newMessage.Code = count

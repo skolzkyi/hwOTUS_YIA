@@ -26,7 +26,7 @@ func recoveryFunction() {
 }
 
 func CreateTopic(topicName string, kafkaURL string, kafkaPort string) error {
-	conn, err := kafka.Dial("tcp", kafkaURL+":"+kafkaPort)
+	conn, err := kafka.Dial("tcp", kafkaURL+":"+kafkaPort) //nolint:typecheck
 	if err != nil {
 		return err
 	}
@@ -36,14 +36,14 @@ func CreateTopic(topicName string, kafkaURL string, kafkaPort string) error {
 	if err != nil {
 		return err
 	}
-	var controllerConn *kafka.Conn
-	controllerConn, err = kafka.Dial("tcp", net.JoinHostPort(controller.Host, strconv.Itoa(controller.Port)))
+	var controllerConn *kafka.Conn //nolint:typecheck
+	controllerConn, err = kafka.Dial("tcp", net.JoinHostPort(controller.Host, strconv.Itoa(controller.Port))) //nolint:typecheck
 	if err != nil {
 		return err
 	}
 	defer controllerConn.Close()
 
-	topicConfigs := []kafka.TopicConfig{
+	topicConfigs := []kafka.TopicConfig{ //nolint:typecheck
 		{
 			Topic:             topicName,
 			NumPartitions:     1,

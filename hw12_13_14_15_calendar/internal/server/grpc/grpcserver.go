@@ -47,8 +47,8 @@ type Application interface {
 	InitStorage(ctx context.Context, config storage.Config) error
 	CloseStorage(ctx context.Context) error
 	GetEvent(ctx context.Context, id int) (storage.Event, error)
-	CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (int, error)
-	UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error
+	CreateEvent(ctx context.Context, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) (int, error) //nolint:lll
+	UpdateEvent(ctx context.Context, id int, title string, userID string, description string, dateStart time.Time, dateStop time.Time, eventMessageTimeDelta time.Duration) error //nolint:lll
 	DeleteEvent(ctx context.Context, id int) error
 	GetListEventsonDayByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
 	GetListEventsOnWeekByDay(ctx context.Context, day time.Time) ([]storage.Event, error)

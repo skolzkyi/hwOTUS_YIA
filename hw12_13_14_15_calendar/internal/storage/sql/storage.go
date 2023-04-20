@@ -170,7 +170,7 @@ func (s *Storage) DeleteEvent(ctx context.Context, logger storage.Logger, id int
 func (s *Storage) GetListEventsNotificationByDay(ctx context.Context,logger storage.Logger, dateTime time.Time) ([]storage.Event, error) {
 	resEvents := make([]storage.Event, 0)
 	dateTimeStr := dateTime.Format("2006-01-02 15:04:05")
-	stmt := "SELECT id, title , userID, description , dateStart, dateStop, eventMessageTimeDelta FROM eventsTable WHERE CAST('" + dateTimeStr + "' AS DATE) BETWEEN DATE_SUB(CAST('" + dateTimeStr + "' AS DATE), INTERVAL eventMessageTimeDelta*1000 MICROSECOND)  AND CAST(dateStart AS DATE) AND CAST('" + dateTimeStr + "' AS DATE) < CAST(dateStart AS DATE) ORDER BY dateStart ASC"
+	stmt := "SELECT id, title , userID, description , dateStart, dateStop, eventMessageTimeDelta FROM eventsTable WHERE CAST('" + dateTimeStr + "' AS DATE) BETWEEN DATE_SUB(CAST('" + dateTimeStr + "' AS DATE), INTERVAL eventMessageTimeDelta*1000 MICROSECOND)  AND CAST(dateStart AS DATE) AND CAST('" + dateTimeStr + "' AS DATE) < CAST(dateStart AS DATE) ORDER BY dateStart ASC" //nolint:lll
 
 	rows, err := s.DB.QueryContext(ctx, stmt)
 	if err != nil {

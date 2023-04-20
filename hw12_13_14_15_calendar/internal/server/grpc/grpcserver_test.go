@@ -120,9 +120,9 @@ func bufDialer(context.Context, string) (net.Conn, error) {
 func TestGetEvent(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) { //nolint:staticcheck
+	go func(t *testing.T) { //nolint:staticcheck,thelper
 		if err := server.grpcserv.Serve(lis); err != nil {
-			t.Fatal(err)
+			t.Fatal(err) //nolint: govet
 		}
 	}(t)
 	ctx := context.Background()
@@ -158,9 +158,9 @@ func TestGetEvent(t *testing.T) {
 func TestCreateEvent(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) { //nolint:staticcheck
+	go func(t *testing.T) { //nolint:staticcheck,thelper
 		if err := server.grpcserv.Serve(lis); err != nil {
-			t.Fatal(err)
+			t.Fatal(err) //nolint: govet
 		}
 	}(t)
 	ctx := context.Background()
@@ -193,9 +193,9 @@ func TestCreateEvent(t *testing.T) {
 func TestUpdateEvent(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) { //nolint:staticcheck
+	go func(t *testing.T) { //nolint:staticcheck,thelper
 		if err := server.grpcserv.Serve(lis); err != nil {
-			t.Fatal(err)
+			t.Fatal(err) //nolint: govet
 		}
 	}(t)
 	ctx := context.Background()
@@ -229,9 +229,9 @@ func TestUpdateEvent(t *testing.T) {
 func TestDeleteEvent(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) {
+	go func(t *testing.T) { //nolint:staticcheck,thelper
 		if err := server.grpcserv.Serve(lis); err != nil {
-			t.Fatal(err)
+			t.Fatal(err) //nolint: govet
 		}
 	}(t)
 	ctx := context.Background()
@@ -252,9 +252,9 @@ func TestDeleteEvent(t *testing.T) {
 func TestGetEventsOnDayByDay(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) {
+	go func(t *testing.T) { //nolint:staticcheck,thelper
 		if err := server.grpcserv.Serve(lis); err != nil {
-			t.Fatal(err)
+			t.Fatal(err) //nolint: govet
 		}
 	}(t)
 	ctx := context.Background()
@@ -282,9 +282,9 @@ func TestGetEventsOnDayByDay(t *testing.T) {
 func TestGetListEventsOnWeekByDay(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) {
+	go func(t *testing.T) { //nolint:staticcheck,thelper
 		if err := server.grpcserv.Serve(lis); err != nil {
-			t.Fatal(err)
+			t.Fatal(err) //nolint: govet
 		}
 	}(t)
 	ctx := context.Background()
@@ -316,9 +316,9 @@ func TestGetListEventsOnWeekByDay(t *testing.T) {
 func TestGetListEventsOnMonthByDay(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) {
+	go func(t *testing.T) { //nolint:staticcheck,thelper
 		if err := server.grpcserv.Serve(lis); err != nil {
-			t.Fatal(err)
+			t.Fatal(err) //nolint: govet
 		}
 	}(t)
 	ctx := context.Background()
@@ -352,13 +352,13 @@ func TestGetListEventsOnMonthByDay(t *testing.T) {
 func TestGetListEventsNotificationByDay(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) {
+	go func(t *testing.T) { //nolint:staticcheck,thelper
 		if err := server.grpcserv.Serve(lis); err != nil {
-			t.Fatal(err)
+			t.Fatal(err) //nolint: govet
 		}
 	}(t)
 	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure()) //nolint:lll,nolintlint
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithTransportCredentials(insecure.NewCredentials())) //nolint:lll,nolintlint
 	require.NoError(t, err)
 	defer conn.Close()
 	client := pb.NewCalendarClient(conn)
@@ -378,9 +378,9 @@ func TestGetListEventsNotificationByDay(t *testing.T) {
 func TestDeleteOldEventsByDay(t *testing.T) {
 	server := createGRPCserver(t)
 	createTestEventPool(t, server)
-	go func(t *testing.T) {
+	go func(t *testing.T) { //nolint:staticcheck,thelper
 		if err := server.grpcserv.Serve(lis); err != nil {
-			t.Fatal(err)
+			t.Fatal(err) //nolint: govet
 		}
 	}(t)
 	ctx := context.Background()

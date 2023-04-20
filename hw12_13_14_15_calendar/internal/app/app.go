@@ -135,7 +135,6 @@ func (a *App) DeleteOldEventsByDay(ctx context.Context, dateTime time.Time) (int
 	if err != nil {
 		message := helpers.StringBuild("event delete error(count deletions - ", strconv.Itoa(count), "),error: ", err.Error())
 		a.logger.Error(message)
-
 	} else {
 		message := helpers.StringBuild("event deleted(count deletions - ", strconv.Itoa(count), ")")
 		a.logger.Info(message)

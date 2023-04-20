@@ -179,8 +179,8 @@ func (s *Storage) DeleteOldEventsByDay(ctx context.Context,_ storage.Logger, dat
 		}
 		s.mu.RUnlock()
 		s.mu.Lock()
-		for curId := range idEventForDeletion {
-			delete(s.m, curId)
+		for curID := range idEventForDeletion {
+			delete(s.m, curID)
 			i++
 		}
 		s.mu.Unlock()

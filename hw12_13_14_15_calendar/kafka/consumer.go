@@ -11,7 +11,7 @@ import (
 var ErrReadMessage = errors.New("failed to read messages")
 
 type KReader struct {
-	kReader *kafka.Reader
+	KReader *kafka.Reader
 }
 
 
@@ -19,12 +19,12 @@ func NewReader() KReader {
 	return KReader{}
 }
 
-func (r *KReader) Init(addr string, port string, topicname string, group_ID string) {
+func (r *KReader) Init(addr string, port string, topicname string, groupID string) {
 
-	r.kReader = kafka.NewReader(kafka.ReaderConfig{
+	r.KReader = kafka.NewReader(kafka.ReaderConfig{
 		Brokers:  []string{addr + ":" + port},
 		Topic:    topicname,
-		GroupID:  group_ID,
+		GroupID:  groupID,
 		MinBytes: 1,
 		MaxBytes: 10e6, // 10MB
 		Logger:      kafka.LoggerFunc(logf),
@@ -35,7 +35,7 @@ func (r *KReader) Init(addr string, port string, topicname string, group_ID stri
 
 func (r *KReader) ReadMessage(ctx context.Context) (string, error) {
 	defer recoveryFunction()
-	m, err := r.kReader.ReadMessage(ctx)
+	m, err := r.KReader.ReadMessage(ctx)
 	if err != nil {
 		return "", err
 	}
@@ -44,6 +44,6 @@ func (r *KReader) ReadMessage(ctx context.Context) (string, error) {
 }
 
 func (r *KReader) Close() error {
-	err := r.kReader.Close()
+	err := r.KReader.Close()
 	return err
 }

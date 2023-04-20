@@ -67,13 +67,12 @@ func (s *Server) helloWorld(w http.ResponseWriter, _ *http.Request) {
 	w.Write([]byte("Hello world!"))
 }
 
-func (s *Server) Event_REST(w http.ResponseWriter, r *http.Request) {
+func (s *Server) Event_REST(w http.ResponseWriter, r *http.Request) { //nolint:funlen
 	defer r.Body.Close()
 
 	ctx, cancel := context.WithTimeout(context.Background(), s.Config.GetDBTimeOut())
 	defer cancel()
 	switch r.Method {
-
 	case http.MethodGet:
 
 		fmt.Println("Get")
@@ -153,7 +152,7 @@ func (s *Server) Event_REST(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Println("PostItem: ", newEvent)
 
-		id, errInner := s.app.CreateEvent(ctx, newEvent.Title, newEvent.UserID, newEvent.Description, dateStart, dateStop, eventMessageTimeDelta)
+		id, errInner := s.app.CreateEvent(ctx, newEvent.Title, newEvent.UserID, newEvent.Description, dateStart, dateStop, eventMessageTimeDelta) //nolint:lll,nolintlint
 		if errInner != nil {
 			newMessage.Text = errInner.Error()
 			newMessage.Code = 1
@@ -213,7 +212,7 @@ func (s *Server) Event_REST(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Println("PutItem: ", newEvent)
 
-		errInner := s.app.UpdateEvent(ctx, newEvent.ID, newEvent.Title, newEvent.UserID, newEvent.Description, dateStart, dateStop, eventMessageTimeDelta)
+		errInner := s.app.UpdateEvent(ctx, newEvent.ID, newEvent.Title, newEvent.UserID, newEvent.Description, dateStart, dateStop, eventMessageTimeDelta) //nolint:lll,nolintlint
 		if errInner != nil {
 			newMessage.Text = errInner.Error()
 			newMessage.Code = 1
@@ -336,8 +335,6 @@ func (s *Server) GetEventsOnDayByDay(w http.ResponseWriter, r *http.Request) {
 		apiErrHandler(err, &w)
 		return
 	}
-
-	return	
 }
 
 func (s *Server) GetEventsOnWeekByDay(w http.ResponseWriter, r *http.Request) {
@@ -391,9 +388,7 @@ func (s *Server) GetEventsOnWeekByDay(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		apiErrHandler(err, &w)
 		return
-	}
-
-	return	
+	}	
 }
 
 func (s *Server) GetEventsOnMonthByDay(w http.ResponseWriter, r *http.Request) {
@@ -447,8 +442,6 @@ func (s *Server) GetEventsOnMonthByDay(w http.ResponseWriter, r *http.Request) {
 		apiErrHandler(err, &w)
 		return
 	}
-
-	return
 }
 
 func (s *Server) GetListEventsNotificationByDay(w http.ResponseWriter, r *http.Request) {
@@ -504,8 +497,6 @@ func (s *Server) GetListEventsNotificationByDay(w http.ResponseWriter, r *http.R
 		apiErrHandler(err, &w)
 		return
 	}
-
-	return
 }
 
 func (s *Server) DeleteOldEventsByDay(w http.ResponseWriter, r *http.Request) {
@@ -557,6 +548,4 @@ func (s *Server) DeleteOldEventsByDay(w http.ResponseWriter, r *http.Request) {
 		apiErrHandler(err, &w)
 		return
 	}
-
-	return
 }

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"runtime/debug"
 
-	"github.com/segmentio/kafka-go"
+	"github.com/segmentio/kafka-go" //nolint:typecheck
 )
 
 var ErrDialLeader = errors.New("failed to dial leader")

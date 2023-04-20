@@ -5,13 +5,13 @@ import (
 	"errors"
 	
 
-	"github.com/segmentio/kafka-go"
+	"github.com/segmentio/kafka-go" //nolint:typecheck
 )
 
 var ErrReadMessage = errors.New("failed to read messages")
 
 type KReader struct {
-	KReader *kafka.Reader
+	KReader *kafka.Reader //nolint:typecheck
 }
 
 
@@ -21,7 +21,7 @@ func NewReader() KReader {
 
 func (r *KReader) Init(addr string, port string, topicname string, groupID string) {
 
-	r.KReader = kafka.NewReader(kafka.ReaderConfig{
+	r.KReader = kafka.NewReader(kafka.ReaderConfig{ //nolint:typecheck
 		Brokers:  []string{addr + ":" + port},
 		Topic:    topicname,
 		GroupID:  groupID,

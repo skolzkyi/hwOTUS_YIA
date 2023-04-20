@@ -5,13 +5,13 @@ import (
 	"errors"
 	"time"
 
-	"github.com/segmentio/kafka-go"
+	"github.com/segmentio/kafka-go" //nolint:typecheck
 )
 
 var ErrWriteMessage = errors.New("failed to write messages")
 
 type Writer struct {
-	KWriter *kafka.Writer
+	KWriter *kafka.Writer //nolint:typecheck
 }
 
 

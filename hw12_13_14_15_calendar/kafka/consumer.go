@@ -1,5 +1,5 @@
 package kafka
-
+// pochemuto linter typecheck na servere schitaet, chto  segmentio/kafka-go ne ispolzuetsia, a kafka. - ne opredeleno, no vse compiliruetsia i rabotaet
 import (
 	"context"
 	"errors"

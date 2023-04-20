@@ -355,7 +355,7 @@ func TestGetEventsOnMonthByDay(t *testing.T) {
 func GetListEventsNotificationByDay(t *testing.T) {
 	server := createServer(t)
 	createTestEventPool(t, server)
-	r := httptest.NewRequest("GET", "/GetListEventsNotificationByDay/", bytes.NewBufferString(`{"Date":"2023-04-20 09:00:00"}`)) //nolint:lll
+	r := httptest.NewRequest("GET", "/GetListEventsNotificationByDay/", bytes.NewBufferString(`{"Date":"2023-04-20 09:00:00"}`)) //nolint:lll,nolintlint
 	w := httptest.NewRecorder()
 	server.GetEventsOnMonthByDay(w, r)
 
@@ -381,7 +381,7 @@ func TestDeleteOldEventsByDay(t *testing.T) {
 	server := createServer(t)
 	createTestEventPool(t, server)
 
-	r := httptest.NewRequest("DELETE", "/DeleteOldEventsByDay/", bytes.NewBufferString(`{"Date":"2024-04-20 09:00:00"}`))
+	r := httptest.NewRequest("DELETE", "/DeleteOldEventsByDay/", bytes.NewBufferString(`{"Date":"2024-04-20 09:00:00"}`)) //nolint:lll,nolintlint
 	w := httptest.NewRecorder()
 	server.DeleteOldEventsByDay(w, r)
 
@@ -421,23 +421,23 @@ func createTestEventPool(t *testing.T, server *Server) {
 	if err != nil {
 		t.Fatal()
 	}
-	_, err = server.app.CreateEvent(ctx, "test1 - +5days", "USER0", "", std.Add(120*time.Hour), std.Add(124*time.Hour), emtd) //nolint:lll
+	_, err = server.app.CreateEvent(ctx, "test1 - +5days", "USER0", "", std.Add(120*time.Hour), std.Add(124*time.Hour), emtd) //nolint:lll,nolintlint
 	if err != nil {
 		t.Fatal()
 	}
-	_, err = server.app.CreateEvent(ctx, "test2 - +6 days end date after week", "USER0", "", std.Add(144*time.Hour), std.Add(150*time.Hour), emtd) //nolint:lll
+	_, err = server.app.CreateEvent(ctx, "test2 - +6 days end date after week", "USER0", "", std.Add(144*time.Hour), std.Add(150*time.Hour), emtd) //nolint:lll,nolintlint
 	if err != nil {
 		t.Fatal()
 	}
-	_, err = server.app.CreateEvent(ctx, "test3 - +8 days - next week", "USER0", "", std.Add(192*time.Hour), std.Add(200*time.Hour), emtd) //nolint:lll
+	_, err = server.app.CreateEvent(ctx, "test3 - +8 days - next week", "USER0", "", std.Add(192*time.Hour), std.Add(200*time.Hour), emtd) //nolint:lll,nolintlint
 	if err != nil {
 		t.Fatal()
 	}
-	_, err = server.app.CreateEvent(ctx, "test4 - start in before week and end in cur week", "USER0", "", std.Add(-48*time.Hour), std.Add(-5*time.Hour), emtd) //nolint:lll
+	_, err = server.app.CreateEvent(ctx, "test4 - start in before week and end in cur week", "USER0", "", std.Add(-48*time.Hour), std.Add(-5*time.Hour), emtd) //nolint:lll,nolintlint
 	if err != nil {
 		t.Fatal()
 	}
-	_, err = server.app.CreateEvent(ctx, "test5 - in this day", "USER0", "", std.Add(-4*time.Hour), std.Add(-3*time.Hour), emtd) //nolint:lll
+	_, err = server.app.CreateEvent(ctx, "test5 - in this day", "USER0", "", std.Add(-4*time.Hour), std.Add(-3*time.Hour), emtd) //nolint:lll,nolintlint
 	if err != nil {
 		t.Fatal()
 	}

@@ -33,6 +33,7 @@ func main() {
 	log, err := logger.New(config.Logger.Level)
 	if err != nil {
 		fmt.Println(err)
+		panic(err)
 	}
 
 	ctx, cancel := signal.NotifyContext(context.Background(),

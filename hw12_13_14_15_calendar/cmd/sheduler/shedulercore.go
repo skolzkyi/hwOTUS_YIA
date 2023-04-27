@@ -40,7 +40,8 @@ func (s *Sheduler) RunAgents(ctx context.Context, config Config) {
 			for _, curAgent := range s.agents {
 				curTime := time.Now()
 				controlTime := curAgent.lastActionTime.Add(curAgent.periodic)
-				if controlTime.Before(curTime) || controlTime.Equal(curTime) || curAgent.lastActionTime.IsZero() || curAgent.firstStart { //nolint:lll
+				if controlTime.Before(curTime) || controlTime.Equal(curTime) || 
+				curAgent.lastActionTime.IsZero() || curAgent.firstStart { 
 					ctxAct, cancel := context.WithTimeout(ctx, 10*time.Second)
 					defer cancel()
 					s.Logger.Info("ShedulerAgentStarted: " + curAgent.name)

@@ -31,6 +31,8 @@ type Config interface {
 	GetDBMaxIdleConns() int
 	GetDBTimeOut() time.Duration
 	GetGRPCPort() string
+	GetDBAddress() string
+	GetDBPort() string
 }
 
 type Logger interface {
@@ -46,6 +48,7 @@ type Event struct {
 	Title                 string
 	UserID                string
 	Description           string
+	NotifCheck 			  string
 	DateStart             time.Time
 	DateStop              time.Time
 	EventMessageTimeDelta time.Duration

@@ -13,7 +13,7 @@ import (
 var configFilePath string
 
 func init() {
-	flag.StringVar(&configFilePath, "config", "./configs/config_sheduler.env", "Path to config_sheduler.env")
+	flag.StringVar(&configFilePath, "config", "./configs/", "Path to config_sheduler.env")
 }
 
 func main() {
@@ -29,6 +29,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+	
 	fmt.Println("config: ", config)
 	log, err := logger.New(config.Logger.Level)
 	if err != nil {

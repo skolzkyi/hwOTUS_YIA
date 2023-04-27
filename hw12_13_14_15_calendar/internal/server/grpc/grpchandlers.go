@@ -39,6 +39,7 @@ func (g *GRPCServer) GetEvent(ctx context.Context, in *pb.GetEventRequest) (*pb.
 		pbEvent.Title = event.Title
 		pbEvent.Description = event.Description
 		pbEvent.UserID = event.UserID
+		pbEvent.NotifCheck = event.NotifCheck
 		pbEvent.DateStart = timestamppb.New(event.DateStart)
 		pbEvent.DateStop = timestamppb.New(event.DateStop)
 		pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
@@ -84,6 +85,22 @@ func (g *GRPCServer) DeleteEvent(ctx context.Context, in *pb.DeleteEventRequest)
 	return &message, nil
 }
 
+func (g *GRPCServer) MarkEventNotifSended(ctx context.Context, in *pb.MarkEventNotifSendedRequest) (*pb.MarkEventNotifSendedResponse, error) {
+	t := time.Now()
+	var message pb.MarkEventNotifSendedResponse
+	err := g.app.MarkEventNotifSended(ctx, int(in.GetId()))
+	if err != nil {
+		message.Id = g.getGRPCErrorCode(err)
+		message.Error = err.Error()
+	} else {
+		message.Id = 200
+		message.Error = "OK!"
+	}
+	logmessage := helpers.StringBuild("[client GRPC: MarkEventNotifSended, Request DateTime: ", time.Now().String(), "Time of request work: ", time.Since(t).String()) //nolint:lll,nolintlint
+	g.logg.Info(logmessage)
+	return &message, nil
+}
+
 func (g *GRPCServer) GetEventsOnDayByDay(ctx context.Context, in *pb.GetEventsOnDayRequest) (*pb.GetEventsOnDayResponse, error) {
 	t := time.Now()
 	var message pb.GetEventsOnDayResponse
@@ -98,6 +115,7 @@ func (g *GRPCServer) GetEventsOnDayByDay(ctx context.Context, in *pb.GetEventsOn
 			pbEvent.Title = event.Title
 			pbEvent.Description = event.Description
 			pbEvent.UserID = event.UserID
+			pbEvent.NotifCheck = event.NotifCheck
 			pbEvent.DateStart = timestamppb.New(event.DateStart)
 			pbEvent.DateStop = timestamppb.New(event.DateStop)
 			pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
@@ -126,6 +144,7 @@ func (g *GRPCServer) GetEventsOnWeekByDay(ctx context.Context, in *pb.GetEventsO
 			pbEvent.Title = event.Title
 			pbEvent.Description = event.Description
 			pbEvent.UserID = event.UserID
+			pbEvent.NotifCheck = event.NotifCheck
 			pbEvent.DateStart = timestamppb.New(event.DateStart)
 			pbEvent.DateStop = timestamppb.New(event.DateStop)
 			pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
@@ -154,6 +173,7 @@ func (g *GRPCServer) GetEventsOnMonthByDay(ctx context.Context, in *pb.GetEvents
 			pbEvent.Title = event.Title
 			pbEvent.Description = event.Description
 			pbEvent.UserID = event.UserID
+			pbEvent.NotifCheck = event.NotifCheck
 			pbEvent.DateStart = timestamppb.New(event.DateStart)
 			pbEvent.DateStop = timestamppb.New(event.DateStop)
 			pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)
@@ -182,6 +202,7 @@ func (g *GRPCServer) GetListEventsNotificationByDay(ctx context.Context, in *pb.
 			pbEvent.Title = event.Title
 			pbEvent.Description = event.Description
 			pbEvent.UserID = event.UserID
+			pbEvent.NotifCheck = event.NotifCheck
 			pbEvent.DateStart = timestamppb.New(event.DateStart)
 			pbEvent.DateStop = timestamppb.New(event.DateStop)
 			pbEvent.EventMessageTimeDelta = durationpb.New(event.EventMessageTimeDelta)

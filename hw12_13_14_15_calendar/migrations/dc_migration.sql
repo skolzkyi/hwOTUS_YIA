@@ -6,6 +6,6 @@ CREATE TABLE eventsTable
     description varchar(1500),
     dateStart datetime NOT NULL,
     dateStop datetime NOT NULL,
-    eventMessageTimeDelta BIGINT
+    eventMessageTimeDelta BIGINT,
+    notifCheck varchar(5) DEFAULT ""
 );
-

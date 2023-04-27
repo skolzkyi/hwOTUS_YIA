@@ -17,6 +17,8 @@ type Config struct {
 	kafkaAddr             string        `mapstructure:"S_KAFKA_ADDR"`
 	kafkaPort             string        `mapstructure:"S_KAFKA_PORT"`
 	kafkaTopicName        string        `mapstructure:"KAFKA_CREATE_TOPICS"`
+	grpsport              string        `mapstructure:"GRPC_PORT"`
+	serverURL             string        `mapstructure:"SERVER_URL"`
 }
 
 type LoggerConf struct {
@@ -33,13 +35,16 @@ func (config *Config) Init(path string) error {
 		return err
 	}
 
-	viper.SetDefault("S_KAFKA_ADDR", "kafka")
+	viper.SetDefault("S_KAFKA_ADDR", "127.0.0.1")
 	viper.SetDefault("S_KAFKA_PORT", "9092")
 	viper.SetDefault("KAFKA_CREATE_TOPICS", "CLNotifications1")
 	viper.SetDefault("S_KAFKA_TIMEOUT", 3*time.Second)
 	viper.SetDefault("SENDER_SHUTDOWN_TIMEOUT", 30*time.Second)
 
 	viper.SetDefault("LOG_LEVEL", "debug")
+
+	viper.SetDefault("GRPC_PORT", "5000")
+	viper.SetDefault("SERVER_URL", "127.0.0.1")
 
 	viper.AddConfigPath(path)
 	viper.SetConfigName("config_sender")
@@ -59,6 +64,9 @@ func (config *Config) Init(path string) error {
 	config.kafkaTopicName = viper.GetString("KAFKA_CREATE_TOPICS")
 	config.kafkaTimeOut = viper.GetDuration("S_KAFKA_TIMEOUT")
 	config.senderShutdownTimeout = viper.GetDuration("SENDER_SHUTDOWN_TIMEOUT")
+
+	config.grpsport = viper.GetString("GRPC_PORT")
+	config.serverURL = viper.GetString("SERVER_URL")
 
 	config.Logger.Level = viper.GetString("LOG_LEVEL")
 
@@ -87,4 +95,12 @@ func (config *Config) GetSenderShutdownTimeout() time.Duration {
 
 func (config *Config) GetKafkaTimeOut() time.Duration {
 	return config.kafkaTimeOut
+}
+
+func (config *Config) GetGRPSPort() string {
+	return config.grpsport
+}
+
+func (config *Config) GetServerURL() string {
+	return config.serverURL
 }

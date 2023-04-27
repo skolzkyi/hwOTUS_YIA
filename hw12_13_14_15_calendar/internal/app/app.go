@@ -35,6 +35,7 @@ type Storage interface {
 	GetListEventsOnMonthByDay(ctx context.Context, logger storage.Logger, day time.Time) ([]storage.Event, error)
 	GetListEventsNotificationByDay(ctx context.Context,logger storage.Logger, dateTime time.Time) ([]storage.Event, error)
 	DeleteOldEventsByDay(ctx context.Context,logger storage.Logger, dateTime time.Time) (int, error)
+	MarkEventNotifSended(ctx context.Context, logger storage.Logger, id int) error
 }
 
 func New(logger Logger, storage Storage) *App {
@@ -141,4 +142,9 @@ func (a *App) DeleteOldEventsByDay(ctx context.Context, dateTime time.Time) (int
 	}
 
 	return count, err
+}
+
+func (a *App) MarkEventNotifSended(ctx context.Context, id int) error {
+	err:=a.storage.MarkEventNotifSended(ctx, a.logger,id)
+	return err
 }

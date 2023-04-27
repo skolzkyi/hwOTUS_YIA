@@ -31,6 +31,7 @@ type CalendarClient interface {
 	GetEventsOnMonthByDay(ctx context.Context, in *GetEventsOnDayRequest, opts ...grpc.CallOption) (*GetEventsOnDayResponse, error)
 	GetListEventsNotificationByDay(ctx context.Context, in *GetEventsOnDayRequest, opts ...grpc.CallOption) (*GetEventsOnDayResponse, error)
 	DeleteOldEvents(ctx context.Context, in *DeleteOldEventsRequest, opts ...grpc.CallOption) (*DeleteOldEventsResponse, error)
+	MarkEventNotifSended(ctx context.Context, in *MarkEventNotifSendedRequest, opts ...grpc.CallOption) (*MarkEventNotifSendedResponse, error)
 }
 
 type calendarClient struct {
@@ -122,6 +123,15 @@ func (c *calendarClient) DeleteOldEvents(ctx context.Context, in *DeleteOldEvent
 	return out, nil
 }
 
+func (c *calendarClient) MarkEventNotifSended(ctx context.Context, in *MarkEventNotifSendedRequest, opts ...grpc.CallOption) (*MarkEventNotifSendedResponse, error) {
+	out := new(MarkEventNotifSendedResponse)
+	err := c.cc.Invoke(ctx, "/event.Calendar/MarkEventNotifSended", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CalendarServer is the server API for Calendar service.
 // All implementations must embed UnimplementedCalendarServer
 // for forward compatibility
@@ -135,6 +145,7 @@ type CalendarServer interface {
 	GetEventsOnMonthByDay(context.Context, *GetEventsOnDayRequest) (*GetEventsOnDayResponse, error)
 	GetListEventsNotificationByDay(context.Context, *GetEventsOnDayRequest) (*GetEventsOnDayResponse, error)
 	DeleteOldEvents(context.Context, *DeleteOldEventsRequest) (*DeleteOldEventsResponse, error)
+	MarkEventNotifSended(context.Context, *MarkEventNotifSendedRequest) (*MarkEventNotifSendedResponse, error)
 	mustEmbedUnimplementedCalendarServer()
 }
 
@@ -168,6 +179,9 @@ func (UnimplementedCalendarServer) GetListEventsNotificationByDay(context.Contex
 }
 func (UnimplementedCalendarServer) DeleteOldEvents(context.Context, *DeleteOldEventsRequest) (*DeleteOldEventsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteOldEvents not implemented")
+}
+func (UnimplementedCalendarServer) MarkEventNotifSended(context.Context, *MarkEventNotifSendedRequest) (*MarkEventNotifSendedResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MarkEventNotifSended not implemented")
 }
 func (UnimplementedCalendarServer) mustEmbedUnimplementedCalendarServer() {}
 
@@ -344,6 +358,24 @@ func _Calendar_DeleteOldEvents_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Calendar_MarkEventNotifSended_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MarkEventNotifSendedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CalendarServer).MarkEventNotifSended(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/event.Calendar/MarkEventNotifSended",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CalendarServer).MarkEventNotifSended(ctx, req.(*MarkEventNotifSendedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Calendar_ServiceDesc is the grpc.ServiceDesc for Calendar service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -387,8 +419,11 @@ var Calendar_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "DeleteOldEvents",
 			Handler:    _Calendar_DeleteOldEvents_Handler,
 		},
+		{
+			MethodName: "MarkEventNotifSended",
+			Handler:    _Calendar_MarkEventNotifSended_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "api/EventService.proto",
 }
-

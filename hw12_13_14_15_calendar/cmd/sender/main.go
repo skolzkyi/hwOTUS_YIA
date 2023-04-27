@@ -9,10 +9,15 @@ import (
 	"os/signal"
 	"strconv"
 	"syscall"
+	"time"
+	"errors"
 
 	helpers "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/helpers"
 	"github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger"
 	"github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/kafka"
+	pb "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/grpc/pb"
+	grpc "google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type Notification struct {
@@ -29,7 +34,7 @@ func (n *Notification) String() string {
 var configFilePath string
 
 func init() {
-	flag.StringVar(&configFilePath, "config", "./configs/config_sender.env", "Path to config_sender.env")
+	flag.StringVar(&configFilePath, "config", "./configs/", "Path to config_sender.env")
 }
 
 func main() {
@@ -45,6 +50,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+	
 	fmt.Println("config: ", config)
 	log, err := logger.New(config.Logger.Level)
 	if err != nil {
@@ -81,12 +87,48 @@ func main() {
 					log.Error("Sender error unmarshalling notification: " + err.Error())
 					continue
 				}
-				sendNotification(notif)
+				err = sendNotification(notif,config,log)
+				if err != nil {
+					log.Error("Sender error sendNotification: " + err.Error())
+					continue
+				}
 			}
 		}
 	}
 }
 
-func sendNotification(notif Notification) {
+func sendNotification(notif Notification, config Config,log *logger.LogWrap)error {
 	fmt.Println("Message from sender: ", notif.String())
+	err:=sendNotifCheckInCalendar(notif.ID, config,log)
+	return err
+}
+
+
+func sendNotifCheckInCalendar(id int, config Config,log *logger.LogWrap)error{
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	address := config.GetServerURL() + ":" + config.GetGRPSPort()
+	conn, err := grpc.DialContext(ctx, address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Error("grpc connect error: " + err.Error())
+		return err
+	}
+
+	client := pb.NewCalendarClient(conn)
+
+	inData := &pb.MarkEventNotifSendedRequest{}
+	inData.Id = int32(id)
+	outData, err := client.MarkEventNotifSended(ctx, inData)
+	if err != nil {
+		log.Error("grpc MarkEventNotifSended error: " + err.Error())
+		return err
+	}
+	errorFromServer := outData.GetError()
+	log.Info("Result: Code - " + strconv.Itoa(int(outData.GetId())) + "; Err - " + outData.GetError()) //nolint:lll
+
+	if errorFromServer != "OK!" {
+		return errors.New(errorFromServer)
+	}
+
+	return nil
 }

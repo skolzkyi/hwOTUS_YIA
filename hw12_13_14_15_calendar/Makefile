@@ -75,4 +75,8 @@ up:
 down:
 	docker-compose -f ./deployments/docker-compose.yaml down
 
-.PHONY: generate build run build-img ex-services-img-up run-img stop-img version test lint up down 
+integration-tests:
+	docker-compose -f ./deployments/docker-compose.yaml -f ./deployments/docker-compose.test.yaml up --build --exit-code-from integration_tests && \
+	docker-compose -f ./deployments/docker-compose.yaml -f ./deployments/docker-compose.test.yaml down > deployIntegrationTestsLog.txt
+
+.PHONY: generate build run build-img ex-services-img-up run-img stop-img version test lint up down integration-tests ex-services-img-up ex-services-img-down

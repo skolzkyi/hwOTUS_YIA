@@ -1,3 +1,6 @@
+//go:build !integration
+// +build !integration
+
 package internalhttp
 
 import (
@@ -76,6 +79,14 @@ func (config *ConfigTest) GetDBMaxIdleConns() int {
 
 func (config *ConfigTest) GetDBTimeOut() time.Duration {
 	return 5 * time.Second
+}
+
+func (config *ConfigTest) GetDBAddress() string {
+	return "127.0.0.1"
+}
+
+func (config *ConfigTest) GetDBPort() string {
+	return "3306"
 }
 
 func TestCreateEvent(t *testing.T) {

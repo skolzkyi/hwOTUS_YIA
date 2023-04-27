@@ -4,6 +4,7 @@ import (
 	"errors"
 	"os"
 	"time"
+	
 
 	"github.com/spf13/viper"
 )
@@ -20,6 +21,8 @@ type Config struct {
 	port                  string        `mapstructure:"PORT"`
 	grpcPort              string        `mapstructure:"GRPC_PORT"`
 	OSFilePathSeparator   string
+	dbAddress 			  string `mapstructure:"DB_ADDRESS"`
+	dbPort				  string `mapstructure:"DB_PORT"`
 	dbName                string `mapstructure:"MYSQL_DATABASE"`
 	dbUser                string `mapstructure:"MYSQL_USER"`
 	dbPassword            string `mapstructure:"MYSQL_PASSWORD"`
@@ -42,7 +45,7 @@ func (config *Config) Init(path string) error {
 		return err
 	}
 
-	viper.SetDefault("ADDRESS", "calendar")
+	viper.SetDefault("ADDRESS", "127.0.0.1")
 	viper.SetDefault("PORT", "4000")
 	viper.SetDefault("GRPC_PORT", "5000")
 	viper.SetDefault("SERVER_SHUTDOWN_TIMEOUT", 30*time.Second)
@@ -53,7 +56,9 @@ func (config *Config) Init(path string) error {
 	viper.SetDefault("DB_MAX_OPEN_CONNS", 20)
 	viper.SetDefault("DB_MAX_IDLE_CONNS", 20)
 	viper.SetDefault("DB_TIMEOUT", 5*time.Second)
-	viper.SetDefault("WORK_W_DB_STORAGE", false)
+	viper.SetDefault("WORK_W_DB_STORAGE", true)
+	viper.SetDefault("DB_ADDRESS ", "127.0.0.1")
+	viper.SetDefault("DB_PORT", "3306")
 	viper.SetDefault("LOG_LEVEL", "debug")
 
 	viper.AddConfigPath(path)
@@ -84,6 +89,8 @@ func (config *Config) Init(path string) error {
 	config.dbTimeOut = viper.GetDuration("DB_TIMEOUT")
 	config.workWithDBStorage = viper.GetBool("WORK_W_DB_STORAGE")
 	config.Logger.Level = viper.GetString("LOG_LEVEL")
+	config.dbAddress = viper.GetString("DB_ADDRESS")
+	config.dbPort = viper.GetString("DB_PORT")
 	config.OSFilePathSeparator = viper.GetString("OSFilePathSeparator")
 
 	return nil
@@ -139,4 +146,12 @@ func (config *Config) GetDBMaxIdleConns() int {
 
 func (config *Config) GetDBTimeOut() time.Duration {
 	return config.dbTimeOut
+}
+
+func (config *Config) GetDBAddress() string {
+	return config.dbAddress
+}
+
+func (config *Config) GetDBPort() string {
+	return config.dbPort
 }

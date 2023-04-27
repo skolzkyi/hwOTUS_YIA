@@ -35,6 +35,8 @@ type Config interface {
 	GetDBMaxIdleConns() int
 	GetDBTimeOut() time.Duration
 	GetGRPCPort() string
+	GetDBAddress() string
+	GetDBPort() string
 }
 
 type Logger interface {
@@ -55,6 +57,7 @@ type Application interface {
 	GetListEventsOnMonthByDay(ctx context.Context, day time.Time) ([]storage.Event, error)
 	GetListEventsNotificationByDay(ctx context.Context, dateTime time.Time) ([]storage.Event, error)
 	DeleteOldEventsByDay(ctx context.Context, dateTime time.Time) (int, error)
+	MarkEventNotifSended(ctx context.Context, id int) error
 }
 
 func NewServer(logger Logger, app Application, config Config) *GRPCServer {

@@ -549,3 +549,48 @@ func (s *Server) DeleteOldEventsByDay(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func (s *Server) MarkEventNotifSended(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPut {
+		apiErrHandler(ErrUnsupportedMethod, &w)
+		return
+	} 
+	ctx, cancel := context.WithTimeout(r.Context(), s.Config.GetDBTimeOut())
+	defer cancel()
+	fmt.Println("Put")
+	newMessage := outputJSON{}
+
+	path := strings.Trim(r.URL.Path, "/")
+	pathParts := strings.Split(path, "/")
+	if len(pathParts) < 2 {
+		apiErrHandler(ErrNoIDInEventHandler, &w)
+		return
+	}
+	id, err := strconv.Atoi(pathParts[1])
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	errInner := s.app.MarkEventNotifSended(ctx, id)
+	if errInner != nil {
+		newMessage.Text = errInner.Error()
+		newMessage.Code = 1
+		w.Header().Add("ErrCustom",errInner.Error())
+	} else {
+		newMessage.Text = "OK!"
+		newMessage.Code = 200
+	}
+
+	jsonstring, err := json.Marshal(newMessage)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+
+	_, err = w.Write(jsonstring)
+	if err != nil {
+		apiErrHandler(err, &w)
+		return
+	}
+}

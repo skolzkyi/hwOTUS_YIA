@@ -346,3 +346,68 @@ testing.tRunner
 2023-04-15T00:06:15.243+0400	INFO	new event created(title - test3 - +8 days - next week)
 2023-04-15T00:06:15.243+0400	INFO	new event created(title - test4 - start in before week and end in cur week)
 2023-04-15T00:06:15.243+0400	INFO	new event created(title - test5 - in this day)
+2023-04-27T10:09:58.022+0300	INFO	new event created(title - testData)
+2023-04-27T10:09:58.023+0300	INFO	new event created(title - testData)
+2023-04-27T10:09:58.023+0300	ERROR	event create error(title - testData),error: this date busy by other event
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).CreateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:73
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:155
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestCreateEventBadTimeBusy
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:129
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-27T10:09:58.023+0300	INFO	new event created(title - testData)
+2023-04-27T10:09:58.023+0300	INFO	new event created(title - testData - not Updated)
+2023-04-27T10:09:58.023+0300	INFO	event updated(title - testData)
+2023-04-27T10:09:58.023+0300	ERROR	event update error(title - testData),error: record not searched
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).UpdateEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:92
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:215
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestUpdateEventBadID
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:218
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-27T10:09:58.023+0300	INFO	new event created(title - testData)
+2023-04-27T10:09:58.023+0300	INFO	event deleted(id - 0)
+2023-04-27T10:09:58.023+0300	ERROR	event delete error(id - 99),error: record not searched
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger.LogWrap.Error
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/logger/logger.go:44
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app.(*App).DeleteEvent
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/app/app.go:105
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.(*Server).Event_REST
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/handlers.go:256
+github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http.TestDeleteEventBadID
+	/home/ivan/REPO/hwOTUS_YIA/hw12_13_14_15_calendar/internal/server/http/server_test.go:260
+testing.tRunner
+	/snap/go/current/src/testing/testing.go:1576
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test0 - base event)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test1 - +5days)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test5 - in this day)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test0 - base event)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test1 - +5days)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test5 - in this day)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test0 - base event)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test1 - +5days)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test5 - in this day)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test0 - base event)
+2023-04-27T10:09:58.024+0300	INFO	new event created(title - test1 - +5days)
+2023-04-27T10:09:58.025+0300	INFO	new event created(title - test2 - +6 days end date after week)
+2023-04-27T10:09:58.025+0300	INFO	new event created(title - test3 - +8 days - next week)
+2023-04-27T10:09:58.025+0300	INFO	new event created(title - test4 - start in before week and end in cur week)
+2023-04-27T10:09:58.025+0300	INFO	new event created(title - test5 - in this day)
+2023-04-27T10:09:58.025+0300	INFO	event deleted(count deletions - 3)

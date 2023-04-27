@@ -234,3 +234,24 @@ func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, _ storage.Logge
 		return false, nil
 	}
 }
+
+
+func (s *Storage) MarkEventNotifSended(ctx context.Context, logger storage.Logger, id int) error {
+	select {
+	case <-ctx.Done():
+		return storage.ErrStorageTimeout
+	default:
+		s.mu.RLock()
+		_, ok := s.m[id]
+		if !ok {
+			return storage.ErrNoRecord
+		}
+		s.mu.RUnlock()
+		s.mu.Lock()
+		defer s.mu.Unlock()
+		temp:=s.m[id]
+		temp.NotifCheck = "YES"
+		s.m[id] = temp
+	}
+	return nil
+}

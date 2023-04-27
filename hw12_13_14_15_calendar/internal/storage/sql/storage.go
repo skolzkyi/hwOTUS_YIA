@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"time"
+	"fmt"
 
 	_ "github.com/go-sql-driver/mysql" // for driver
 	helpers "github.com/skolzkyi/hwOTUS_YIA/hw12_13_14_15_calendar/helpers"
@@ -41,7 +42,7 @@ func (s *Storage) Connect(ctx context.Context, logger storage.Logger, config sto
 	case <-ctx.Done():
 		return storage.ErrStorageTimeout
 	default:
-		dsn := helpers.StringBuild(config.GetDBUser(), ":", config.GetDBPassword(), "@/", config.GetDBName(), "?parseTime=true") //nolint:lll
+		dsn := helpers.StringBuild(config.GetDBUser(), ":", config.GetDBPassword(), "@tcp(",config.GetDBAddress(),":",config.GetDBPort(),")/", config.GetDBName(), "?parseTime=true") //nolint:lll
 		// fmt.Println("dsn: ", dsn)
 		var err error
 		s.DB, err = sql.Open("mysql", dsn)
@@ -103,7 +104,7 @@ func (s *Storage) GetEvent(ctx context.Context, logger storage.Logger, id int) (
 		logger.Error("SQL GetEvent dateTime convert error")
 		return storage.Event{}, ErrSQLTimeConvert
 	}
-	dr := time.Duration(int64Delta) * time.Millisecond
+	dr := time.Duration(int64Delta) //* time.Millisecond
 	event.EventMessageTimeDelta = dr
 
 	return *event, nil
@@ -119,8 +120,10 @@ func (s *Storage) CreateEvent(ctx context.Context, logger storage.Logger, value 
 	if ok {
 		return 0, storage.ErrDateBusy
 	}
+	tempDelta:=int64(value.EventMessageTimeDelta)/1000000
+	fmt.Println("tempDelta: ",tempDelta)
 	stmt := "INSERT INTO eventsTable(title , userID, description , dateStart, dateStop, eventMessageTimeDelta) VALUES (?,?,?,?,?,?)"                           //nolint:lll
-	res, err := s.DB.ExecContext(ctx, stmt, value.Title, value.UserID, value.Description, value.DateStart, value.DateStop, int64(value.EventMessageTimeDelta)) //nolint:lll
+	res, err := s.DB.ExecContext(ctx, stmt, value.Title, value.UserID, value.Description, value.DateStart, value.DateStop,tempDelta) //nolint:lll
 	if err != nil {
 		logger.Error("SQL DB exec stmt CreateEvent error: " + err.Error() + " stmt: " + stmt)
 		return 0, err
@@ -143,9 +146,12 @@ func (s *Storage) UpdateEvent(ctx context.Context, logger storage.Logger, value 
 	if ok {
 		return storage.ErrDateBusy
 	}
+
+	tempDelta:=int64(value.EventMessageTimeDelta)/1000000
+	fmt.Println("tempDelta: ",tempDelta)
 	stmt := "UPDATE eventsTable SET title =?,userID=?,description=?,dateStart=?, dateStop=?, eventMessageTimeDelta=? WHERE id=?" //nolint:lll
 
-	_, err = s.DB.ExecContext(ctx, stmt, value.Title, value.UserID, value.Description, value.DateStart, value.DateStop, value.EventMessageTimeDelta, value.ID) //nolint:lll
+	_, err = s.DB.ExecContext(ctx, stmt, value.Title, value.UserID, value.Description, value.DateStart, value.DateStop, tempDelta, value.ID) //nolint:lll
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return storage.ErrNoRecord
@@ -170,8 +176,8 @@ func (s *Storage) DeleteEvent(ctx context.Context, logger storage.Logger, id int
 func (s *Storage) GetListEventsNotificationByDay(ctx context.Context,logger storage.Logger, dateTime time.Time) ([]storage.Event, error) {
 	resEvents := make([]storage.Event, 0)
 	dateTimeStr := dateTime.Format("2006-01-02 15:04:05")
-	stmt := "SELECT id, title , userID, description , dateStart, dateStop, eventMessageTimeDelta FROM eventsTable WHERE CAST('" + dateTimeStr + "' AS DATE) BETWEEN DATE_SUB(CAST('" + dateTimeStr + "' AS DATE), INTERVAL eventMessageTimeDelta*1000 MICROSECOND)  AND CAST(dateStart AS DATE) AND CAST('" + dateTimeStr + "' AS DATE) < CAST(dateStart AS DATE) ORDER BY dateStart ASC" //nolint:lll
-
+	//stmt := "SELECT id, title , userID, description , dateStart, dateStop, eventMessageTimeDelta FROM eventsTable WHERE CAST('" + dateTimeStr + "' AS DATE) BETWEEN DATE_SUB(CAST('" + dateTimeStr + "' AS DATE), INTERVAL eventMessageTimeDelta*1000 MICROSECOND)  AND CAST(dateStart AS DATE) AND CAST('" + dateTimeStr + "' AS DATE) < CAST(dateStart AS DATE) ORDER BY dateStart ASC" //nolint:lll
+	stmt := "SELECT id, title , userID, description , dateStart, dateStop, eventMessageTimeDelta FROM eventsTable WHERE CAST('" + dateTimeStr + "' AS DATE) BETWEEN DATE_SUB(CAST(dateStart AS DATE), INTERVAL eventMessageTimeDelta*1000 MICROSECOND)  AND CAST(dateStart AS DATE) ORDER BY dateStart ASC" //nolint:lll
 	rows, err := s.DB.QueryContext(ctx, stmt)
 	if err != nil {
 		logger.Error("SQL QueryContext stmt GetListEventsNotificationByDay error: " + err.Error() + " stmt: " + stmt)
@@ -205,7 +211,7 @@ func (s *Storage) GetListEventsNotificationByDay(ctx context.Context,logger stor
 			err = ErrSQLTimeConvert
 			return nil, err
 		}
-		dr := time.Duration(int64Delta) * time.Millisecond
+		dr := time.Duration(int64Delta) //* time.Millisecond
 		event.EventMessageTimeDelta = dr
 
 		resEvents = append(resEvents, event)
@@ -343,4 +349,19 @@ func (s *Storage) isEventOnThisTimeExcluded(ctx context.Context, logger storage.
 		return false, err
 	}
 	return true, nil
+}
+
+func (s *Storage) MarkEventNotifSended(ctx context.Context, logger storage.Logger, id int) error {
+	
+	stmt := `UPDATE eventsTable SET notifCheck="YES" WHERE id=?` 
+
+	_, err := s.DB.ExecContext(ctx, stmt, id) 
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return storage.ErrNoRecord
+		}
+		logger.Error("SQL DB exec stmt MarkEventNotifSended error: " + err.Error() + " stmt: " + stmt)
+		return err
+	}
+	return nil
 }
